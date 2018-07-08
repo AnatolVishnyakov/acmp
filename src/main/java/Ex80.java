@@ -1,18 +1,19 @@
 package main.java;
 
+import java.io.File;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Ex80 {
-    private static final Scanner in = new Scanner(System.in);
-    private static final PrintWriter out = new PrintWriter(System.out);
-
     private static final int NUMBER_OF_ARGUMENTS = 3;
     private static final int MAX_NUMBER = 30_000;
     private static final int MAX_STRING = 100;
+    // output message
     private static final String ERROR = "ERROR";
     private static final String YES = "YES";
     private static final String NO = "NO";
+
+    private static Integer indexString = 0;
 
     enum Sign {
         MINUS('-'), PLUS('+'), MULTIPLY('*'), DIVIDE('/');
@@ -49,25 +50,24 @@ public class Ex80 {
 
         try {
             if(!(expression.length() >= MAX_STRING)){
-                int indexString = 0;
+                StringBuilder sb;
+                float number;
+                boolean isMinus = false;
                 for (int i = 0; i < NUMBER_OF_ARGUMENTS; i++) {
                     switch (i){
-                        // первое число (со знаком минус)
-                        case 0: {
-                            // начинается со знака минус
-                            boolean isMinus = false;
+                        case 0:
                             if (expression.charAt(indexString) == '-') {
                                 isMinus = true;
                                 indexString++;
                             }
-                            // является числом
+
                             if (!isNumber(expression.charAt(indexString))) {
                                 return ERROR;
                             }
 
-                            StringBuilder sb = isMinus
-                                    ? new StringBuilder("-")
-                                    : new StringBuilder();
+                            sb = isMinus
+                                ? new StringBuilder("-")
+                                : new StringBuilder();
 
                             for (; indexString < expression.length() && isNumber(expression.charAt(indexString)); indexString++) {
                                 sb.append(expression.charAt(indexString));
@@ -77,34 +77,29 @@ public class Ex80 {
                                 return ERROR;
                             }
 
-                            float number;
-                            try {
-                                number = Float.parseFloat(sb.toString());
-                            } catch (Exception exc) {
-                                return ERROR;
-                            }
+                            number = Float.parseFloat(sb.toString());
                             if (Math.abs(number) >= MAX_NUMBER) {
                                 return ERROR;
                             }
                             firstArg = number;
                             break;
-                        }
-                        case 1: {
+
+                        case 1:
                             char sign = expression.charAt(indexString++);
                             if (!isOperation(sign)) {
                                 return ERROR;
                             }
 
-                            boolean isMinus = false;
+                            isMinus = false;
                             char symbol = expression.charAt(indexString);
                             while (isOperation(symbol)) {
                                 symbol = expression.charAt(indexString++);
                                 isMinus ^= (symbol == Sign.MINUS._symbol);
                             }
 
-                            StringBuilder sb = isMinus
-                                    ? new StringBuilder("-")
-                                    : new StringBuilder();
+                            sb = isMinus
+                                ? new StringBuilder("-")
+                                : new StringBuilder();
 
                             if(isMinus){ indexString--; }
                             for (; indexString < expression.length() && isNumber(expression.charAt(indexString)); indexString++) {
@@ -115,12 +110,7 @@ public class Ex80 {
                                 return ERROR;
                             }
 
-                            float number;
-                            try {
-                                number = Float.parseFloat(sb.toString());
-                            } catch (Exception exc) {
-                                return ERROR;
-                            }
+                            number = Float.parseFloat(sb.toString());
                             if (Math.abs(number) >= MAX_NUMBER) {
                                 return ERROR;
                             }
@@ -142,14 +132,13 @@ public class Ex80 {
                                     break;
                             }
                             break;
-                        }
-                        case 2: {
+
+                        case 2:
                             if (expression.charAt(indexString++) != '=') {
                                 return ERROR;
                             }
 
-                            // начинается со знака минус
-                            boolean isMinus = false;
+                            isMinus = false;
                             if (expression.charAt(indexString) == '-') {
                                 isMinus = true;
                                 indexString++;
@@ -159,7 +148,7 @@ public class Ex80 {
                                 return ERROR;
                             }
 
-                            StringBuilder sb = isMinus
+                            sb = isMinus
                                     ? new StringBuilder("-")
                                     : new StringBuilder();
 
@@ -170,18 +159,14 @@ public class Ex80 {
                             if (sb.length() == 0 || indexString != expression.length() || sb.length() > 5) {
                                 return ERROR;
                             }
-                            float number;
-                            try {
-                                number = Float.parseFloat(sb.toString());
-                            } catch (Exception exc) {
-                                return ERROR;
-                            }
+
+                            number = Float.parseFloat(sb.toString());
                             if (Math.abs(number) >= MAX_NUMBER) {
                                 return ERROR;
                             }
                             thirdArg = number;
                             break;
-                        }
+
                         default:
                             return ERROR;
                     }
@@ -189,14 +174,27 @@ public class Ex80 {
             }
             return resultExpression == thirdArg
                     ? YES : NO;
-        } catch (StringIndexOutOfBoundsException exc) {
+
+        } catch (Exception exc) {
             return ERROR;
         }
     }
 
     public static void main(String[] args) {
-        String expression = in.nextLine();
-        out.print(parse(expression));
-        out.flush();
+        Scanner in;
+        PrintWriter out = null;
+
+        try {
+            in = new Scanner(new File("input.txt"));
+            out = new PrintWriter(new File("output.txt"));
+
+            String expression = in.nextLine();
+            out.print(parse(expression));
+            out.close();
+        } catch (Exception ex) {
+            assert out != null;
+            out.print(ERROR);
+            out.close();
+        }
     }
 }
