@@ -4,6 +4,9 @@ import java.io.File;
 import java.io.PrintWriter;
 import java.util.Scanner;
 
+// TODO вынести дублирующийся код
+// TODO переработать цикл
+// TODO разбить по методам операции получения чисел
 public class Ex80 {
     private static final int NUMBER_OF_ARGUMENTS = 3;
     private static final int MAX_NUMBER = 30_000;
