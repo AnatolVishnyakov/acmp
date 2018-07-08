@@ -37,6 +37,11 @@ public class Ex80Test {
         Assert.assertEquals(YES, Ex80.parse("-0*2=0"));
         Assert.assertEquals(YES, Ex80.parse("-12--7=-5"));
         Assert.assertEquals(YES, Ex80.parse("2*-5=-10"));
+
+        String firstNumber = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000001";
+        String secondNumber = "0000000000000000000000000000000000000000000000000000000000000000000000000000000000000001";
+        String thirdNumber = "00000000000000000000000000000000000000000000000000000000000000000000000000000000000000002";
+        Assert.assertEquals(YES, Ex80.parse(firstNumber + "+" + secondNumber + "=" + thirdNumber));
     }
 
     @Test
@@ -82,5 +87,7 @@ public class Ex80Test {
         Assert.assertEquals(ERROR, Ex80.parse("-2--1= "));
         Assert.assertEquals(ERROR, Ex80.parse("9999999999+9999999999=9999999999"));
         Assert.assertEquals(ERROR, Ex80.parse("-999999999999999999999999999"));
+        Assert.assertEquals(ERROR, Ex80.parse("-999999999999999999999999999+1===============================999999"));
+        Assert.assertEquals(ERROR, Ex80.parse("2=2"));
     }
 }

@@ -43,12 +43,12 @@ public class Ex80 {
 
     public static String parse(String expression) {
         float firstArg = 0;
-        float secondArg;
+        float secondArg = 0;
         float thirdArg = 0;
         float resultExpression = 0;
 
         try {
-            if(!(expression.length() > MAX_STRING)){
+            if(!(expression.length() >= MAX_STRING)){
                 int indexString = 0;
                 for (int i = 0; i < NUMBER_OF_ARGUMENTS; i++) {
                     switch (i){
@@ -77,8 +77,13 @@ public class Ex80 {
                                 return ERROR;
                             }
 
-                            int number = Integer.parseInt(sb.toString());
-                            if (Math.abs(number) > MAX_NUMBER) {
+                            float number;
+                            try {
+                                number = Float.parseFloat(sb.toString());
+                            } catch (Exception exc) {
+                                return ERROR;
+                            }
+                            if (Math.abs(number) >= MAX_NUMBER) {
                                 return ERROR;
                             }
                             firstArg = number;
@@ -110,8 +115,13 @@ public class Ex80 {
                                 return ERROR;
                             }
 
-                            int number = Integer.parseInt(sb.toString());
-                            if (Math.abs(number) > MAX_NUMBER) {
+                            float number;
+                            try {
+                                number = Float.parseFloat(sb.toString());
+                            } catch (Exception exc) {
+                                return ERROR;
+                            }
+                            if (Math.abs(number) >= MAX_NUMBER) {
                                 return ERROR;
                             }
 
@@ -160,8 +170,13 @@ public class Ex80 {
                             if (sb.length() == 0 || indexString != expression.length() || sb.length() > 5) {
                                 return ERROR;
                             }
-                            int number = Integer.parseInt(sb.toString());
-                            if (Math.abs(number) > MAX_NUMBER) {
+                            float number;
+                            try {
+                                number = Float.parseFloat(sb.toString());
+                            } catch (Exception exc) {
+                                return ERROR;
+                            }
+                            if (Math.abs(number) >= MAX_NUMBER) {
                                 return ERROR;
                             }
                             thirdArg = number;
