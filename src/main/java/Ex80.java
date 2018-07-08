@@ -9,7 +9,7 @@ public class Ex80 {
 
     private static final int NUMBER_OF_ARGUMENTS = 3;
     private static final int MAX_NUMBER = 30_000;
-    private static final int MAX_STRING = 101;
+    private static final int MAX_STRING = 100;
     private static final String ERROR = "ERROR";
     private static final String YES = "YES";
     private static final String NO = "NO";
@@ -73,9 +73,10 @@ public class Ex80 {
                                 sb.append(expression.charAt(indexString));
                             }
 
-                            if (sb.length() == 0) {
+                            if (sb.length() == 0 || sb.length() > 5) {
                                 return ERROR;
                             }
+
                             int number = Integer.parseInt(sb.toString());
                             if (Math.abs(number) > MAX_NUMBER) {
                                 return ERROR;
@@ -105,7 +106,7 @@ public class Ex80 {
                                 sb.append(expression.charAt(indexString));
                             }
 
-                            if (sb.length() == 0) {
+                            if (sb.length() == 0 || sb.length() > 5) {
                                 return ERROR;
                             }
 
@@ -156,7 +157,7 @@ public class Ex80 {
                                 sb.append(expression.charAt(indexString));
                             }
 
-                            if (sb.length() == 0 || indexString != expression.length()) {
+                            if (sb.length() == 0 || indexString != expression.length() || sb.length() > 5) {
                                 return ERROR;
                             }
                             int number = Integer.parseInt(sb.toString());

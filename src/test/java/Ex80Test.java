@@ -47,6 +47,7 @@ public class Ex80Test {
         Assert.assertEquals(NO, Ex80.parse("123/0=1"));
         Assert.assertEquals(NO, Ex80.parse("0/0=0"));
         Assert.assertEquals(NO, Ex80.parse("-4875*-998=-3742"));
+        Assert.assertEquals(NO, Ex80.parse("23*7=421"));
     }
 
     @Test
@@ -74,5 +75,12 @@ public class Ex80Test {
         Assert.assertEquals(ERROR, Ex80.parse("2+2=a"));
         Assert.assertEquals(ERROR, Ex80.parse("--2-2=0"));
         Assert.assertEquals(ERROR, Ex80.parse("two plus three is five"));
+        Assert.assertEquals(ERROR, Ex80.parse("2+3="));
+        Assert.assertEquals(ERROR, Ex80.parse("2+3"));
+        Assert.assertEquals(ERROR, Ex80.parse("2+"));
+        Assert.assertEquals(ERROR, Ex80.parse("-2"));
+        Assert.assertEquals(ERROR, Ex80.parse("-2--1= "));
+        Assert.assertEquals(ERROR, Ex80.parse("9999999999+9999999999=9999999999"));
+        Assert.assertEquals(ERROR, Ex80.parse("-999999999999999999999999999"));
     }
 }
