@@ -1,6 +1,6 @@
-package test.java;
+package test.java.strings;
 
-import main.java.Ex93;
+import main.java.strings.Ex93;
 import org.junit.Assert;
 import org.junit.Test;
 
@@ -47,5 +47,18 @@ public class Ex93Test {
 
         String actual = (String) method.invoke(Ex93.class, correct, inCorrect);
         Assert.assertEquals("2 1 0", actual);
+
+        correct.clear();
+        correct.add("A");
+        correct.add("A");
+        correct.add("A");
+
+        inCorrect.clear();
+        inCorrect.add("R");
+        inCorrect.add("R");
+        inCorrect.add("R");
+
+        actual = (String) method.invoke(Ex93.class, correct, inCorrect);
+        Assert.assertEquals("3 3 3", actual);
     }
 }

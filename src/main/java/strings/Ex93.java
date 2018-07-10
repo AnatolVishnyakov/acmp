@@ -1,4 +1,4 @@
-package main.java;
+package main.java.strings;
 
 import java.io.PrintWriter;
 import java.util.ArrayList;
@@ -10,14 +10,16 @@ public class Ex93 {
     private static final Scanner in = new Scanner(System.in);
     private static final PrintWriter out = new PrintWriter(System.out);
 
-    private static List<String> readNames(int count) {
+    private static List<String> readNames() {
+        int count = in.nextInt();
         List<String> dictionary = new ArrayList<>();
         do {
             String input = in.nextLine();
-            dictionary.add(input);
+            if(input.length() > 0){
+                dictionary.add(input);
+            }
         } while(count-- != 0);
-//         TODO не понятно почему пустой объект помещается
-//        dictionary.remove(0);
+
         return dictionary;
     }
 
@@ -32,7 +34,7 @@ public class Ex93 {
                 flag = true;
             }
         }
-        return true;
+        return flag;
     }
 
     private static boolean isEmpty(StringBuilder stringBuilder){
@@ -58,16 +60,13 @@ public class Ex93 {
             }
             output.append(count);
         }
-        output = output.delete(output.length()-2, output.length());
+
         return output.toString();
     }
 
     public static void main(String[] args) {
-        int count = in.nextInt();
-        List<String> dictCorrect = readNames(count);
-
-        count = in.nextInt();
-        List<String> dictIncorrect = readNames(count);
+        List<String> dictCorrect = readNames();
+        List<String> dictIncorrect = readNames();
 
         String result = matcherDictionary(dictCorrect, dictIncorrect);
         out.print(result);

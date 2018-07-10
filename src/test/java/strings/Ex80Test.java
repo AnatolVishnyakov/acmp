@@ -1,6 +1,6 @@
-package test.java;
+package test.java.strings;
 
-import main.java.Ex80;
+import main.java.strings.Ex80;
 import org.junit.Assert;
 import org.junit.Test;
 

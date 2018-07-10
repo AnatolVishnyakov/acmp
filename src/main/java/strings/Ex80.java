@@ -1,4 +1,4 @@
-package main.java;
+package main.java.strings;
 
 import java.io.File;
 import java.io.PrintWriter;
