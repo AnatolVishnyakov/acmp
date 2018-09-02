@@ -20,6 +20,12 @@ public class Ex203Test {
         int result = (int) method.invoke(Ex203.class, "abcde", "deabc");
         Assert.assertEquals(2, result);
 
+        result = (int) method.invoke(Ex203.class, "", "");
+        Assert.assertEquals(0, result);
+
+        result = (int) method.invoke(Ex203.class, "a", "a");
+        Assert.assertEquals(0, result);
+
         result = (int) method.invoke(Ex203.class, "abbebeeaokeb", "abbebeeaokeb");
         Assert.assertEquals(0, result);
 
