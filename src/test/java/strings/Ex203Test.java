@@ -26,6 +26,12 @@ public class Ex203Test {
         result = (int) method.invoke(Ex203.class, "a", "a");
         Assert.assertEquals(0, result);
 
+        result = (int) method.invoke(Ex203.class, "BBBBaAAAAAAA", "BBBBaAAAAAAA");
+        Assert.assertEquals(0, result);
+
+        result = (int) method.invoke(Ex203.class, "aaaaaaaaaab", "aaaaabaaaaa");
+        Assert.assertEquals(6, result);
+
         result = (int) method.invoke(Ex203.class, "abbebeeaokeb", "abbebeeaokeb");
         Assert.assertEquals(0, result);
 
@@ -42,6 +48,21 @@ public class Ex203Test {
     @Test
     public void testNegative() throws InvocationTargetException, IllegalAccessException {
         int result = (int) method.invoke(Ex203.class, "a", "b");
+        Assert.assertEquals(-1, result);
+
+        result = (int) method.invoke(Ex203.class, "abc", "bcd");
+        Assert.assertEquals(-1, result);
+
+        result = (int) method.invoke(Ex203.class, "aa", "ab");
+        Assert.assertEquals(-1, result);
+
+        result = (int) method.invoke(Ex203.class, "abc", "abcd");
+        Assert.assertEquals(-1, result);
+
+        result = (int) method.invoke(Ex203.class, "123123abc", "123123abc");
+        Assert.assertEquals(-1, result);
+
+        result = (int) method.invoke(Ex203.class, "zxcvzxcvza", "zxcvzxcvaz");
         Assert.assertEquals(-1, result);
     }
 }

@@ -40,7 +40,8 @@ public class Ex203 {
     }
 
     private static boolean isValid(String value) {
-        return value.length() > 0 && value.length() <= 10_000;
+        return value.matches("[a-zA-Z]+\\.?")
+                && value.length() > 0 && value.length() <= 10_000;
     }
 
     private static int handler(String source, String pattern) {
@@ -55,7 +56,8 @@ public class Ex203 {
     }
 
     private static int check(String source, String pattern){
-        if(source.hashCode() == pattern.hashCode()){
+        if(source.length() == pattern.length() && isValid(pattern) &&
+                source.hashCode() == pattern.hashCode()){
             return 0;
         }
         return handler(source, pattern);
@@ -68,9 +70,7 @@ public class Ex203 {
         String source = in.next();
         String pattern = in.next();
 
-        if(source.length() == pattern.length() && isValid(source)){
-            out.print(check(source, pattern));
-        }
+        out.print(check(source, pattern));
 
         out.flush();
     }
