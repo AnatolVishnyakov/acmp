@@ -20,11 +20,11 @@ public class Ex203Test {
         int result = (int) method.invoke(Ex203.class, "abcde", "deabc");
         Assert.assertEquals(2, result);
 
-        result = (int) method.invoke(Ex203.class, "", "");
-        Assert.assertEquals(0, result);
-
         result = (int) method.invoke(Ex203.class, "a", "a");
         Assert.assertEquals(0, result);
+
+        result = (int) method.invoke(Ex203.class, "aaaaabbbbb", "bbbbbaaaaa");
+        Assert.assertEquals(5, result);
 
         result = (int) method.invoke(Ex203.class, "BBBBaAAAAAAA", "BBBBaAAAAAAA");
         Assert.assertEquals(0, result);
@@ -43,6 +43,9 @@ public class Ex203Test {
 
         result = (int) method.invoke(Ex203.class, "AaaA", "aAAa");
         Assert.assertEquals(2, result);
+
+        result = (int) method.invoke(Ex203.class, "abababab", "babababa");
+        Assert.assertEquals(1, result);
     }
 
     @Test
@@ -56,13 +59,13 @@ public class Ex203Test {
         result = (int) method.invoke(Ex203.class, "aa", "ab");
         Assert.assertEquals(-1, result);
 
-        result = (int) method.invoke(Ex203.class, "abc", "abcd");
-        Assert.assertEquals(-1, result);
-
         result = (int) method.invoke(Ex203.class, "123123abc", "123123abc");
         Assert.assertEquals(-1, result);
 
         result = (int) method.invoke(Ex203.class, "zxcvzxcvza", "zxcvzxcvaz");
+        Assert.assertEquals(-1, result);
+
+        result = (int) method.invoke(Ex203.class, "", "");
         Assert.assertEquals(-1, result);
     }
 }

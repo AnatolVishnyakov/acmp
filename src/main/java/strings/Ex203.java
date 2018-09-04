@@ -7,6 +7,7 @@ import java.util.Scanner;
 
 public class Ex203 {
     private static final int NEGATIVE_OPTION = -1;
+    private static final int DEFAULT_OPTION = 0;
 
     private static int[] prefix_function(String stroka){
         int n = stroka.length();
@@ -27,8 +28,13 @@ public class Ex203 {
     }
 
     private static int getShelf(String str, String subStr){
-        int[] weight = prefix_function(subStr + "@" + str);
-        return Arrays.stream(weight).max().getAsInt();
+        int[] weight = prefix_function(str + "@" + subStr);
+        int count = 0;
+        for (int i = subStr.length() + 1; weight[i] == 0 ; i++, count++);
+        if(count == 0){
+            count = Arrays.stream(weight).max().getAsInt();
+        }
+        return count;
     }
 
     private static String shelfRight(String pattern, int shelfCount) {
@@ -44,23 +50,24 @@ public class Ex203 {
                 && value.length() > 0 && value.length() <= 10_000;
     }
 
-    private static int handler(String source, String pattern) {
-        int shelfCount = getShelf(source, pattern);
-        source = shelfRight(source, shelfCount);
+    private static int check(String source, String pattern){
+        if(!isValid(source)){
+            return NEGATIVE_OPTION;
+        }
 
         if(source.hashCode() == pattern.hashCode()){
-            return shelfCount;
+            return DEFAULT_OPTION;
+        } else if(source.length() == 1) {
+            return NEGATIVE_OPTION;
+        }
+
+        int index = getShelf(source, pattern);
+        source = shelfRight(source, index);
+        if(source.hashCode() == pattern.hashCode()){
+            return index;
         }
 
         return NEGATIVE_OPTION;
-    }
-
-    private static int check(String source, String pattern){
-        if(source.length() == pattern.length() && isValid(pattern) &&
-                source.hashCode() == pattern.hashCode()){
-            return 0;
-        }
-        return handler(source, pattern);
     }
 
     public static void main(String[] args) {
