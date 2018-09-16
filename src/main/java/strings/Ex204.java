@@ -1,14 +1,14 @@
 package main.java.strings;
 
 import java.io.PrintWriter;
-import java.util.Scanner;
+import java.util.*;
 
 public class Ex204 {
     private static final int MAX_LENGTH = 50_000;
 
     private static boolean isValid(String stroka){
         return stroka.length() <= MAX_LENGTH
-                && stroka.matches("\\w+");
+                && stroka.matches("[a-zA-Z]+\\.?");
     }
 
     private static int[] prefix_function(String stroka){
@@ -46,7 +46,7 @@ public class Ex204 {
 
         String stroka = in.next();
         if(isValid(stroka)){
-            out.print(getMinimalSubString(stroka));
+            out.print(getMinimalSubString(stroka)-1);
         }
 
         out.flush();

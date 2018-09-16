@@ -1,6 +1,7 @@
 package main.java.strings;
 
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Scanner;
 
 
@@ -8,13 +9,41 @@ public class Ex203 {
     private static final int NEGATIVE_OPTION = -1;
     private static final int DEFAULT_OPTION = 0;
 
-    private static char[] getShelfRigth(char[] string) {
-        char symb = string[string.length-1];
-        for (int i = string.length-1; i > 0; i--) {
-            string[i] = string[i-1];
+    private static int[] prefix_function(String stroka){
+        int n = stroka.length();
+        int[] pi = new int[n];
+        for (int i = 1; i < n; ++i)
+        {
+            int j = pi[i-1];
+            while ((j > 0) && (stroka.charAt(i) != stroka.charAt(j)))
+                j = pi[j-1];
+
+            if (stroka.charAt(i) == stroka.charAt(j))
+                ++j;
+
+            pi[i] = j;
         }
-        string[0] = symb;
-        return string;
+
+        return pi;
+    }
+
+    private static int getShelf(String str, String subStr){
+        int[] weight = prefix_function(str + "@" + subStr);
+        int count = 0;
+        for (int i = subStr.length() + 1; i < weight.length && weight[i] == 0; i++, count++);
+        if(count == 0){
+            int[] _subarray = Arrays.copyOfRange(weight, str.length() + 1, weight.length);
+            count = Arrays.binarySearch(_subarray, 0) + 1;
+        }
+        return count;
+    }
+
+    private static String shelfRight(String pattern, int shelfCount) {
+        final int N = pattern.length();
+        StringBuilder buffer = new StringBuilder();
+        buffer.append(pattern, N-shelfCount, N);
+        buffer.append(pattern, 0, N-shelfCount);
+        return buffer.toString();
     }
 
     private static boolean isValid(String value) {
@@ -33,12 +62,10 @@ public class Ex203 {
             return NEGATIVE_OPTION;
         }
 
-        char[] _source = source.toCharArray();
-        for (int i = 1; i <= _source.length; i++) {
-            _source = getShelfRigth(_source);
-            if(String.valueOf(_source).hashCode() == pattern.hashCode()){
-                return i;
-            }
+        int index = getShelf(source, pattern);
+        source = shelfRight(source, index);
+        if(source.hashCode() == pattern.hashCode()){
+            return index;
         }
 
         return NEGATIVE_OPTION;

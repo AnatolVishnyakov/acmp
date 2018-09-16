@@ -20,6 +20,9 @@ public class Ex204Test {
         int result = (int) method.invoke(Ex204.class, "aaaaaaaaaaa");
         Assert.assertEquals(1, result);
 
+        result = (int) method.invoke(Ex204.class, "abababab");
+        Assert.assertEquals(2, result);
+
         result = (int) method.invoke(Ex204.class, "abababa");
         Assert.assertEquals(2, result);
     }

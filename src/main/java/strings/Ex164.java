@@ -1,76 +1,45 @@
 package main.java.strings;
 
 import java.io.PrintWriter;
-import java.util.Deque;
-import java.util.LinkedList;
 import java.util.Scanner;
 
 class Ticket {
-    private static final int BOUND_END = 2;
-    private static final int SKIP_VALUE = 0;
-    private final String ticketNumber;
-
-    public Ticket(String number) {
-        ticketNumber = number;
+    private static String sum(String number, int indexElementA, int indexElementB){
+        int a = Character.getNumericValue(number.charAt(indexElementA));
+        int b = Character.getNumericValue(number.charAt(indexElementB));
+        return String.valueOf(a + b);
     }
 
-    private Deque<Integer> prepareTicketFormat() {
-        Deque<Integer> ticket = new LinkedList<>();
-        for (int i = 0; i < ticketNumber.length(); i++) {
-            int value = Character.getNumericValue(ticketNumber.charAt(i));
-            if(value != SKIP_VALUE){
-                ticket.addFirst(value);
-            }
-        }
-        return ticket;
+    private static String sumLeft(String number) {
+        return sum(number, 0, 1) + number.substring(2, number.length());
     }
 
-    // 11111 1111 9 - YES
-    // 9 1111 11111 - YES
-    private boolean runAnalyzeTicket(Deque<Integer> deque) {
-        if(deque.size() < 2){
+    private static String sumRight(String number) {
+        int indexElementA = number.length() - 1;
+        int indexElementB = indexElementA - 1;
+        return number.substring(0, indexElementB) + sum(number, indexElementA, indexElementB);
+    }
+
+    private static boolean check(String number) {
+        if(number.length() == 1 || number.length() == 0){
             return false;
         }
-
-        int left = 0;
-        int right = 0;
-        while(deque.size() != 2){
-            int l = ((LinkedList<Integer>) deque).get(deque.size() - 1) + ((LinkedList<Integer>) deque).get(deque.size() - 2);
-            if(left <= right && l != 10){
-                left = deque.pollFirst() + deque.pollFirst();
-                if(left == 10){
-                    deque.addFirst(1);
-                } else if(left > 10){
-                    deque.addFirst(left % 10);
-                    deque.addFirst(left / 10);
-                } else {
-                    deque.addFirst(left);
-                }
-            } else {
-                right = deque.pollLast() + deque.pollLast();
-                if(right == 10){
-                    deque.addLast(1);
-                } else if(right > 10){
-                    deque.addLast(right / 10);
-                    deque.addLast(right % 10);
-                } else {
-                    deque.addLast(right);
-                }
-            }
+        if(number.length() == 2){
+            // итого: осталось два элемента
+            return number.charAt(0) == number.charAt(1);
         }
-        left = deque.pollFirst();
-        right = deque.pollLast();
 
-        return left == right;
+        if(check(sumRight(new String(number)))){
+            return true;
+        }
+        if(check(sumLeft(new String(number)))){
+            return true;
+        }
+        return false;
     }
 
-    private boolean handleTicket() {
-        Deque<Integer> deque = prepareTicketFormat();
-        return runAnalyzeTicket(deque);
-    }
-
-    public boolean isHappy(){
-        return handleTicket();
+    public static boolean isHappy(String number) {
+        return check(number);
     }
 }
 
@@ -81,13 +50,16 @@ public class Ex164 {
     private static final String NO = "NO";
 
     public static boolean isHappyTicket(String number){
-        Ticket ticket = new Ticket(number);
-        return ticket.isHappy();
+        return Ticket.isHappy(number);
+    }
+
+    public static boolean isValid(String number){
+        return number.length() >= 1 && number.length() <= 100;
     }
 
     public static void main(String[] args) {
-        String input = in.nextLine();
-        if(isHappyTicket(input)){
+        String input = in.nextLine().replaceAll("0", "");
+        if (isValid(input) && isHappyTicket(input)) {
             out.print(YES);
         } else {
             out.print(NO);

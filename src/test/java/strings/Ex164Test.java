@@ -1,22 +1,44 @@
 package test.java.strings;
 
-import main.java.strings.Ex164;
-import org.junit.Assert;
 import org.junit.Test;
-import java.lang.reflect.InvocationTargetException;
+
+import static main.java.strings.Ex164.isHappyTicket;
+import static org.junit.Assert.*;
 
 
 public class Ex164Test {
 
     @Test
-    public void testIsHappyTicket() throws NoSuchMethodException, InvocationTargetException, IllegalAccessException {
-        Assert.assertTrue(Ex164.isHappyTicket("0015420"));
-        Assert.assertTrue(Ex164.isHappyTicket("15420"));
-        Assert.assertTrue(Ex164.isHappyTicket("162510021"));
-        Assert.assertTrue(Ex164.isHappyTicket("911"));
-        Assert.assertTrue(Ex164.isHappyTicket("119"));
-        Assert.assertTrue(Ex164.isHappyTicket("11111111111"));
+    public void testIsHappyTicketSuccess(){
+        assertTrue(isHappyTicket("0015420"));
+        assertTrue(isHappyTicket("00015420"));
+        assertTrue(isHappyTicket("162510021"));
+        assertTrue(isHappyTicket("911"));
+        assertTrue(isHappyTicket("119"));
+        assertTrue(isHappyTicket("11111111111"));
+        assertTrue(isHappyTicket("100001"));
+        assertTrue(isHappyTicket("1001001001"));
+        assertTrue(isHappyTicket("10203020301"));
+        assertTrue(isHappyTicket("444444444444442"));
+        assertTrue(isHappyTicket("12345"));
+        assertTrue(isHappyTicket("00"));
+        assertTrue(isHappyTicket("001236"));
+        assertTrue(isHappyTicket("1111111119"));
+        assertTrue(isHappyTicket("191111111111"));
+        assertTrue(isHappyTicket("1111111111"));
+        assertTrue(isHappyTicket("5555"));
+        assertTrue(isHappyTicket("0000"));
+        assertTrue(isHappyTicket("999"));
+        assertTrue(isHappyTicket("910001"));
+        assertTrue(isHappyTicket("99922"));
+        assertTrue(isHappyTicket("111002200111"));
+    }
 
-//        Assert.assertFalse(callMethodIsHappyTicket("00100"));
+    @Test
+    public void testIsHappyTicketError(){
+        assertFalse(isHappyTicket("00100"));
+        assertFalse(isHappyTicket("1100003"));
+        assertFalse(isHappyTicket("400100"));
+        assertFalse(isHappyTicket("10101"));
     }
 }
