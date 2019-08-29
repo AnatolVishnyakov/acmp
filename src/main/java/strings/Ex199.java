@@ -1,6 +1,8 @@
 package main.java.strings;
 
+import java.io.PrintWriter;
 import java.util.Arrays;
+import java.util.Scanner;
 
 enum Rome {
     I(1),
@@ -15,13 +17,16 @@ enum Rome {
     X(10),
     XVIII(18),
     XXXI(31),
+    XL(40),
     XLVI(46),
     L(50),
     LXXV(75),
+    XC(90),
     XCII(92),
     IC(99),
     C(100),
     CCCII(302),
+    CD(400),
     CDXLI(441),
     ID(499),
     D(500),
@@ -32,6 +37,11 @@ enum Rome {
 
     Rome(int value) {
         this.value = value;
+    }
+
+    // TODO implements convert arabic to rome
+    public static String toRomeNumber(int arabicValue) {
+        return String.valueOf(arabicValue);
     }
 
     public static int toArabicNumber(String romeValue) {
@@ -76,7 +86,26 @@ enum Rome {
 }
 
 public class Ex199 {
-    public static void main(String[] args) {
+    private static Scanner in = new Scanner(System.in);
+    private static PrintWriter out = new PrintWriter(System.out);
 
+    private static int gcd(int a, int b) {
+        return b == 0
+                ? a
+                : gcd(b, a % b);
+    }
+
+    public static void main(String[] args) {
+        String stroka = in.nextLine();
+        String[] values = stroka.split("/");
+
+        int oneArg = Rome.toArabicNumber(values[0]);
+        int twoArg = Rome.toArabicNumber(values[1]);
+        int divider = gcd(oneArg, twoArg);
+
+        out.print(Rome.toRomeNumber(oneArg / divider));
+        out.print("/");
+        out.print(Rome.toRomeNumber(twoArg / divider));
+        out.flush();
     }
 }

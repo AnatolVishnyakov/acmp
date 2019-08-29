@@ -34,5 +34,20 @@ public class Ex199RomeTest {
         assertEquals(23, Rome.toArabicNumber("XXIII"));
         assertEquals(24, Rome.toArabicNumber("XXIV"));
         assertEquals(25, Rome.toArabicNumber("XXV"));
+
+        assertEquals(18, Rome.toArabicNumber("XVIII"));
+        assertEquals(31, Rome.toArabicNumber("XXXI"));
+        assertEquals(46, Rome.toArabicNumber("XLVI"));
+        assertEquals(50, Rome.toArabicNumber("L"));
+        assertEquals(75, Rome.toArabicNumber("LXXV"));
+        assertEquals(92, Rome.toArabicNumber("XCII"));
+        assertEquals(99, Rome.toArabicNumber("IC"));
+        assertEquals(100, Rome.toArabicNumber("C"));
+        assertEquals(302, Rome.toArabicNumber("CCCII"));
+        assertEquals(441, Rome.toArabicNumber("CDXLI"));
+        assertEquals(499, Rome.toArabicNumber("ID"));
+        assertEquals(500, Rome.toArabicNumber("D"));
+        assertEquals(695, Rome.toArabicNumber("DCXCV"));
+        assertEquals(900, Rome.toArabicNumber("CM"));
     }
 }
