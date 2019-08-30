@@ -4,31 +4,7 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 import java.util.concurrent.atomic.AtomicInteger;
 
-/** Ex267
- * Секретарша Ирочка сегодня опоздала на работу и ей срочно
- * нужно успеть к обеду сделать N копий одного документа.
- * В ее распоряжении имеются два ксерокса, один из которых
- * копирует лист за х секунд, а другой – за y секунд.
- * (Разрешается использовать как один ксерокс, так и оба одновременно.
- * Можно копировать не только с оригинала, но и с копии.)
- * Помогите ей выяснить, какое минимальное время для этого потребуется.
- * <p>
- * N - кол-во копий документа
- * x - скорость копирования 1 ксерокса
- * y - скорость копирования 2 ксерокса
- * <p>
- * Входные данные
- * - Во входном файле INPUT.TXT записаны три натуральных числа N, x и y, разделенные пробелом (1 ≤ N ≤ 2*10^8, 1 <= x, y <= 10).
- * <p>
- * Выходные данные
- * - В выходной файл OUTPUT.TXT выведите одно число – минимальное время в секундах, необходимое для получения N копий.
- * <p>
- * Пример:
- * <p>
- * 4 1 1 -> 3
- * 5 1 2 -> 4
- */
-public class Ex267 {
+public class Main {
     private static boolean isValidNumberOfCopy(int value) {
         return value != 0 && value != 1;
     }
@@ -72,6 +48,7 @@ public class Ex267 {
     }
 
     public static void main(String[] args) {
+        System.out.println(8 / 3);
         Scanner reader = new Scanner(System.in);
         PrintWriter writer = new PrintWriter(System.out);
 

@@ -1,4 +1,4 @@
-package main.java.strings;
+package strings;
 
 import java.io.PrintWriter;
 import java.util.Arrays;
