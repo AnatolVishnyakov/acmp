@@ -158,8 +158,11 @@ enum Arabic {
 }
 
 public class Ex199 {
-    private static Scanner in = new Scanner(System.in);
-    private static PrintWriter out = new PrintWriter(System.out);
+    private static final Scanner IN = new Scanner(System.in);
+    private static final PrintWriter OUT = new PrintWriter(System.out);
+    private static final String ERROR_MESSAGE = "ERROR";
+    private static final String FRACTION_PATTERN = "[MDCLXVI]+/[MDCLXVI]+";
+    private static final String DIVIDER = "/";
 
     private static int gcd(int a, int b) {
         return b == 0
@@ -167,32 +170,40 @@ public class Ex199 {
                 : gcd(b, a % b);
     }
 
-    private static boolean isValid(String drob) {
-        return drob.matches("[MDCLXVI]+/[MDCLXVI]+");
+    private static boolean isValid(String fraction) {
+        return fraction.matches(FRACTION_PATTERN);
+    }
+
+    public static int toArabicNumber(String valueRome) {
+        return Rome.toArabicNumber(valueRome);
+    }
+
+    public static String toRomeNumber(int valueArabic) {
+        return Arabic.toRomeNumber(valueArabic);
     }
 
     public static String reduceFraction(String drob) {
         if (isValid(drob)) {
-            String[] values = drob.split("/");
-            int oneArg = Rome.toArabicNumber(values[0]);
-            int twoArg = Rome.toArabicNumber(values[1]);
+            String[] values = drob.split(DIVIDER);
+            int oneArg = toArabicNumber(values[0]);
+            int twoArg = toArabicNumber(values[1]);
 
             if (oneArg % twoArg == 0) {
-                return Arabic.toRomeNumber(oneArg / twoArg);
+                return toRomeNumber(oneArg / twoArg);
             } else {
                 int divider = gcd(oneArg, twoArg);
                 return String.format("%s/%s",
-                        Arabic.toRomeNumber(oneArg / divider),
-                        Arabic.toRomeNumber(twoArg / divider));
+                        toRomeNumber(oneArg / divider),
+                        toRomeNumber(twoArg / divider));
             }
         }
 
-        return "ERROR";
+        return ERROR_MESSAGE;
     }
 
     public static void main(String[] args) {
-        String stroka = in.nextLine();
-        out.print(reduceFraction(stroka));
-        out.flush();
+        String inputLine = IN.nextLine();
+        OUT.print(reduceFraction(inputLine));
+        OUT.flush();
     }
 }
