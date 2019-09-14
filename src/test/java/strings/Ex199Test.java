@@ -1,6 +1,5 @@
 package strings;
 
-import main.java.strings.Ex199;
 import org.junit.Test;
 
 import static org.junit.Assert.assertEquals;

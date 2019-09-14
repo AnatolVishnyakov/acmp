@@ -1,4 +1,4 @@
-package main.java.strings;
+package strings;
 
 import java.io.PrintWriter;
 import java.util.Scanner;
@@ -11,7 +11,7 @@ class Ticket {
     }
 
     private static String sumLeft(String number) {
-        return sum(number, 0, 1) + number.substring(2, number.length());
+        return sum(number, 0, 1) + number.substring(2);
     }
 
     private static String sumRight(String number) {
@@ -29,10 +29,10 @@ class Ticket {
             return number.charAt(0) == number.charAt(1);
         }
 
-        if(check(sumRight(new String(number)))){
+        if(check(sumRight(number))){
             return true;
         }
-        if(check(sumLeft(new String(number)))){
+        if(check(sumLeft(number))){
             return true;
         }
         return false;
@@ -50,7 +50,7 @@ public class Ex164 {
     private static final String NO = "NO";
 
     public static boolean isHappyTicket(String number){
-        return Ticket.isHappy(number);
+        return Ticket.isHappy(number.replaceAll("0", ""));
     }
 
     public static boolean isValid(String number){
@@ -58,7 +58,7 @@ public class Ex164 {
     }
 
     public static void main(String[] args) {
-        String input = in.nextLine().replaceAll("0", "");
+        String input = in.nextLine();
         if (isValid(input) && isHappyTicket(input)) {
             out.print(YES);
         } else {

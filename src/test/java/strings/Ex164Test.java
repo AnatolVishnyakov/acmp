@@ -1,9 +1,9 @@
-package test.java.strings;
+package strings;
 
 import org.junit.Test;
 
-import static main.java.strings.Ex164.isHappyTicket;
 import static org.junit.Assert.*;
+import static strings.Ex164.isHappyTicket;
 
 
 public class Ex164Test {
@@ -32,6 +32,7 @@ public class Ex164Test {
         assertTrue(isHappyTicket("910001"));
         assertTrue(isHappyTicket("99922"));
         assertTrue(isHappyTicket("111002200111"));
+        assertTrue(isHappyTicket("999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999999"));
     }
 
     @Test
