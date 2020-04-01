@@ -1,4 +1,4 @@
-package strings;
+package algorithms.strings;
 
 import java.io.PrintWriter;
 import java.util.Scanner;

@@ -7,7 +7,7 @@ import org.junit.Test;
 
 public class Ex691Test {
 /*
-    @Test
+    @algorithms.Test
     public void testHandleRegNum(){
         Assert.assertEquals("Yes", Ex691.handleRegNum("P204BT"));
         Assert.assertEquals("No", Ex691.handleRegNum("X182YZ"));

@@ -1,8 +1,7 @@
-package main.java.strings;
+package algorithms.strings;
 
 import java.io.PrintWriter;
 import java.util.Scanner;
-
 
 public class Ex202 {
     public static int[] prefix_function(String stroka){

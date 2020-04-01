@@ -1,9 +1,9 @@
-package strings;
+package algorithms.strings;
 
 import org.junit.Test;
 
 import static org.junit.Assert.*;
-import static strings.Ex164.isHappyTicket;
+import static algorithms.strings.Ex164.isHappyTicket;
 
 
 public class Ex164Test {
