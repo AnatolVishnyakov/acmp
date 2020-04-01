@@ -10,11 +10,13 @@ public class Ex202 {
         for (int i = 1; i < n; ++i)
         {
             int j = pi[i-1];
-            while ((j > 0) && (stroka.charAt(i) != stroka.charAt(j)))
-                j = pi[j-1];
+            while ((j > 0) && (stroka.charAt(i) != stroka.charAt(j))) {
+                j = pi[j - 1];
+            }
 
-            if (stroka.charAt(i) == stroka.charAt(j))
+            if (stroka.charAt(i) == stroka.charAt(j)) {
                 ++j;
+            }
 
             pi[i] = j;
         }
@@ -27,9 +29,11 @@ public class Ex202 {
 
         StringBuilder sb = new StringBuilder();
         int index = subStr.length();
-        for(int i = 0; i < weight.length; i++)
-            if(subStr.length() == weight[i])
+        for(int i = 0; i < weight.length; i++) {
+            if (subStr.length() == weight[i]) {
                 sb.append(i - index - subStr.length()).append(" ");
+            }
+        }
 
         return sb.toString();
     }
