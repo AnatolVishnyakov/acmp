@@ -29,7 +29,7 @@ public class Ex202 {
         int index = subStr.length();
         for(int i = 0; i < weight.length; i++)
             if(subStr.length() == weight[i])
-                sb.append(i - index - subStr.length() + " ");
+                sb.append(i - index - subStr.length()).append(" ");
 
         return sb.toString();
     }
