@@ -1,84 +1,53 @@
-package main.java.strings;
+package algorithms.strings;
 
 import java.io.PrintWriter;
-import java.util.Arrays;
 import java.util.Scanner;
 
-
 public class Ex203 {
-    private static final int NEGATIVE_OPTION = -1;
-    private static final int DEFAULT_OPTION = 0;
+    private static ShiftIdentifier shiftIdentifier = new ShiftIdentifier();
 
-    private static int[] prefix_function(String stroka){
-        int n = stroka.length();
-        int[] pi = new int[n];
-        for (int i = 1; i < n; ++i)
-        {
-            int j = pi[i-1];
-            while ((j > 0) && (stroka.charAt(i) != stroka.charAt(j)))
-                j = pi[j-1];
+    public static class ShiftIdentifier {
+        private static final int NEGATIVE_OPTION = -1;
+        private static final int DEFAULT_OPTION = 0;
+        private static final String ALPHABET = "[a-zA-Z]+";
 
-            if (stroka.charAt(i) == stroka.charAt(j))
-                ++j;
-
-            pi[i] = j;
-        }
-
-        return pi;
-    }
-
-    private static int getShelf(String str, String subStr){
-        int[] weight = prefix_function(str + "@" + subStr);
-        int count = 0;
-        for (int i = subStr.length() + 1; i < weight.length && weight[i] == 0; i++, count++);
-        if(count == 0){
-            int[] _subarray = Arrays.copyOfRange(weight, str.length() + 1, weight.length);
-            count = Arrays.binarySearch(_subarray, 0) + 1;
-        }
-        return count;
-    }
-
-    private static String shelfRight(String pattern, int shelfCount) {
-        final int N = pattern.length();
-        StringBuilder buffer = new StringBuilder();
-        buffer.append(pattern, N-shelfCount, N);
-        buffer.append(pattern, 0, N-shelfCount);
-        return buffer.toString();
-    }
-
-    private static boolean isValid(String value) {
-        return value.matches("[a-zA-Z]+\\.?")
-                && value.length() > 0 && value.length() <= 10_000;
-    }
-
-    private static int check(String source, String pattern){
-        if(!isValid(source)){
+        public int shelfRight(String text, String pattern) {
+            if (text.hashCode() == pattern.hashCode()) {
+                return DEFAULT_OPTION;
+            } else {
+                int i;
+                StringBuilder buffer = new StringBuilder(text);
+                int N = pattern.length();
+                for (i = 1; i <= N; i++) {
+                    buffer.insert(0, buffer.charAt(N - 1));
+                    buffer.deleteCharAt(N);
+                    if (buffer.toString().hashCode() == pattern.hashCode()) {
+                        return i;
+                    }
+                }
+            }
             return NEGATIVE_OPTION;
         }
 
-        if(source.hashCode() == pattern.hashCode()){
-            return DEFAULT_OPTION;
-        } else if(source.length() == 1) {
-            return NEGATIVE_OPTION;
+        public boolean isValid(String text, String pattern) {
+            return text.length() == pattern.length() &&
+                    text.matches(ALPHABET) &&
+                    pattern.matches(ALPHABET) &&
+                    text.length() > 0 && text.length() <= 10_000;
         }
-
-        int index = getShelf(source, pattern);
-        source = shelfRight(source, index);
-        if(source.hashCode() == pattern.hashCode()){
-            return index;
-        }
-
-        return NEGATIVE_OPTION;
     }
+
 
     public static void main(String[] args) {
         Scanner in = new Scanner(System.in);
         PrintWriter out = new PrintWriter(System.out);
 
-        String source = in.next();
+        String text = in.next();
         String pattern = in.next();
 
-        out.print(check(source, pattern));
+        if (shiftIdentifier.isValid(text, pattern)) {
+            out.print(shiftIdentifier.shelfRight(text, pattern));
+        }
 
         out.flush();
     }

@@ -13,6 +13,7 @@ public class Ex203Test {
     public static Iterable<Object[]> testDataSuccess() {
         return Arrays.asList(new Object[][]{
                 {"a", "a", 0},
+                {"aaaaaaaaaaaa", "aaaaaaaaaaaa", 0},
                 {"BBBBaAAAAAAA", "BBBBaAAAAAAA", 0},
                 {"abbebeeaokeb", "abbebeeaokeb", 0},
                 {"abcde", "deabc", 2},
@@ -21,7 +22,7 @@ public class Ex203Test {
                 {"abbebeeaokeb", "bbebeeaokeba", 11},
                 {"abbebeeaokeb", "babbebeeaoke", 1},
                 {"AaaA", "aAAa", 2},
-                {"abababab", "babababa", 7}
+                {"abababab", "babababa", 1}
         });
     }
 
