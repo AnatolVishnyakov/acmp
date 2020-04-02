@@ -1,29 +1,59 @@
-package test.java.strings;
+package algorithms.strings;
 
-import main.java.strings.Ex204;
-import org.junit.Assert;
-import org.junit.Test;
+import algorithms.StringSearch;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.MethodSource;
 
-import java.lang.reflect.InvocationTargetException;
-import java.lang.reflect.Method;
+import java.util.Arrays;
+import java.util.Collections;
+
+import static org.junit.Assert.assertEquals;
 
 public class Ex204Test {
-    private Method method;
-
-    public Ex204Test() throws NoSuchMethodException {
-        method = Ex204.class.getDeclaredMethod("getMinimalSubString", String.class);
-        method.setAccessible(true);
+    public static Iterable<Object[]> testDataSuccess() {
+        return Arrays.asList(new Object[][]{
+                {"a", 1},
+                {"aaaaaaaaaaaa", 1},
+                {"abababab", 2},
+                {"abababa", 2},
+                {"abc", 3},
+                {"abca", 3},
+                {"abcad", 4},
+                {"BBBBaAAAAAAA", 3},
+                {"abbebeeaokeb", 5},
+//                {"deabc", 5},
+//                {"bbbbbaaaaa", 10},
+//                {"aaaaabaaaaa", 3},
+//                {"bbebeeaokeba", 11},
+//                {"babbebeeaoke", 1},
+//                {"aAAa", 4},
+//                {"babababa", 2},
+        });
     }
 
-    @Test
-    public void testSuccess() throws InvocationTargetException, IllegalAccessException {
-        int result = (int) method.invoke(Ex204.class, "aaaaaaaaaaa");
-        Assert.assertEquals(1, result);
+    @ParameterizedTest(name = "[{index}]: {0} -> {1}")
+    @MethodSource("testDataSuccess")
+    public void testSuccess(String text, int expected) {
+        StringSearch.KMP kmp = new StringSearch.KMP(text);
+        kmp.printDKA();
+        Ex204.StringHandler handler = new Ex204.StringHandler(text);
+        assertEquals(expected, handler.process());
+    }
 
-        result = (int) method.invoke(Ex204.class, "abababab");
-        Assert.assertEquals(2, result);
+    public static Iterable<Object[]> testDataIsValid() {
+        return Arrays.asList(new Object[][]{
+                {"", false},
+                {"AAAbbbb", true},
+                {"AAAAффффф", false},
+                {String.join("", Collections.nCopies(50_001, "A")), false},
+                {String.join("", Collections.nCopies(50_000, "A")), true}
+        });
+    }
 
-        result = (int) method.invoke(Ex204.class, "abababa");
-        Assert.assertEquals(2, result);
+    @ParameterizedTest(name = "[{index}]: {0} -> {1}")
+    @MethodSource("testDataIsValid")
+    public void testIsValidString(String text, boolean expected) {
+        Ex204.StringHandler handler = new Ex204.StringHandler(text);
+        assertEquals(expected, handler.isValidString());
     }
 }
