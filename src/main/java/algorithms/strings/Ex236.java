@@ -15,10 +15,6 @@ public class Ex236 {
             this.x = x;
         }
 
-        public boolean isValid() {
-            return x <= 100 && polynomial.length() <= 80;
-        }
-
         public String pow() {
             Pattern pattern = Pattern.compile("(?<x>\\d+)\\^(?<k>\\d+)");
             Matcher matcher = pattern.matcher(polynomial);
@@ -26,11 +22,8 @@ public class Ex236 {
                 String group = matcher.group();
                 int k = Integer.parseInt(matcher.group("k"));
                 int x = Integer.parseInt(matcher.group("x"));
-//                double pow = Math.pow(x, k);
-                for (int i = 0; i < k; i++) {
-                    x *= x;
-                }
-                polynomial = polynomial.replace(group, String.valueOf(x));
+                int pow = (int) Math.pow(x, k);
+                polynomial = polynomial.replace(group, String.valueOf(pow));
             }
             return polynomial;
         }
@@ -63,6 +56,13 @@ public class Ex236 {
             polynomial = pow();
             polynomial = multiply();
             return sum();
+        }
+
+        public boolean isValid() {
+            return Pattern.compile("(-?\\d+)((\\+|\\-|\\*)(([0-9]|[0-9][0-9]|(100))\\*|(x\\^[1-4]|x|[0-9]|[0-9][0-9]|(100)))*)*")
+                    .matcher(polynomial).matches() &&
+                    x <= 100 &&
+                    polynomial.length() > 0 && polynomial.length() <= 80;
         }
     }
 
