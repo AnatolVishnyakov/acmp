@@ -15,7 +15,7 @@ public class Ex236 {
             this.x = x;
         }
 
-        public String pow() {
+        private String pow() {
             Pattern pattern = Pattern.compile("(?<x>\\d+)\\^(?<k>\\d+)");
             Matcher matcher = pattern.matcher(polynomial);
             while (matcher.find()) {
@@ -28,7 +28,7 @@ public class Ex236 {
             return polynomial;
         }
 
-        public String multiply() {
+        private String multiply() {
             Pattern pattern = Pattern.compile("(?<a>\\d+)\\*(?<b>\\d+)");
             Matcher matcher = pattern.matcher(polynomial);
             while (matcher.find()) {
@@ -51,7 +51,7 @@ public class Ex236 {
             return result;
         }
 
-        private int calculate() {
+        public int calculate() {
             polynomial = polynomial.replace("x", String.valueOf(x));
             polynomial = pow();
             polynomial = multiply();
@@ -59,7 +59,7 @@ public class Ex236 {
         }
 
         public boolean isValid() {
-            return Pattern.compile("(-?\\d+)((\\+|\\-|\\*)(([0-9]|[0-9][0-9]|(100))\\*|(x\\^[1-4]|x|[0-9]|[0-9][0-9]|(100)))*)*")
+            return Pattern.compile("(-?\\d+)((\\+|\\-|\\*)(([0-9]|[0-9][0-9]|(100))\\*|(x\\^[1-4]|\\d+\\^|x|[0-9]|[0-9][0-9]|(100)))*)*")
                     .matcher(polynomial).matches() &&
                     x <= 100 &&
                     polynomial.length() > 0 && polynomial.length() <= 80;
@@ -70,7 +70,7 @@ public class Ex236 {
         Scanner in = new Scanner(System.in);
         PrintWriter out = new PrintWriter(System.out);
 
-        String polynomial = in.nextLine();
+        String polynomial = in.nextLine().replace(" ", "");
         int x = in.nextInt();
 
         EquationSolver equationSolver = new EquationSolver(polynomial, x);
