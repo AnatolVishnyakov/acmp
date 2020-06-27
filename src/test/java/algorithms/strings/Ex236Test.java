@@ -6,6 +6,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 import java.util.Arrays;
 
 import static org.junit.Assert.assertEquals;
+import static org.junit.Assert.assertTrue;
 
 class Ex236Test {
     public static Iterable<Object[]> testDataCalculate() {
@@ -35,8 +36,11 @@ class Ex236Test {
                 {"x-5", 0, -5},
                 {"x^2-x^2", 2, 0},
                 {"2*x-2*x", 99, 0},
+                {"-2", 0, -2},
+                {"-2*x", 1, -2},
+                {"-2*x^3", 1, -2},
+                {"x^3", 1, 1},
                 {"2*x-2*x+1+2*x-2*x+1+2*x-2*x+1+2*x-2*x+1+2*x-2*x+1+2*x-2*x+1+2*x-2*x+1+2*x-2*x+12", 0, 19},
-                {"2*x-2*x+1+2*x-2*x+1+2*x-2*x+1+2*x-2*x+1+2*x-2*x+1+2*x-2*x+1+2*x-2*x+1+2*x-2*x+123", 0, 19}
         });
     }
 
@@ -44,6 +48,7 @@ class Ex236Test {
     @MethodSource("testDataCalculate")
     public void testCalculate(String expression, int x, int expected) {
         Ex236.EquationSolver handler = new Ex236.EquationSolver(expression, x);
+        assertTrue(handler.isValid());
         assertEquals(expected, handler.calculate());
     }
 }

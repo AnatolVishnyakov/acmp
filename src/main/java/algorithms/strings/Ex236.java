@@ -42,7 +42,7 @@ public class Ex236 {
         }
 
         private int sum() {
-            Pattern pattern = Pattern.compile("(?<number>(-)?\\d+)");
+            Pattern pattern = Pattern.compile("(?<number>([-+])?\\d+)");
             Matcher matcher = pattern.matcher(polynomial);
             int result = 0;
             while (matcher.find()) {
@@ -59,10 +59,8 @@ public class Ex236 {
         }
 
         public boolean isValid() {
-            return Pattern.compile("(-?\\d+)((\\+|\\-|\\*)(([0-9]|[0-9][0-9]|(100))\\*|(x\\^[1-4]|\\d+\\^|x|[0-9]|[0-9][0-9]|(100)))*)*")
-                    .matcher(polynomial).matches() &&
-                    x <= 100 &&
-                    polynomial.length() > 0 && polynomial.length() <= 80;
+            return Pattern.compile("(-?\\d+|x)(([+\\-^*])(([0-9]|[0-9][0-9]|(100))\\*|(x\\^[1-4]|\\d+\\^|x|[0-9]|[0-9][0-9]|(100)))*)*")
+                    .matcher(polynomial).matches() && polynomial.contains("x") && x <= 100 && polynomial.length() <= 80;
         }
     }
 
