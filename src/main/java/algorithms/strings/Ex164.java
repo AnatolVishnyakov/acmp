@@ -24,6 +24,7 @@ class Ticket {
         if(number.length() == 1 || number.length() == 0){
             return false;
         }
+
         if(number.length() == 2){
             // итого: осталось два элемента
             return number.charAt(0) == number.charAt(1);
@@ -32,10 +33,7 @@ class Ticket {
         if(check(sumRight(number))){
             return true;
         }
-        if(check(sumLeft(number))){
-            return true;
-        }
-        return false;
+        return check(sumLeft(number));
     }
 
     public static boolean isHappy(String number) {
@@ -54,7 +52,7 @@ public class Ex164 {
     }
 
     public static boolean isValid(String number){
-        return number.length() >= 1 && number.length() <= 100;
+        return number.length() > 1 && number.length() <= 100;
     }
 
     public static void main(String[] args) {
