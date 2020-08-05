@@ -1,30 +1,33 @@
 package algorithms.strings;
 
 import java.io.PrintWriter;
+import java.util.Arrays;
 import java.util.Scanner;
 
 public class Ex204 {
     public static class StringHandler {
         private static final int MAX_LENGTH = 50_000;
         private String text;
-        private final int M;
-        private final int R;
-        private int[][] dfa;
 
         public StringHandler(String text) {
             this.text = text;
-            M = text.length();
-            R = 256;
+        }
 
-            dfa = new int[R][M];
-            dfa[text.charAt(0)][0] = 1;
-            for (int X = 0, j = 1; j < M; j++) {
-                for (int c = 0; c < R; c++) {
-                    dfa[c][j] = dfa[c][X];
-                }
-                dfa[text.charAt(j)][j] = j + 1;
-                X = dfa[text.charAt(j)][X];
+        private static int[] prefixFunction(String text) {
+            int n = text.length();
+            int[] pi = new int[n];
+            for (int i = 1; i < n; ++i) {
+                int j = pi[i - 1];
+                while ((j > 0) && (text.charAt(i) != text.charAt(j)))
+                    j = pi[j - 1];
+
+                if (text.charAt(i) == text.charAt(j))
+                    ++j;
+
+                pi[i] = j;
             }
+
+            return pi;
         }
 
         public boolean isValidString() {
@@ -33,20 +36,15 @@ public class Ex204 {
         }
 
         public int process() {
-            int count = 0;
-            boolean isAllZero = true;
-            for (int i = 0; i < R; i++, isAllZero = true) {
-                for (int j = 0; j < M; j++) {
-                    if (dfa[i][j] != 0) {
-                        isAllZero = false;
-                        break;
-                    }
-                }
-                if (!isAllZero) {
-                    count++;
-                }
-            }
+            String t = text;
+            int[] weight = prefixFunction(t);
+            System.out.println(
+                    Arrays.toString(t.toString().toCharArray()).replace(",", "")
+                            + "\n" + Arrays.toString(weight).replace(",", "") + "\n");
 
+            int count = (int) Arrays.stream(weight)
+                    .filter(value -> value == 0)
+                    .count();
             return count;
         }
     }
