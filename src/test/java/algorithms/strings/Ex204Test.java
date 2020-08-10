@@ -1,6 +1,5 @@
 package algorithms.strings;
 
-import algorithms.StringSearch;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.MethodSource;
 
@@ -34,8 +33,6 @@ public class Ex204Test {
     @ParameterizedTest(name = "[{index}]: {0} -> {1}")
     @MethodSource("testDataSuccess")
     public void testSuccess(String text, int expected) {
-        StringSearch.KMP kmp = new StringSearch.KMP(text);
-        kmp.printDKA();
         Ex204.StringHandler handler = new Ex204.StringHandler(text);
         assertEquals(expected, handler.process());
     }
