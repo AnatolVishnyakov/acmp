@@ -38,7 +38,13 @@ import static java.lang.Math.min;
  */
 public class Ex249 {
     public static int countNumberBrackets(String s) {
-        int[][] count = new int[s.length()][s.length()];
+        int n = s.length();
+        int[][] count = new int[n][n];
+
+        for (int i = 0; i < n; i++) {
+            Arrays.fill(count[i], 101);
+        }
+
         for (int len = 1; len <= s.length(); len++) {
             for (int left = 0; left + len - 1 < s.length(); left++) {
                 int right = left + len - 1;
