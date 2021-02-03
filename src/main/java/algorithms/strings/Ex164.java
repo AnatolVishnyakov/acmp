@@ -48,7 +48,7 @@ public class Ex164 {
     private static final String NO = "NO";
 
     public static boolean isHappyTicket(String number){
-        return Ticket.isHappy(number.replaceAll("0", ""));
+        return Ticket.isHappy(number);
     }
 
     public static boolean isValid(String number){
