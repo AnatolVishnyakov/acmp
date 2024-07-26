@@ -5,7 +5,7 @@ import org.junit.jupiter.params.provider.MethodSource;
 
 import java.util.Arrays;
 
-import static org.junit.Assert.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertEquals;
 
 public class Ex203Test {
     private Ex203.ShiftIdentifier shiftIdentifier = new Ex203.ShiftIdentifier();

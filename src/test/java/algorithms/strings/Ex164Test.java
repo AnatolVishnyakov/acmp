@@ -1,9 +1,10 @@
 package algorithms.strings;
 
-import org.junit.Test;
+import org.junit.jupiter.api.Test;
 
-import static org.junit.Assert.*;
 import static algorithms.strings.Ex164.isHappyTicket;
+import static org.junit.jupiter.api.Assertions.assertFalse;
+import static org.junit.jupiter.api.Assertions.assertTrue;
 
 
 public class Ex164Test {

@@ -1,8 +1,8 @@
 package test.java.strings;
 
 import main.java.strings.Ex93;
-import org.junit.Assert;
-import org.junit.Test;
+import static org.junit.jupiter.api.Assertions.*;
+import org.junit.jupiter.api.Test;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
@@ -17,19 +17,19 @@ public class Ex93Test {
         method.setAccessible(true);
 
         boolean result = (boolean) method.invoke(Ex93.class, "ZEUS".toCharArray(), "ZEVS".toCharArray());
-        Assert.assertTrue(result);
+        assertTrue(result);
 
         result = (boolean) method.invoke(Ex93.class, "POSEIDON".toCharArray(), "POSEYDON".toCharArray());
-        Assert.assertTrue(result);
+        assertTrue(result);
 
         result = (boolean) method.invoke(Ex93.class, "ZEUS".toCharArray(), "ZERS".toCharArray());
-        Assert.assertTrue(result);
+        assertTrue(result);
 
         result = (boolean) method.invoke(Ex93.class, "AFINA".toCharArray(), "AVYNA".toCharArray());
-        Assert.assertFalse(result);
+        assertFalse(result);
 
         result = (boolean) method.invoke(Ex93.class, "ZEUS".toCharArray(), "POSEIDON".toCharArray());
-        Assert.assertFalse(result);
+        assertFalse(result);
     }
 
     @Test
@@ -46,7 +46,7 @@ public class Ex93Test {
         }};
 
         String actual = (String) method.invoke(Ex93.class, correct, inCorrect);
-        Assert.assertEquals("2 1 0", actual);
+        assertEquals("2 1 0", actual);
 
         correct.clear();
         correct.add("A");
@@ -59,6 +59,6 @@ public class Ex93Test {
         inCorrect.add("R");
 
         actual = (String) method.invoke(Ex93.class, correct, inCorrect);
-        Assert.assertEquals("3 3 3", actual);
+        assertEquals("3 3 3", actual);
     }
 }
