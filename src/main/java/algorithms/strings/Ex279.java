@@ -38,6 +38,9 @@ public class Ex279 {
                     return -1;
             }
         }
+        if (!queue.isEmpty()) {
+            return -1;
+        }
         return magicAttempts;
     }
 
