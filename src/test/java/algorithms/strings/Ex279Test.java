@@ -20,7 +20,8 @@ class Ex279Test {
             "{}{}{}{}{}{}",
             "{)",
             "[}",
-            "(]"
+            "(]",
+            "([})"
     })
     void correct(String input) {
         Assertions.assertTrue(ex279.check(input));
@@ -28,9 +29,9 @@ class Ex279Test {
 
     @ParameterizedTest
     @ValueSource(strings = {
-            "{)",
-            "[}",
-            "(]"
+            "{))",
+            "[}}",
+            "(]]"
     })
     void incorrect(String input) {
         Assertions.assertFalse(ex279.check(input));

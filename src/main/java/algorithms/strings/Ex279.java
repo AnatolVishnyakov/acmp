@@ -19,24 +19,28 @@ public class Ex279 {
                     continue;
                 case '}':
                     if (queue.isEmpty()) return false;
-                    if (queue.peekLast() == '{') {
+                    if (queue.peekLast() == '{' || magicAttempts == 1) {
                         queue.pollLast();
+                        magicAttempts--;
                     }
                     continue;
                 case ']':
                     if (queue.isEmpty()) return false;
-                    if (queue.peekLast() == '[') {
+                    if (queue.peekLast() == '[' || magicAttempts == 1) {
                         queue.pollLast();
+                        magicAttempts--;
                     }
                     continue;
                 case ')': {
                     if (queue.isEmpty()) return false;
-                    if (queue.peekLast() == '(') {
+                    if (queue.peekLast() == '(' || magicAttempts == 1) {
                         queue.pollLast();
+                        magicAttempts--;
                     }
                     continue;
                 }
-
+                default:
+                    return false;
             }
         }
         return queue.isEmpty();
