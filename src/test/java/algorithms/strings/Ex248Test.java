@@ -16,8 +16,9 @@ class Ex248Test {
                     "ci:s",
                     "ce:s",
                     "ck:''",
-                    "success:suksess",
+                    "c:k",
                     "cck:kk",
+                    "success:suksess",
             },
             delimiter = ':')
     void correct(String input, String expected) {

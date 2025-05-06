@@ -40,31 +40,56 @@ import java.util.stream.Collectors;
 //    пробелы между словами и знаками препинания должны остаться там и только там, где они были в исходной строке, в начале и в конце строки пробелов быть не должно.
 public class Ex248 {
 
-    // Первоочередной задачей будет избавление от буквы c,
+    // 1. Первоочередной задачей будет избавление от буквы c,
     // которая в сочетаниях сi и сe будет изменяться на s,
     // в сочетании ck — опускаться, а в остальных случаях заменяться на k.
     // При этом все замены будут производиться в строгом порядке слева направо.
     // То есть, например, в слове success сначала первая из двух букв c заменится на k, а затем вторая — на s, т
     // о есть получится suksess. А слово cck превратится в kk.
     //
-    // ci/ce -> s
-    // ck -> null
-    // c -> k
-    // success -> suksess (c -> k, c -> s)
-    // cck -> kk
-
+    //
+    // TODO 1. Избавление от буквы "с"
+    //  ci/ce -> s
+    //  ck -> ''
+    //  c -> k
+    //  cck -> kk
+    //  success -> suksess (c -> k, c -> s)
     public static String doEuroEnglish(String str) {
-        LinkedList<Character> sb = new LinkedList<Character>();
+        LinkedList<Character> sb = new LinkedList<>();
         for (int i = 0; i < str.length(); i++) {
             switch (str.charAt(i)) {
                 case 'i':
                 case 'e': {
                     if (sb.getLast() == 'c') {
                         sb.removeLast();
-                        sb.add('s');
+                        sb.addLast('s');
+                    } else {
+                        sb.addLast(str.charAt(i));
                     }
+                    continue;
                 }
-                default: sb.addLast(str.charAt(i));
+                case 'k': {
+                    if (sb.getLast() == 'c') {
+                        sb.removeLast();
+                    }
+                    continue;
+                }
+                case 'c': {
+                    if (i + 1 < str.length()) {
+                        if (str.charAt(i + 1) == 'c') {
+                            sb.addLast('k');
+                        } else if (str.charAt(i + 1) != 'i' && str.charAt(i + 1) != 'e' && str.charAt(i + 1) != 'k') {
+                            sb.addLast('k');
+                        } else {
+                            sb.addLast('c');
+                        }
+                    } else {
+                        sb.addLast('k');
+                    }
+                    continue;
+                }
+                default:
+                    sb.addFirst(str.charAt(i));
             }
         }
         return sb.stream()
