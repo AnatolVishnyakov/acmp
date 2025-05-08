@@ -19,6 +19,9 @@ package algorithms.strings;
 // В начале и в конце строки не может стоять пробел. Слова отделяются друг от друга
 // пробелами и/или знаками препинания.
 
+import java.io.PrintWriter;
+import java.util.Scanner;
+
 // Выходные данные
 //
 // В выходной файл OUTPUT.TXT нужно выдать преобразованную строку при ограничениях:
@@ -93,5 +96,11 @@ public class Ex248 {
     }
 
     public static void main(String[] args) {
+        Scanner in = new Scanner(System.in);
+        PrintWriter out = new PrintWriter(System.out);
+
+        out.print(doEuroEnglish(in.next()));
+
+        out.flush();
     }
 }
