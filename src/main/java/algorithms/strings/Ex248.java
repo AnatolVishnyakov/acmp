@@ -1,11 +1,5 @@
 package algorithms.strings;
 
-// Наконец, завершением реформы станет отмена артиклей (в английском языке три артикля: а, an и the).
-// При этом удаляться эти артикли будут только тогда, когда они в исходном тексте были словами a, an, the.
-// То есть, например, текст the table после реформ первых трех лет превратиться в th tabl,
-// а после реформы четвертого года — просто в tabl. А слово aaaaa после реформы первых лет станет словом a,
-// но поскольку изначально оно не было словом a (артиклем), то оно в итоге так и останется словом a.
-//
 //Напишите программу, которая будет переводить классический английский текст на Eвроинглиш.
 
 // Входные данные
@@ -31,17 +25,16 @@ import java.util.Scanner;
 //    пробелы между словами и знаками препинания должны остаться там и только там, где они были в исходной строке, в начале и в конце строки пробелов быть не должно.
 public class Ex248 {
 
-    // На третий год на конце слова станут опускать букву е,
-    // если она не единственная буква в слове.
     public static String doEuroEnglish(String str) {
         StringBuilder sb = new StringBuilder(str);
         for (int i = 0; i < sb.length(); i++) {
             switch (sb.charAt(i)) {
+                case 'C':
                 case 'c': {
                     if (i + 1 < sb.length()) {
                         char nextChar = sb.charAt(i + 1);
                         if (nextChar == 'i' || nextChar == 'e') {
-                            sb.setCharAt(i, 's');
+                            sb.setCharAt(i, (char) getCorrectCase(sb.charAt(i), i));
                             continue;
                         } else if (nextChar == 'k') {
                             sb.deleteCharAt(i);
@@ -93,6 +86,10 @@ public class Ex248 {
             }
         }
         return sb.toString();
+    }
+
+    private static int getCorrectCase(char symb, int i) {
+        return (int) symb + ((int) 's' - (int) 'a') - 2;
     }
 
     public static void main(String[] args) {

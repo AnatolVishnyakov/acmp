@@ -90,4 +90,27 @@ class Ex248Test {
     void correct03(String input, String expected) {
         Assertions.assertEquals(expected, Ex248.doEuroEnglish(input));
     }
+
+    // Наконец, завершением реформы станет отмена артиклей (в английском языке три артикля: а, an и the).
+    // При этом удаляться эти артикли будут только тогда, когда они в исходном тексте были словами a, an, the.
+    // То есть, например, текст the table после реформ первых трех лет превратиться в th tabl,
+    // а после реформы четвертого года — просто в tabl. А слово aaaaa после реформы первых лет станет словом a,
+    // но поскольку изначально оно не было словом a (артиклем), то оно в итоге так и останется словом a.
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "the table:th tabl",
+                    "cacao and coffee:kakao and kofi",
+                    "Cinderella! Where Is The Dress???:Sinderela! Wher Is Dres???",
+                    "'A' is a letter:rela! Wher Is Dres???:'' is leter",
+                    "!!!Hello!!!A-the-\"word\":!!!Helo!!!--\"word\"",
+                    "Aaaa then the ckckck:A then k",
+                    "\"A\"-the an:\"\"-",
+                    "A the an:",
+                    "success:sukses",
+            },
+            delimiter = ':')
+    void common(String input, String expected) {
+        Assertions.assertEquals(expected, Ex248.doEuroEnglish(input));
+    }
 }
