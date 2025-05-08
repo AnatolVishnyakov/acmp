@@ -1,21 +1,17 @@
 package algorithms.strings;
 
 import org.junit.jupiter.api.Assertions;
-import org.junit.jupiter.api.Test;
 import org.junit.jupiter.params.ParameterizedTest;
 import org.junit.jupiter.params.provider.CsvSource;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class Ex248Test {
 
     @ParameterizedTest
     @CsvSource(
             value = {
-//                    "cacao and coffee:kakao and kofi"
-                    "ci:s",
-                    "ce:s",
-                    "ck:''",
+                    "ci:si",
+                    "ce:se",
+                    "ck:k",
                     "c:k",
                     "cck:kk",
                     "success:suksess",
