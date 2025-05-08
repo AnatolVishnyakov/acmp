@@ -6,6 +6,12 @@ import org.junit.jupiter.params.provider.CsvSource;
 
 class Ex248Test {
 
+    // Первоочередной задачей будет избавление от буквы c,
+    // которая в сочетаниях сi и сe будет изменяться на s,
+    // в сочетании ck — опускаться, а в остальных случаях заменяться на k.
+    // При этом все замены будут производиться в строгом порядке слева направо.
+    // То есть, например, в слове success сначала первая из двух букв c заменится на k,
+    // а затем вторая — на s, то есть получится suksess. А слово cck превратится в kk.
     @ParameterizedTest
     @CsvSource(
             value = {
@@ -33,6 +39,7 @@ class Ex248Test {
                     "oo:u",
                     "ooo:uo",
                     "oou:u",
+                    "eea:ia",
             },
             delimiter = ':')
     void correct021(String input, String expected) {

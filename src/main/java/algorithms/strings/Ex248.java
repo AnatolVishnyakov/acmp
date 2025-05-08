@@ -23,9 +23,6 @@ package algorithms.strings;
 // В начале и в конце строки не может стоять пробел. Слова отделяются друг от друга
 // пробелами и/или знаками препинания.
 
-import java.util.LinkedList;
-import java.util.stream.Collectors;
-
 // Выходные данные
 //
 // В выходной файл OUTPUT.TXT нужно выдать преобразованную строку при ограничениях:
@@ -41,59 +38,56 @@ public class Ex248 {
     // Так, слово ooo превратится в uo, а oou — просто в u (в нем сначала oo заменится на u, а затем uu — на u),
     // слово iee превратится в i (в нем сначала ee заменится на i, а затем ii — на i).
     public static String doEuroEnglish(String str) {
-        LinkedList<Character> sb = new LinkedList<>();
-        for (int i = 0; i < str.length(); i++) {
-            switch (str.charAt(i)) {
+        StringBuilder sb = new StringBuilder(str);
+        for (int i = 0; i < sb.length(); i++) {
+            switch (sb.charAt(i)) {
                 case 'c': {
-                    if (i + 1 < str.length()) {
-                        char nextChar = str.charAt(i + 1);
+                    if (i + 1 < sb.length()) {
+                        char nextChar = sb.charAt(i + 1);
                         if (nextChar == 'i' || nextChar == 'e') {
-                            sb.addLast('s');
+                            sb.setCharAt(i, 's');
                             continue;
                         } else if (nextChar == 'k') {
-                            sb.addLast('k');
-                            i++;
+                            sb.deleteCharAt(i);
                             continue;
                         }
                     }
-                    sb.addLast('k');
+                    sb.setCharAt(i, 'k');
                     continue;
                 }
                 case 'e': {
-                    if (i + 1 < str.length()) {
-                        char nextChar = str.charAt(i + 1);
+                    if (i + 1 < sb.length()) {
+                        char nextChar = sb.charAt(i + 1);
                         if (nextChar == 'e') {
-                            sb.addLast('i');
-                            i++;
+                            sb.setCharAt(i, 'i');
+                            sb.deleteCharAt(i + 1);
+                            i--;
                             continue;
                         }
                     }
                 }
                 case 'o': {
-                    if (i + 1 < str.length()) {
-                        char nextChar = str.charAt(i + 1);
+                    if (i + 1 < sb.length()) {
+                        char nextChar = sb.charAt(i + 1);
                         if (nextChar == 'o') {
-                            sb.addLast('u');
-                            i++;
+                            sb.setCharAt(i, 'u');
+                            sb.deleteCharAt(i + 1);
+                            i--;
                             continue;
                         }
                     }
                 }
                 default:
-                    if (i + 1 < str.length()) {
-                        char nextChar = str.charAt(i + 1);
-                        if (nextChar == str.charAt(i)) {
-                            sb.addLast(str.charAt(i));
-                            i++;
-                            continue;
+                    if (i + 1 < sb.length()) {
+                        char nextChar = sb.charAt(i + 1);
+                        if (nextChar == sb.charAt(i)) {
+                            sb.deleteCharAt(i);
+                            i--;
                         }
                     }
-                    sb.addLast(str.charAt(i));
             }
         }
-        return sb.stream()
-                .map(Object::toString)
-                .collect(Collectors.joining());
+        return sb.toString();
     }
 
     public static void main(String[] args) {
