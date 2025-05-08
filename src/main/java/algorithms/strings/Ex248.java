@@ -1,10 +1,5 @@
 package algorithms.strings;
 
-// На второй год из английских слов изымут все удвоенные буквы: ee изменят на i, oo - на u,
-// a в остальных комбинациях будут просто писать одну букву вместо двух одинаковых.
-// Такие замены также будут делать строго в порядке слева направо.
-// Так, слово ooo превратится в uo, а oou — просто в u (в нем сначала oo заменится на u, а затем uu — на u),
-// слово iee превратится в i (в нем сначала ee заменится на i, а затем ii — на i).
 //
 // На третий год на конце слова станут опускать букву е,
 // если она не единственная буква в слове.
@@ -39,12 +34,17 @@ import java.util.stream.Collectors;
 //    не должно встречаться двух пробелов подряд;
 //    пробелы между словами и знаками препинания должны остаться там и только там, где они были в исходной строке, в начале и в конце строки пробелов быть не должно.
 public class Ex248 {
+
+    // На второй год из английских слов изымут все удвоенные буквы: ee изменят на i, oo - на u,
+    // a в остальных комбинациях будут просто писать одну букву вместо двух одинаковых.
+    // Такие замены также будут делать строго в порядке слева направо.
+    // Так, слово ooo превратится в uo, а oou — просто в u (в нем сначала oo заменится на u, а затем uu — на u),
+    // слово iee превратится в i (в нем сначала ee заменится на i, а затем ii — на i).
     public static String doEuroEnglish(String str) {
         LinkedList<Character> sb = new LinkedList<>();
         for (int i = 0; i < str.length(); i++) {
             switch (str.charAt(i)) {
                 case 'c': {
-                    // cck -> kck
                     if (i + 1 < str.length()) {
                         char nextChar = str.charAt(i + 1);
                         if (nextChar == 'i' || nextChar == 'e') {
@@ -59,7 +59,35 @@ public class Ex248 {
                     sb.addLast('k');
                     continue;
                 }
+                case 'e': {
+                    if (i + 1 < str.length()) {
+                        char nextChar = str.charAt(i + 1);
+                        if (nextChar == 'e') {
+                            sb.addLast('i');
+                            i++;
+                            continue;
+                        }
+                    }
+                }
+                case 'o': {
+                    if (i + 1 < str.length()) {
+                        char nextChar = str.charAt(i + 1);
+                        if (nextChar == 'o') {
+                            sb.addLast('u');
+                            i++;
+                            continue;
+                        }
+                    }
+                }
                 default:
+                    if (i + 1 < str.length()) {
+                        char nextChar = str.charAt(i + 1);
+                        if (nextChar == str.charAt(i)) {
+                            sb.addLast(str.charAt(i));
+                            i++;
+                            continue;
+                        }
+                    }
                     sb.addLast(str.charAt(i));
             }
         }

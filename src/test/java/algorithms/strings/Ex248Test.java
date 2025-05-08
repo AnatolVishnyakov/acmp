@@ -14,10 +14,60 @@ class Ex248Test {
                     "ck:k",
                     "c:k",
                     "cck:kk",
-                    "success:suksess",
+                    "success:sukses",
             },
             delimiter = ':')
-    void correct(String input, String expected) {
+    void correct01(String input, String expected) {
+        Assertions.assertEquals(expected, Ex248.doEuroEnglish(input));
+    }
+
+    // На второй год из английских слов изымут все удвоенные буквы: ee изменят на i, oo - на u,
+    // a в остальных комбинациях будут просто писать одну букву вместо двух одинаковых.
+    // Такие замены также будут делать строго в порядке слева направо.
+    // Так, слово ooo превратится в uo, а oou — просто в u (в нем сначала oo заменится на u, а затем uu — на u),
+    // слово iee превратится в i (в нем сначала ee заменится на i, а затем ii — на i).
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "ee:i",
+                    "oo:u",
+                    "ooo:uo",
+                    "oou:u",
+            },
+            delimiter = ':')
+    void correct021(String input, String expected) {
+        Assertions.assertEquals(expected, Ex248.doEuroEnglish(input));
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "aa:a",
+                    "bb:b",
+                    "dd:d",
+                    "ff:f",
+                    "gg:g",
+                    "hh:h",
+                    "ii:i",
+                    "jj:j",
+                    "kk:k",
+                    "ll:l",
+                    "mm:m",
+                    "nn:n",
+                    "pp:p",
+                    "qq:q",
+                    "rr:r",
+                    "ss:s",
+                    "tt:t",
+                    "uu:u",
+                    "vv:v",
+                    "ww:w",
+                    "xx:x",
+                    "yy:y",
+                    "zz:z",
+            },
+            delimiter = ':')
+    void correct022(String input, String expected) {
         Assertions.assertEquals(expected, Ex248.doEuroEnglish(input));
     }
 }
