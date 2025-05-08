@@ -16,7 +16,7 @@ class Ex248Test {
     @CsvSource(
             value = {
                     "ci:si",
-                    "ce:se",
+                    "ce:s",
                     "ck:k",
                     "c:k",
                     "cck:kk",
@@ -75,6 +75,19 @@ class Ex248Test {
             },
             delimiter = ':')
     void correct022(String input, String expected) {
+        Assertions.assertEquals(expected, Ex248.doEuroEnglish(input));
+    }
+
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "circle:sirkl",
+                    "cake:kak",
+                    "e:e",
+                    "ce:s",
+            },
+            delimiter = ':')
+    void correct03(String input, String expected) {
         Assertions.assertEquals(expected, Ex248.doEuroEnglish(input));
     }
 }
