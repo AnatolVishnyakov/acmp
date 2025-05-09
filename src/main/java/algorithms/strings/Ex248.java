@@ -39,12 +39,22 @@ public class Ex248 {
                             }
                             i--;
                         }
+                        if (getSymbol(sb, i + 1) == 'n' && isNotSymbol(getSymbol(sb, i + 2))) {
+                            sb.deleteCharAt(i);
+                            sb.deleteCharAt(i);
+                            i -= 2;
+                        }
                     } else {
                         if (i + 1 < sb.length()) {
                             char nextChar = sb.charAt(i + 1);
-                            if (nextChar == sb.charAt(i)) {
-                                sb.deleteCharAt(i);
+                            if (nextChar == sb.charAt(i) || 'a' == nextChar) {
+                                sb.deleteCharAt(i + 1);
+                                i--;
                             }
+//                            if (getSymbol(sb, i + 1) == ' ') {
+//                                sb.deleteCharAt(i);
+//                                i--;
+//                            }
                         }
                     }
                     continue;
@@ -58,7 +68,7 @@ public class Ex248 {
                             continue;
                         } else if (nextChar == 'k') {
                             sb.deleteCharAt(i);
-                            i--;
+                            i -= 2;
                             continue;
                         }
                     }

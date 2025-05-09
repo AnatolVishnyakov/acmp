@@ -106,7 +106,7 @@ class Ex248Test {
                     "!!!Hello!!!A-the-\"word\":!!!Helo!!!--\"word\"",
                     "Aaaa then the ckckck:A then k",
                     "\"A\"-the an:\"\"-",
-                    "A the an:",
+                    "A the an: ",
                     "success:sukses",
             },
             delimiter = ':')
