@@ -38,6 +38,7 @@ public class Ex248 {
                             continue;
                         } else if (nextChar == 'k') {
                             sb.deleteCharAt(i);
+                            i--;
                             continue;
                         }
                     }
@@ -56,12 +57,14 @@ public class Ex248 {
                         }
                         if (nextChar == ' ') {
                             sb.deleteCharAt(i);
+                            i--;
                             continue;
                         }
                         continue;
                     }
                     if (sb.length() > 1) {
                         sb.deleteCharAt(i);
+                        i--;
                     }
                     continue;
                 }
@@ -75,6 +78,15 @@ public class Ex248 {
                             i--;
                             continue;
                         }
+                    }
+                }
+                case 't': {
+                    if (next(sb, i + 1) == 'h' && next(sb, i + 2) == ' ') {
+                        sb.deleteCharAt(i);
+                        sb.deleteCharAt(i);
+                        sb.deleteCharAt(i);
+                        i--;
+                        continue;
                     }
                 }
                 default:
@@ -96,6 +108,13 @@ public class Ex248 {
             return (char) ('A' + ind);
         }
         return ch;
+    }
+
+    private static char next(StringBuilder sb, int index) {
+        if (index >= sb.length()) {
+            return '0';
+        }
+        return sb.charAt(index);
     }
 
     public static void main(String[] args) {

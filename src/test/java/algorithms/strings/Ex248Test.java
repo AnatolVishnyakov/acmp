@@ -99,7 +99,7 @@ class Ex248Test {
     @ParameterizedTest
     @CsvSource(
             value = {
-                    "the table:th tabl",
+                    "the table:tabl",
                     "cacao and coffee:kakao and kofi",
                     "Cinderella! Where Is The Dress???:Sinderela! Wher Is Dres???",
                     "'A' is a letter:rela! Wher Is Dres???:'' is leter",
