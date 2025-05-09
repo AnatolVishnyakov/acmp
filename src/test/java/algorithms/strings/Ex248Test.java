@@ -113,4 +113,17 @@ class Ex248Test {
     void common(String input, String expected) {
         Assertions.assertEquals(expected, Ex248.doEuroEnglish(input));
     }
+
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "C:K",
+                    "Ee:I",
+                    "Oo:U",
+            },
+            delimiter = ':'
+    )
+    void testSymbolCase(String input, String expected) {
+        Assertions.assertEquals(expected, Ex248.doEuroEnglish(input));
+    }
 }

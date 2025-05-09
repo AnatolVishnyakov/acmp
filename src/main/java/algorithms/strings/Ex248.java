@@ -34,21 +34,22 @@ public class Ex248 {
                     if (i + 1 < sb.length()) {
                         char nextChar = sb.charAt(i + 1);
                         if (nextChar == 'i' || nextChar == 'e') {
-                            sb.setCharAt(i, (char) getCorrectCase(sb.charAt(i), i));
+                            sb.setCharAt(i, getOrConvertCase(sb.charAt(i), 's'));
                             continue;
                         } else if (nextChar == 'k') {
                             sb.deleteCharAt(i);
                             continue;
                         }
                     }
-                    sb.setCharAt(i, 'k');
+                    sb.setCharAt(i, getOrConvertCase(sb.charAt(i), 'k'));
                     continue;
                 }
+                case 'E':
                 case 'e': {
                     if (i + 1 < sb.length()) {
                         char nextChar = sb.charAt(i + 1);
                         if (nextChar == 'e') {
-                            sb.setCharAt(i, 'i');
+                            sb.setCharAt(i, getOrConvertCase(sb.charAt(i), 'i'));
                             sb.deleteCharAt(i + 1);
                             i--;
                             continue;
@@ -64,11 +65,12 @@ public class Ex248 {
                     }
                     continue;
                 }
+                case 'O':
                 case 'o': {
                     if (i + 1 < sb.length()) {
                         char nextChar = sb.charAt(i + 1);
                         if (nextChar == 'o') {
-                            sb.setCharAt(i, 'u');
+                            sb.setCharAt(i, getOrConvertCase(sb.charAt(i), 'u'));
                             sb.deleteCharAt(i + 1);
                             i--;
                             continue;
@@ -88,8 +90,12 @@ public class Ex248 {
         return sb.toString();
     }
 
-    private static int getCorrectCase(char symb, int i) {
-        return (int) symb + ((int) 's' - (int) 'a') - 2;
+    private static char getOrConvertCase(char current, char ch) {
+        if (current >= 'A' && current <= 'Z') {
+            int ind = ch - 'a';
+            return (char) ('A' + ind);
+        }
+        return ch;
     }
 
     public static void main(String[] args) {
