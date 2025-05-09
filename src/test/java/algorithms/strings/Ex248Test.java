@@ -102,7 +102,7 @@ class Ex248Test {
                     "the table:tabl",
                     "cacao and coffee:kakao and kofi",
                     "Cinderella! Where Is The Dress???:Sinderela! Wher Is Dres???",
-                    "'A' is a letter:rela! Wher Is Dres???:'' is leter",
+                    "'A' is a letter:'' is leter",
                     "!!!Hello!!!A-the-\"word\":!!!Helo!!!--\"word\"",
                     "Aaaa then the ckckck:A then k",
                     "\"A\"-the an:\"\"-",

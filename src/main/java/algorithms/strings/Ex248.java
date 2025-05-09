@@ -29,6 +29,26 @@ public class Ex248 {
         StringBuilder sb = new StringBuilder(str);
         for (int i = 0; i < sb.length(); i++) {
             switch (sb.charAt(i)) {
+                case 'A':
+                case 'a': {
+                    if (i - 1 >= 0) {
+                        if (isNotSymbol(getSymbol(sb, i - 1)) && isNotSymbol(getSymbol(sb, i + 1))) {
+                            sb.deleteCharAt(i);
+                            if (getSymbol(sb, i) == ' ') {
+                                sb.deleteCharAt(i);
+                            }
+                            i--;
+                        }
+                    } else {
+                        if (i + 1 < sb.length()) {
+                            char nextChar = sb.charAt(i + 1);
+                            if (nextChar == sb.charAt(i)) {
+                                sb.deleteCharAt(i);
+                            }
+                        }
+                    }
+                    continue;
+                }
                 case 'C':
                 case 'c': {
                     if (i + 1 < sb.length()) {
@@ -82,18 +102,22 @@ public class Ex248 {
                 }
                 case 'T':
                 case 't': {
-                    if ((next(sb, i + 1) == 'h' && next(sb, i + 2) == ' ')) {
+                    if ((getSymbol(sb, i + 1) == 'h' && isNotSymbol(getSymbol(sb, i + 2)))) {
                         sb.deleteCharAt(i);
                         sb.deleteCharAt(i);
-                        sb.deleteCharAt(i);
+                        if (getSymbol(sb, i) == ' ') {
+                            sb.deleteCharAt(i);
+                        }
                         i--;
                         continue;
                     }
-                    if (next(sb, i + 1) == 'h' && next(sb, i + 2) == 'e' && next(sb, i + 3) == ' ') {
+                    if (getSymbol(sb, i + 1) == 'h' && getSymbol(sb, i + 2) == 'e' && isNotSymbol(getSymbol(sb, i + 3))) {
                         sb.deleteCharAt(i);
                         sb.deleteCharAt(i);
                         sb.deleteCharAt(i);
-                        sb.deleteCharAt(i);
+                        if (getSymbol(sb, i) == ' ') {
+                            sb.deleteCharAt(i);
+                        }
                         i--;
                         continue;
                     }
@@ -122,11 +146,15 @@ public class Ex248 {
         return ch;
     }
 
-    private static char next(StringBuilder sb, int index) {
+    private static char getSymbol(StringBuilder sb, int index) {
         if (index >= sb.length()) {
             return '0';
         }
         return sb.charAt(index);
+    }
+
+    private static boolean isNotSymbol(char c) {
+        return !(c >= 'a' && c <= 'z') && !(c >= 'A' && c <= 'Z');
     }
 
     public static void main(String[] args) {
