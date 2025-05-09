@@ -80,8 +80,17 @@ public class Ex248 {
                         }
                     }
                 }
+                case 'T':
                 case 't': {
-                    if (next(sb, i + 1) == 'h' && next(sb, i + 2) == ' ') {
+                    if ((next(sb, i + 1) == 'h' && next(sb, i + 2) == ' ')) {
+                        sb.deleteCharAt(i);
+                        sb.deleteCharAt(i);
+                        sb.deleteCharAt(i);
+                        i--;
+                        continue;
+                    }
+                    if (next(sb, i + 1) == 'h' && next(sb, i + 2) == 'e' && next(sb, i + 3) == ' ') {
+                        sb.deleteCharAt(i);
                         sb.deleteCharAt(i);
                         sb.deleteCharAt(i);
                         sb.deleteCharAt(i);
@@ -90,6 +99,9 @@ public class Ex248 {
                     }
                 }
                 default:
+                    if (!(sb.charAt(i) >= 'a' && sb.charAt(i) <= 'z') && !(sb.charAt(i) >= 'A' && sb.charAt(i) <= 'Z')) {
+                        continue;
+                    }
                     if (i + 1 < sb.length()) {
                         char nextChar = sb.charAt(i + 1);
                         if (nextChar == sb.charAt(i)) {
