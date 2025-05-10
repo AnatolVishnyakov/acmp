@@ -26,85 +26,106 @@ import java.util.Scanner;
 public class Ex248 {
 
     public static String doEuroEnglish(String str) {
-        StringBuilder sb = new StringBuilder(str);
-        for (int i = 0; i < sb.length(); i++) {
-            switch (sb.charAt(i)) {
+        String[] words = str.split(" ");
+        StringBuilder sb = new StringBuilder();
+        for (String word : words) {
+            String res = textReformat(new StringBuilder(word));
+            if (res != null && !res.isEmpty() && !res.equals(" ")) {
+                sb.append(res);
+                sb.append(" ");
+            }
+        }
+        if (sb.length() > 0) {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+        if (sb.length() == 0) {
+            return null;
+        }
+        return sb.toString();
+    }
+
+    private static String textReformat(StringBuilder word) {
+        String w = word.toString();
+        if (w.equalsIgnoreCase("a") ||
+                w.equalsIgnoreCase("an") ||
+                w.equalsIgnoreCase("the")
+        ) {
+            return null;
+        }
+        for (int i = 0; i < word.length(); i++) {
+            switch (word.charAt(i)) {
                 case 'A':
                 case 'a': {
                     if (i - 1 >= 0) {
-                        if (isNotSymbol(getSymbol(sb, i - 1)) && isNotSymbol(getSymbol(sb, i + 1))) {
-                            sb.deleteCharAt(i);
-                            if (getSymbol(sb, i) == ' ') {
-                                sb.deleteCharAt(i);
+                        if (isNotSymbol(getSymbol(word, i - 1)) && isNotSymbol(getSymbol(word, i + 1))) {
+                            word.deleteCharAt(i);
+                            if (getSymbol(word, i) == ' ') {
+                                word.deleteCharAt(i);
                             }
                             i--;
                         }
-                        if (getSymbol(sb, i + 1) == 'n' && isNotSymbol(getSymbol(sb, i + 2))) {
-                            sb.deleteCharAt(i);
-                            sb.deleteCharAt(i);
+                        if (getSymbol(word, i + 1) == 'n' && isNotSymbol(getSymbol(word, i + 2))) {
+                            word.deleteCharAt(i);
+                            word.deleteCharAt(i);
                             i -= 2;
                         }
                     } else {
-                        if (i + 1 < sb.length()) {
-                            char nextChar = sb.charAt(i + 1);
-                            if (nextChar == sb.charAt(i) || 'a' == nextChar) {
-                                sb.deleteCharAt(i + 1);
+                        if (i + 1 < word.length()) {
+                            char nextChar = word.charAt(i + 1);
+                            if (nextChar == word.charAt(i) || 'a' == nextChar) {
+                                word.deleteCharAt(i + 1);
                                 i--;
                             }
-//                            if (getSymbol(sb, i + 1) == ' ') {
-//                                sb.deleteCharAt(i);
-//                                i--;
-//                            }
                         }
                     }
                     continue;
                 }
                 case 'C':
                 case 'c': {
-                    if (i + 1 < sb.length()) {
-                        char nextChar = sb.charAt(i + 1);
+                    if (i + 1 < word.length()) {
+                        char nextChar = word.charAt(i + 1);
                         if (nextChar == 'i' || nextChar == 'e') {
-                            sb.setCharAt(i, getOrConvertCase(sb.charAt(i), 's'));
+                            word.setCharAt(i, getOrConvertCase(word.charAt(i), 's'));
                             continue;
                         } else if (nextChar == 'k') {
-                            sb.deleteCharAt(i);
-                            i -= 2;
+                            word.deleteCharAt(i);
+                            i--;
                             continue;
                         }
                     }
-                    sb.setCharAt(i, getOrConvertCase(sb.charAt(i), 'k'));
+                    word.setCharAt(i, getOrConvertCase(word.charAt(i), 'k'));
                     continue;
                 }
                 case 'E':
                 case 'e': {
-                    if (i + 1 < sb.length()) {
-                        char nextChar = sb.charAt(i + 1);
+                    if (i + 1 < word.length()) {
+                        char nextChar = word.charAt(i + 1);
                         if (nextChar == 'e') {
-                            sb.setCharAt(i, getOrConvertCase(sb.charAt(i), 'i'));
-                            sb.deleteCharAt(i + 1);
+                            word.setCharAt(i, getOrConvertCase(word.charAt(i), 'i'));
+                            word.deleteCharAt(i + 1);
                             i--;
                             continue;
                         }
                         if (nextChar == ' ') {
-                            sb.deleteCharAt(i);
+                            word.deleteCharAt(i);
                             i--;
                             continue;
                         }
                         continue;
                     }
-                    if (sb.length() > 1) {
-                        sb.deleteCharAt(i);
+                    if (word.length() > 1) {
+                        word.deleteCharAt(i);
                         i--;
                     }
                     continue;
                 }
                 case 'O':
                 case 'o': {
-                    if (i + 1 < sb.length()) {
-                        char nextChar = sb.charAt(i + 1);
+                    if (i + 1 < word.length()) {
+                        char nextChar = word.charAt(i + 1);
                         if (nextChar == 'o') {
-                            sb.setCharAt(i, getOrConvertCase(sb.charAt(i), 'u'));
-                            sb.deleteCharAt(i + 1);
+                            word.setCharAt(i, getOrConvertCase(word.charAt(i), 'u'));
+                            word.deleteCharAt(i + 1);
                             i--;
                             continue;
                         }
@@ -112,40 +133,40 @@ public class Ex248 {
                 }
                 case 'T':
                 case 't': {
-                    if ((getSymbol(sb, i + 1) == 'h' && isNotSymbol(getSymbol(sb, i + 2)))) {
-                        sb.deleteCharAt(i);
-                        sb.deleteCharAt(i);
-                        if (getSymbol(sb, i) == ' ') {
-                            sb.deleteCharAt(i);
+                    if ((getSymbol(word, i + 1) == 'h' && isNotSymbol(getSymbol(word, i + 2)))) {
+                        word.deleteCharAt(i);
+                        word.deleteCharAt(i);
+                        if (getSymbol(word, i) == ' ') {
+                            word.deleteCharAt(i);
                         }
                         i--;
                         continue;
                     }
-                    if (getSymbol(sb, i + 1) == 'h' && getSymbol(sb, i + 2) == 'e' && isNotSymbol(getSymbol(sb, i + 3))) {
-                        sb.deleteCharAt(i);
-                        sb.deleteCharAt(i);
-                        sb.deleteCharAt(i);
-                        if (getSymbol(sb, i) == ' ') {
-                            sb.deleteCharAt(i);
+                    if (getSymbol(word, i + 1) == 'h' && getSymbol(word, i + 2) == 'e' && isNotSymbol(getSymbol(word, i + 3))) {
+                        word.deleteCharAt(i);
+                        word.deleteCharAt(i);
+                        word.deleteCharAt(i);
+                        if (getSymbol(word, i) == ' ') {
+                            word.deleteCharAt(i);
                         }
                         i--;
                         continue;
                     }
                 }
                 default:
-                    if (!(sb.charAt(i) >= 'a' && sb.charAt(i) <= 'z') && !(sb.charAt(i) >= 'A' && sb.charAt(i) <= 'Z')) {
+                    if (!(word.charAt(i) >= 'a' && word.charAt(i) <= 'z') && !(word.charAt(i) >= 'A' && word.charAt(i) <= 'Z')) {
                         continue;
                     }
-                    if (i + 1 < sb.length()) {
-                        char nextChar = sb.charAt(i + 1);
-                        if (nextChar == sb.charAt(i)) {
-                            sb.deleteCharAt(i);
+                    if (i + 1 < word.length()) {
+                        char nextChar = word.charAt(i + 1);
+                        if (nextChar == word.charAt(i)) {
+                            word.deleteCharAt(i);
                             i--;
                         }
                     }
             }
         }
-        return sb.toString();
+        return word.toString();
     }
 
     private static char getOrConvertCase(char current, char ch) {
