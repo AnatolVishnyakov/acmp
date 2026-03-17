@@ -72,6 +72,13 @@ class Ex248Test {
 
     @Test
     void all() {
-
+        assertEquals("kakao and kofi", Ex248.all("cacao and coffee"));
+        assertEquals("Sinderela! Wher Is Dres???", Ex248.all("Cinderella! Where Is The Dress???"));
+        assertEquals("'' is leter", Ex248.all("'A' is a letter"));
+        assertEquals("!!!Helo!!!--\"word\"", Ex248.all("!!!Hello!!!A-the-\"word\""));
+        assertEquals("A then k", Ex248.all("Aaaa then the ckckck"));
+        assertEquals("\"\"-", Ex248.all("\"A\"-the an"));
+        assertEquals(" ", Ex248.all("A the an"));
+        assertEquals("sukses", Ex248.all("success"));
     }
 }

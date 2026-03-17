@@ -80,8 +80,15 @@ public class Ex248 {
                 continue;
             }
             sb.append(word);
+            if (i + 1 < words.length) {
+                sb.append(' ');
+            }
         }
         return sb.toString();
+    }
+
+    static String all(String s) {
+        return year4(year3(year2(year1(s))));
     }
 
     public static void main(String[] args) {
@@ -89,9 +96,7 @@ public class Ex248 {
         PrintWriter out = new PrintWriter(System.out);
 
         String input = in.next();
-        out.print(
-                year4(year3(year2(year1(input))))
-        );
+        out.print(all(input));
 
         out.flush();
     }
