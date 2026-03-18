@@ -1,7 +1,6 @@
 package algorithms.strings;
 
 import java.io.PrintWriter;
-import java.util.Objects;
 import java.util.Scanner;
 
 public class Ex248 {
@@ -9,12 +8,12 @@ public class Ex248 {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
             char c = s.charAt(i);
-            if (c == 'c') {
+            var isUpper = Character.isUpperCase(c);
+            if (c == 'c' || c == 'C') {
                 if (i + 1 < s.length()) {
                     char next = s.charAt(i + 1);
                     if (next == 'i' || next == 'e') {
-                        sb.append('s');
-                        i++;
+                        if (isUpper) sb.append('S'); else sb.append('s');
                     } else if (next == 'k') {
                         i++;
                     } else {
@@ -33,7 +32,7 @@ public class Ex248 {
     static String year2(String s) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
-            if (i + 1 < s.length() && s.charAt(i) == s.charAt(i + 1)) {
+            if (i + 1 < s.length() && Character.isLetter(s.charAt(i)) && Character.isLetter(s.charAt(i + 1)) && s.charAt(i) == s.charAt(i + 1)) {
                 var c = s.charAt(i);
                 if (c == 'e') {
                     sb.append('i');
@@ -51,22 +50,25 @@ public class Ex248 {
     }
 
     static String year3(String s) {
+        var words = s.split(" ");
         StringBuilder sb = new StringBuilder();
-        for (int i = 0; i < s.length(); i++) {
-            var c = s.charAt(i);
-            if (c == 'e') {
-                var prev = i - 1;
-                if (prev >= 0 && s.charAt(prev) != ' ') {
-                    i++;
-                    continue;
-                } else if (i + 1 < s.length() && s.charAt(i + 1) == ' ') {
-                    i++;
-                    continue;
+        for (int i = 0; i < words.length; i++) {
+            var word = words[i];
+            if (!word.equalsIgnoreCase("the")) {
+                if (word.length() > 1) {
+                    if (word.endsWith("e")) {
+                        if (i > 0) {
+                            sb.append(' ');
+                        }
+                        sb.append(word, 0, word.length() - 1);
+                        continue;
+                    }
                 }
-                sb.append(c);
-            } else {
-                sb.append(c);
             }
+            if (i > 0) {
+                sb.append(' ');
+            }
+            sb.append(word);
         }
         return sb.toString();
     }
@@ -76,13 +78,13 @@ public class Ex248 {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < words.length; i++) {
             var word = words[i];
-            if (Objects.equals(word, "a") || Objects.equals(word, "an") || Objects.equals(word, "the")) {
+            if (word.equalsIgnoreCase("a") || word.equalsIgnoreCase("an") || word.equalsIgnoreCase("the")) {
                 continue;
             }
-            sb.append(word);
-            if (i + 1 < words.length) {
+            if (i > 0) {
                 sb.append(' ');
             }
+            sb.append(word);
         }
         return sb.toString();
     }
