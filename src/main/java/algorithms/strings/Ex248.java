@@ -17,10 +17,10 @@ public class Ex248 {
                     } else if (next == 'k') {
                         i++;
                     } else {
-                        sb.append('k');
+                        if (isUpper) sb.append('K'); else sb.append('k');
                     }
                 } else {
-                    sb.append('k');
+                    if (isUpper) sb.append('K'); else sb.append('k');
                 }
             } else {
                 sb.append(c);
@@ -77,8 +77,9 @@ public class Ex248 {
         var words = s.split(" ");
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < words.length; i++) {
-            var word = words[i];
+            var word = words[i].replace("'", "");
             if (word.equalsIgnoreCase("a") || word.equalsIgnoreCase("an") || word.equalsIgnoreCase("the")) {
+                sb.append(words[i].replace(word, ""));
                 continue;
             }
             if (i > 0) {
@@ -98,7 +99,9 @@ public class Ex248 {
         PrintWriter out = new PrintWriter(System.out);
 
         String input = in.next();
-        out.print(all(input));
+        if (input.length() < 200) {
+            out.print(all(input));
+        }
 
         out.flush();
     }
