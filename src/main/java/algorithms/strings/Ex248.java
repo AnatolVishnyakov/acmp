@@ -27,23 +27,6 @@ public class Ex248 {
             } else {
                 sb.append(curr);
             }
-//            if (c == 'c' || c == 'C') {
-//                if (i + 1 < s.length()) {
-//                    char next = s.charAt(i + 1);
-//                    if (next == 'i' || next == 'e') {
-//                        if (isUpper) sb.append('S'); else sb.append('s');
-//                    } else if (next == 'k') {
-//                        if (isUpper) sb.append('С'); else sb.append('с');
-//                        i++;
-//                    } else {
-//                        if (isUpper) sb.append('K'); else sb.append('k');
-//                    }
-//                } else {
-//                    if (isUpper) sb.append('K'); else sb.append('k');
-//                }
-//            } else {
-//                sb.append(c);
-//            }
         }
         return sb.toString();
     }
