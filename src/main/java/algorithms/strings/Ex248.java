@@ -84,7 +84,7 @@ public class Ex248 {
                 sb.append(words[i].replace(word, ""));
                 continue;
             }
-            if (i > 0) {
+            if (i > 0 && !sb.isEmpty()) {
                 sb.append(' ');
             }
             sb.append(word);
@@ -108,18 +108,19 @@ public class Ex248 {
                 case ')':
                 case '"':
                 case '\'':
+                case ' ':
                     sb.append(ch);
                     continue;
                 default:
                     var word = new StringBuilder();
-                    for (; ; i++) {
-                        if (!Character.isLetterOrDigit(s.charAt(i))) {
-                            i--;
+                    for (int j = i; j < s.length(); j++) {
+                        if (!Character.isLetterOrDigit(s.charAt(j))) {
                             break;
                         }
-                        word.append(s.charAt(i));
+                        word.append(s.charAt(j));
                     }
                     sb.append(year4(year3(year2(year1(word.toString())))));
+                    i += word.length() - 1;
             }
         }
         return sb.toString();
