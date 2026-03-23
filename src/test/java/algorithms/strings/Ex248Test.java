@@ -1,6 +1,8 @@
 package algorithms.strings;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -55,15 +57,15 @@ class Ex248Test {
         assertEquals("-se-", Ex248.year1("-ce-"));
         assertEquals(" se ", Ex248.year1(" ce "));
 
-//        assertEquals("", Ex248.year1("ck"));
-//        assertEquals("", Ex248.year1("CK"));
-//        assertEquals("  ", Ex248.year1(" ck "));
+        assertEquals("k", Ex248.year1("ck"));
+        assertEquals("k", Ex248.year1("Ck"));
+        assertEquals(" k ", Ex248.year1(" ck "));
 
-//        assertEquals("k", Ex248.year1("c"));
-//        assertEquals("K", Ex248.year1("C"));
-//        assertEquals(" k ", Ex248.year1(" c "));
-//        assertEquals("kk", Ex248.year1("cck"));
-//        assertEquals("suksess", Ex248.year1("success"));
+        assertEquals("k", Ex248.year1("c"));
+        assertEquals("K", Ex248.year1("C"));
+        assertEquals(" k ", Ex248.year1(" c "));
+        assertEquals("kk", Ex248.year1("cck"));
+        assertEquals("suksess", Ex248.year1("success"));
     }
 
     /**
@@ -119,8 +121,8 @@ class Ex248Test {
 //        assertEquals("sukses", Ex248.all("success"));
 //        assertEquals("", Ex248.all("A the an"));
 
-        assertEquals("!!!Helo!!!--\"word\"", Ex248.all("!!!Hello!!!A-the-\"word\""));
-//        assertEquals("A then k", Ex248.all("Aaaa then the ckckck"));
+//        assertEquals("!!!Helo!!!--\"word\"", Ex248.all("!!!Hello!!!A-the-\"word\""));
+        assertEquals("A then k", Ex248.all("Aaaa then the ckckck"));
 //        assertEquals("\"\"-", Ex248.all("\"A\"-the an"));
     }
 }

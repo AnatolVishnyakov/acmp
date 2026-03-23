@@ -7,24 +7,43 @@ public class Ex248 {
     static String year1(String s) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
-            char c = s.charAt(i);
-            var isUpper = Character.isUpperCase(c);
-            if (c == 'c' || c == 'C') {
-                if (i + 1 < s.length()) {
-                    char next = s.charAt(i + 1);
-                    if (next == 'i' || next == 'e') {
-                        if (isUpper) sb.append('S'); else sb.append('s');
-                    } else if (next == 'k') {
-                        i++;
-                    } else {
-                        if (isUpper) sb.append('K'); else sb.append('k');
+            boolean isUpper = Character.isUpperCase(s.charAt(i));
+            char curr = Character.toLowerCase(s.charAt(i));
+            char next = i + 1 < s.length()
+                    ? s.charAt(i + 1) : '0';
+            if (curr == 'c') {
+                switch (next) {
+                    case 'i', 'e' -> {
+                        if (isUpper) sb.append('S');
+                        else sb.append('s');
                     }
-                } else {
-                    if (isUpper) sb.append('K'); else sb.append('k');
+                    case 'k' -> {
+                    }
+                    default -> {
+                        if (isUpper) sb.append('K');
+                        else sb.append('k');
+                    }
                 }
             } else {
-                sb.append(c);
+                sb.append(curr);
             }
+//            if (c == 'c' || c == 'C') {
+//                if (i + 1 < s.length()) {
+//                    char next = s.charAt(i + 1);
+//                    if (next == 'i' || next == 'e') {
+//                        if (isUpper) sb.append('S'); else sb.append('s');
+//                    } else if (next == 'k') {
+//                        if (isUpper) sb.append('С'); else sb.append('с');
+//                        i++;
+//                    } else {
+//                        if (isUpper) sb.append('K'); else sb.append('k');
+//                    }
+//                } else {
+//                    if (isUpper) sb.append('K'); else sb.append('k');
+//                }
+//            } else {
+//                sb.append(c);
+//            }
         }
         return sb.toString();
     }
@@ -91,7 +110,36 @@ public class Ex248 {
     }
 
     static String all(String s) {
-        return year4(year3(year2(year1(s))));
+        StringBuilder sb = new StringBuilder();
+        for (int i = 0; i < s.length(); i++) {
+            char ch = s.charAt(i);
+            switch (ch) {
+                case '.':
+                case ',':
+                case '?':
+                case '!':
+                case ':':
+                case '-':
+                case ';':
+                case '(':
+                case ')':
+                case '"':
+                case '\'':
+                    sb.append(ch);
+                    continue;
+                default:
+                    var word = new StringBuilder();
+                    for (; ; i++) {
+                        if (!Character.isLetterOrDigit(s.charAt(i))) {
+                            i--;
+                            break;
+                        }
+                        word.append(s.charAt(i));
+                    }
+                    sb.append(year4(year3(year2(year1(word.toString())))));
+            }
+        }
+        return sb.toString();
     }
 
     public static void main(String[] args) {
