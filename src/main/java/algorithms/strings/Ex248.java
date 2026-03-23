@@ -25,7 +25,8 @@ public class Ex248 {
                     }
                 }
             } else {
-                sb.append(curr);
+                if (isUpper) sb.append(Character.toUpperCase(curr));
+                else sb.append(curr);
             }
         }
         return sb.toString();
@@ -108,8 +109,12 @@ public class Ex248 {
                 case ')':
                 case '"':
                 case '\'':
-                case ' ':
                     sb.append(ch);
+                    continue;
+                case ' ':
+                    if (!sb.isEmpty() && sb.charAt(sb.length() - 1) != ' ') {
+                        sb.append(ch);
+                    }
                     continue;
                 default:
                     var word = new StringBuilder();
