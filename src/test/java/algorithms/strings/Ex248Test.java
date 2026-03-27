@@ -83,6 +83,7 @@ class Ex248Test {
         assertEquals("u", Ex248.year2("uu").sb().toString());
         assertEquals("v", Ex248.year2("vv").sb().toString());
         assertEquals("A", Ex248.year2("Aaaa").sb().toString());
+        assertEquals("U", Ex248.year2("Oooo").sb().toString());
     }
 
     /**
@@ -132,5 +133,11 @@ class Ex248Test {
         assertEquals("\"\"-", Ex248.all("\"A\"-the an"));
         assertEquals("Papa Keks", Ex248.all("Papa Ckeks"));
         assertEquals("Kakao And Kofi", Ex248.all("Cacao And Coffee"));
+
+        assertEquals("'e'e'", Ex248.all("'e'e'"));
+        assertEquals("\"e\"e\"", Ex248.all("\"e\"e\""));
+        assertEquals("!e!e!", Ex248.all("!e!e!"));
+        assertEquals(".e.e.", Ex248.all(".e.e."));
+        assertEquals(",e,e,", Ex248.all(",e,e,"));
     }
 }
