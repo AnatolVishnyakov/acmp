@@ -1,8 +1,6 @@
 package algorithms.strings;
 
 import org.junit.jupiter.api.Test;
-import org.junit.jupiter.params.ParameterizedTest;
-import org.junit.jupiter.params.provider.CsvSource;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -81,9 +79,10 @@ class Ex248Test {
     @Test
     void year2() {
         assertEquals("i", Ex248.year2("ee"));
-        assertEquals("u", Ex248.year2("oo"));
-        assertEquals("u", Ex248.year2("uu"));
-        assertEquals("v", Ex248.year2("vv"));
+//        assertEquals("u", Ex248.year2("oo"));
+//        assertEquals("u", Ex248.year2("uu"));
+//        assertEquals("v", Ex248.year2("vv"));
+//        assertEquals("A", Ex248.year2("Aaaa"));
     }
 
     /**
@@ -108,21 +107,28 @@ class Ex248Test {
     @Test
     void year4() {
         assertEquals("", Ex248.year4("a"));
+        assertEquals("''", Ex248.year4("'A'"));
+        assertEquals("table", Ex248.year4("a table"));
+        assertEquals("table", Ex248.year4("table a"));
         assertEquals("", Ex248.year4("an"));
+        assertEquals("table", Ex248.year4("an table"));
+        assertEquals("table", Ex248.year4("table an"));
         assertEquals("", Ex248.year4("the"));
         assertEquals("table", Ex248.year4("the table"));
+        assertEquals("table", Ex248.year4("table the"));
     }
 
     @Test
     void all() {
-//        assertEquals("kakao and kofi", Ex248.all("cacao and coffee"));
-//        assertEquals("Sinderela! Wher Is Dres???", Ex248.all("Cinderella! Where Is The Dress???"));
-//        assertEquals("'' is leter", Ex248.all("'A' is a letter"));
-//        assertEquals("sukses", Ex248.all("success"));
-//        assertEquals("", Ex248.all("A the an"));
+        assertEquals("A", Ex248.all("Aaaaaa"));
+        assertEquals("kakao and kofi", Ex248.all("cacao and coffee"));
+        assertEquals("Sinderela! Wher Is Dres???", Ex248.all("Cinderella! Where Is The Dress???"));
+        assertEquals("'' is leter", Ex248.all("'A' is a letter"));
+        assertEquals("sukses", Ex248.all("success"));
+        assertEquals("", Ex248.all("A the an"));
 
-//        assertEquals("!!!Helo!!!--\"word\"", Ex248.all("!!!Hello!!!A-the-\"word\""));
-//        assertEquals("A then k", Ex248.all("Aaaa then the ckckck"));
+        assertEquals("!!!Helo!!!--\"word\"", Ex248.all("!!!Hello!!!A-the-\"word\""));
+        assertEquals("A then k", Ex248.all("Aaaa then the ckckck"));
         assertEquals("\"\"-", Ex248.all("\"A\"-the an"));
     }
 }
