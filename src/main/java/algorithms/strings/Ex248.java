@@ -166,7 +166,7 @@ public class Ex248 {
         PrintWriter out = new PrintWriter(System.out);
 
         String input = in.next();
-        if (input.length() < 200) {
+        if (input.length() <= 200) {
             out.print(all(input));
         }
 

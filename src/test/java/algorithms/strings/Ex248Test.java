@@ -131,5 +131,6 @@ class Ex248Test {
         assertEquals("A then k", Ex248.all("Aaaa then the ckckck"));
         assertEquals("\"\"-", Ex248.all("\"A\"-the an"));
         assertEquals("Papa Keks", Ex248.all("Papa Ckeks"));
+        assertEquals("Kakao And Kofi", Ex248.all("Cacao And Coffee"));
     }
 }
