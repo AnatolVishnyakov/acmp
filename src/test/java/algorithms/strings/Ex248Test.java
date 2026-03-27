@@ -84,6 +84,7 @@ class Ex248Test {
         assertEquals("v", Ex248.year2("vv").sb().toString());
         assertEquals("A", Ex248.year2("Aaaa").sb().toString());
         assertEquals("U", Ex248.year2("Oooo").sb().toString());
+        assertEquals("I", Ex248.year2("Eeeee").sb().toString());
     }
 
     /**

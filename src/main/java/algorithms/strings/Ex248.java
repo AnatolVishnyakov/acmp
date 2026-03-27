@@ -43,24 +43,20 @@ public class Ex248 {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
             if (i + 1 < s.length() && Character.isLetter(s.charAt(i)) && Character.toLowerCase(s.charAt(i)) == Character.toLowerCase(s.charAt(i + 1))) {
-                var c = s.charAt(i);
+                boolean isUpper = Character.isUpperCase(s.charAt(i));
+                var c = Character.toLowerCase(s.charAt(i));
+                while (i + 1 < s.length() && Character.toLowerCase(s.charAt(i)) == Character.toLowerCase(s.charAt(i + 1))) i++;
                 if (c == 'e') {
-                    sb.append('i');
+                    if (isUpper) sb.append('I');
+                    else sb.append('i');
                     i++;
                 } else if (c == 'o') {
-                    sb.append('u');
+                    if (isUpper) sb.append('U');
+                    else sb.append('u');
                     i++;
                 } else {
-                    sb.append(c);
-                    if (Character.toLowerCase(s.charAt(i)) == Character.toLowerCase(s.charAt(i + 1))) {
-                        while (i + 1 < s.length()) {
-                            if (Character.toLowerCase(s.charAt(i)) == Character.toLowerCase(s.charAt(i + 1))) {
-                                i++;
-                            } else {
-                                break;
-                            }
-                        }
-                    }
+                    if (isUpper) sb.append(Character.toUpperCase(c));
+                    else sb.append(c);
                 }
             } else {
                 sb.append(s.charAt(i));
