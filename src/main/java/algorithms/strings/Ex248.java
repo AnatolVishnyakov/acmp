@@ -4,6 +4,9 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Ex248 {
+    record State(StringBuilder sb, Boolean changed) {
+    }
+
     static String year1(String s) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
@@ -25,6 +28,10 @@ public class Ex248 {
                     }
                 }
             } else {
+                int prev = i - 1;
+                if (prev >= 0 && Character.isUpperCase(s.charAt(prev)) && Character.toLowerCase(s.charAt(prev)) == 'c' && Character.toLowerCase(curr) == 'k') {
+                    isUpper = true;
+                }
                 if (isUpper) sb.append(Character.toUpperCase(curr));
                 else sb.append(curr);
             }
@@ -32,7 +39,7 @@ public class Ex248 {
         return sb.toString();
     }
 
-    static String year2(String s) {
+    static State year2(String s) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
             if (i + 1 < s.length() && Character.isLetter(s.charAt(i)) && Character.toLowerCase(s.charAt(i)) == Character.toLowerCase(s.charAt(i + 1))) {
@@ -59,11 +66,11 @@ public class Ex248 {
                 sb.append(s.charAt(i));
             }
         }
-        return sb.toString();
+        return new State(sb, sb.length() != s.length());
     }
 
-    static String year3(String s) {
-        var words = s.split(" ");
+    static State year3(State in) {
+        var words = in.sb.toString().split(" ");
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < words.length; i++) {
             var word = words[i];
@@ -83,15 +90,15 @@ public class Ex248 {
             }
             sb.append(word);
         }
-        return sb.toString();
+        return new State(sb, in.changed);
     }
 
-    static String year4(String s) {
-        var words = s.split(" ");
+    static State year4(State in) {
+        var words = in.sb.toString().split(" ");
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < words.length; i++) {
             var word = words[i].replace("'", "");
-            if (word.equalsIgnoreCase("a") || word.equalsIgnoreCase("an") || word.equalsIgnoreCase("the")) {
+            if ((word.equalsIgnoreCase("a") && !in.changed) || word.equalsIgnoreCase("an") || word.equalsIgnoreCase("the")) {
                 sb.append(words[i].replace(word, ""));
                 continue;
             }
@@ -100,7 +107,7 @@ public class Ex248 {
             }
             sb.append(word);
         }
-        return sb.toString();
+        return new State(sb, in.changed);
     }
 
     static String all(String s) {
@@ -134,17 +141,22 @@ public class Ex248 {
                         }
                         word.append(s.charAt(j));
                     }
-                    sb.append(
-                            year4(
-                                    year3(
-                                            year2(
-                                                    year1(word.toString())
-                                            )
+                    String res = year4(
+                            year3(
+                                    year2(
+                                            year1(word.toString())
                                     )
                             )
-                    );
+                    ).sb.toString();
+                    if (!res.isBlank()) {
+                        sb.append(res);
+                    }
                     i += word.length() - 1;
             }
+        }
+        int lastIndex = sb.length() - 1;
+        if (lastIndex > 0 && sb.charAt(lastIndex) == ' ') {
+            sb.deleteCharAt(lastIndex);
         }
         return sb.toString();
     }

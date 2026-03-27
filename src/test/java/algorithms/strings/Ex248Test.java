@@ -56,7 +56,7 @@ class Ex248Test {
         assertEquals(" se ", Ex248.year1(" ce "));
 
         assertEquals("k", Ex248.year1("ck"));
-        assertEquals("k", Ex248.year1("Ck"));
+        assertEquals("K", Ex248.year1("Ck"));
         assertEquals(" k ", Ex248.year1(" ck "));
 
         assertEquals("k", Ex248.year1("c"));
@@ -78,11 +78,11 @@ class Ex248Test {
      */
     @Test
     void year2() {
-        assertEquals("i", Ex248.year2("ee"));
-//        assertEquals("u", Ex248.year2("oo"));
-//        assertEquals("u", Ex248.year2("uu"));
-//        assertEquals("v", Ex248.year2("vv"));
-//        assertEquals("A", Ex248.year2("Aaaa"));
+        assertEquals("i", Ex248.year2("ee").sb().toString());
+        assertEquals("u", Ex248.year2("oo").sb().toString());
+        assertEquals("u", Ex248.year2("uu").sb().toString());
+        assertEquals("v", Ex248.year2("vv").sb().toString());
+        assertEquals("A", Ex248.year2("Aaaa").sb().toString());
     }
 
     /**
@@ -92,11 +92,11 @@ class Ex248Test {
      */
     @Test
     void year3() {
-        assertEquals("ololosh", Ex248.year3("ololoshe"));
-        assertEquals("e", Ex248.year3("e"));
-        assertEquals("e ololo", Ex248.year3("e ololo"));
-        assertEquals("", Ex248.year3(""));
-        assertEquals("e", Ex248.year3("e "));
+        assertEquals("ololosh", Ex248.year3(new Ex248.State(new StringBuilder("ololoshe"), false)).sb().toString());
+        assertEquals("e",       Ex248.year3(new Ex248.State(new StringBuilder("e"), false)).sb().toString());
+        assertEquals("e ololo", Ex248.year3(new Ex248.State(new StringBuilder("e ololo"), false)).sb().toString());
+        assertEquals("",        Ex248.year3(new Ex248.State(new StringBuilder(""), false)).sb().toString());
+        assertEquals("e",       Ex248.year3(new Ex248.State(new StringBuilder("e "), false)).sb().toString());
     }
 
     /**
@@ -106,16 +106,16 @@ class Ex248Test {
      */
     @Test
     void year4() {
-        assertEquals("", Ex248.year4("a"));
-        assertEquals("''", Ex248.year4("'A'"));
-        assertEquals("table", Ex248.year4("a table"));
-        assertEquals("table", Ex248.year4("table a"));
-        assertEquals("", Ex248.year4("an"));
-        assertEquals("table", Ex248.year4("an table"));
-        assertEquals("table", Ex248.year4("table an"));
-        assertEquals("", Ex248.year4("the"));
-        assertEquals("table", Ex248.year4("the table"));
-        assertEquals("table", Ex248.year4("table the"));
+        assertEquals("",        Ex248.year4(new Ex248.State(new StringBuilder("a"), false)).sb().toString());
+        assertEquals("''",      Ex248.year4(new Ex248.State(new StringBuilder("'A'"), false)).sb().toString());
+        assertEquals("table",   Ex248.year4(new Ex248.State(new StringBuilder("a table"), false)).sb().toString());
+        assertEquals("table",   Ex248.year4(new Ex248.State(new StringBuilder("table a"), false)).sb().toString());
+        assertEquals("",        Ex248.year4(new Ex248.State(new StringBuilder("an"), false)).sb().toString());
+        assertEquals("table",   Ex248.year4(new Ex248.State(new StringBuilder("an table"), false)).sb().toString());
+        assertEquals("table",   Ex248.year4(new Ex248.State(new StringBuilder("table an"), false)).sb().toString());
+        assertEquals("",        Ex248.year4(new Ex248.State(new StringBuilder("the"), false)).sb().toString());
+        assertEquals("table",   Ex248.year4(new Ex248.State(new StringBuilder("the table"), false)).sb().toString());
+        assertEquals("table",   Ex248.year4(new Ex248.State(new StringBuilder("table the"), false)).sb().toString());
     }
 
     @Test
@@ -130,5 +130,6 @@ class Ex248Test {
         assertEquals("!!!Helo!!!--\"word\"", Ex248.all("!!!Hello!!!A-the-\"word\""));
         assertEquals("A then k", Ex248.all("Aaaa then the ckckck"));
         assertEquals("\"\"-", Ex248.all("\"A\"-the an"));
+        assertEquals("Papa Keks", Ex248.all("Papa Ckeks"));
     }
 }
