@@ -1,7 +1,7 @@
 package algorithms.strings;
 
-import java.io.PrintWriter;
-import java.util.Scanner;
+import java.io.*;
+import java.util.*;
 
 public class Ex248 {
     record State(StringBuilder sb, Boolean changed) {
@@ -180,7 +180,7 @@ public class Ex248 {
 
         String input = in.next();
         if (input.length() <= 200) {
-            out.print(all(input));
+            out.println(all(input));
         }
 
         out.flush();
