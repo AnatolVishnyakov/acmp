@@ -39,11 +39,6 @@ public class Ex248 {
         return sb.toString();
     }
 
-    // Ooo -> Uo
-    // Oooo -> Uu -> U
-    // Eee -> Ie
-    // Eeee -> Ii -> I
-    // Eeeee -> Ieee -> Iie -> Ie
     static State year2(String s) {
         StringBuilder sb = new StringBuilder();
         boolean replaced = false;
