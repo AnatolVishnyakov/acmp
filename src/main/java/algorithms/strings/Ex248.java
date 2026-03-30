@@ -173,7 +173,7 @@ public class Ex248 {
         Scanner in = new Scanner(System.in);
         PrintWriter out = new PrintWriter(System.out);
 
-        String input = in.next();
+        String input = in.nextLine();
         if (input.length() <= 200) {
             out.println(all(input));
         }
