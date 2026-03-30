@@ -39,36 +39,36 @@ public class Ex248 {
         return sb.toString();
     }
 
+    // Ooo -> Uo
+    // Oooo -> Uu -> U
+    // Eee -> Ie
+    // Eeee -> Ii -> I
+    // Eeeee -> Ieee -> Iie -> Ie
     static State year2(String s) {
         StringBuilder sb = new StringBuilder();
+        boolean replaced = false;
         for (int i = 0; i < s.length(); i++) {
             if (isDuplicate(s, i, i + 1)) {
+                replaced = true;
                 boolean isUpper = Character.isUpperCase(s.charAt(i));
                 var c = Character.toLowerCase(s.charAt(i));
                 if (c == 'e') {
                     if (isUpper) sb.append('I');
                     else sb.append('i');
-                    i++;
                 } else if (c == 'o') {
                     if (isUpper) sb.append('U');
                     else sb.append('u');
-                    i++;
                 } else {
-                    int j;
-                    for (j = i + 1; j < s.length(); j++) {
-                        if (isDuplicate(s, i, j)) {
-                            continue;
-                        } else {
-                            break;
-                        }
-                    }
-                    i += j;
                     if (isUpper) sb.append(Character.toUpperCase(c));
                     else sb.append(c);
                 }
+                i++;
             } else {
                 sb.append(s.charAt(i));
             }
+        }
+        if (replaced) {
+            return year2(sb.toString());
         }
         return new State(sb, sb.length() != s.length());
     }
