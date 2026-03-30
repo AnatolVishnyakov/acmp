@@ -42,10 +42,9 @@ public class Ex248 {
     static State year2(String s) {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
-            if (i + 1 < s.length() && Character.isLetter(s.charAt(i)) && Character.toLowerCase(s.charAt(i)) == Character.toLowerCase(s.charAt(i + 1))) {
+            if (isDuplicate(s, i, i + 1)) {
                 boolean isUpper = Character.isUpperCase(s.charAt(i));
                 var c = Character.toLowerCase(s.charAt(i));
-                while (i + 1 < s.length() && Character.toLowerCase(s.charAt(i)) == Character.toLowerCase(s.charAt(i + 1))) i++;
                 if (c == 'e') {
                     if (isUpper) sb.append('I');
                     else sb.append('i');
@@ -55,6 +54,15 @@ public class Ex248 {
                     else sb.append('u');
                     i++;
                 } else {
+                    int j;
+                    for (j = i + 1; j < s.length(); j++) {
+                        if (isDuplicate(s, i, j)) {
+                            continue;
+                        } else {
+                            break;
+                        }
+                    }
+                    i += j;
                     if (isUpper) sb.append(Character.toUpperCase(c));
                     else sb.append(c);
                 }
@@ -63,6 +71,12 @@ public class Ex248 {
             }
         }
         return new State(sb, sb.length() != s.length());
+    }
+
+    private static boolean isDuplicate(String s, int curr, int next) {
+        return next < s.length() &&
+               Character.isLetter(s.charAt(curr)) &&
+               Character.toLowerCase(s.charAt(curr)) == Character.toLowerCase(s.charAt(next));
     }
 
     static State year3(State in) {
