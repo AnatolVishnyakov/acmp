@@ -68,6 +68,9 @@ public class Ex248 {
             }
         }
         if (replaced) {
+            if (sb.toString().equalsIgnoreCase("a")) {
+                return new State(sb, sb.length() != s.length());
+            }
             return year2(sb.toString());
         }
         return new State(sb, sb.length() != s.length());
