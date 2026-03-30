@@ -82,15 +82,13 @@ public class Ex248 {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < words.length; i++) {
             var word = words[i];
-            if (!word.equalsIgnoreCase("the")) {
-                if (word.length() > 1) {
-                    if (word.endsWith("e")) {
-                        if (i > 0) {
-                            sb.append(' ');
-                        }
-                        sb.append(word, 0, word.length() - 1);
-                        continue;
+            if (word.length() > 1) {
+                if (word.endsWith("e")) {
+                    if (i > 0) {
+                        sb.append(' ');
                     }
+                    sb.append(word, 0, word.length() - 1);
+                    continue;
                 }
             }
             if (i > 0) {
@@ -106,7 +104,10 @@ public class Ex248 {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < words.length; i++) {
             var word = words[i].replace("'", "");
-            if ((word.equalsIgnoreCase("a") && !in.changed) || word.equalsIgnoreCase("an") || word.equalsIgnoreCase("the")) {
+            if ((word.equalsIgnoreCase("a") && !in.changed) ||
+                word.equalsIgnoreCase("an") ||
+                word.equalsIgnoreCase("th")
+            ) {
                 sb.append(words[i].replace(word, ""));
                 continue;
             }
