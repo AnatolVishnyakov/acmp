@@ -38,7 +38,7 @@ class Ex248Test {
     /**
      * <b>Год 1: Замена буквы "c"</b>
      * <ul>
-     *   <li>"ci" и "ce" → "s"</li>
+     *   <li>"ci" и "ce" → "si" и "se"</li>
      *   <li>"ck" → опускается</li>
      *   <li>в остальных случаях → "k"</li>
      * </ul>
@@ -48,10 +48,12 @@ class Ex248Test {
     @Test
     void year1() {
         assertEquals("si", Ex248.year1("ci"));
+        assertEquals("Si", Ex248.year1("Ci"));
         assertEquals("-si-", Ex248.year1("-ci-"));
         assertEquals(" si ", Ex248.year1(" ci "));
 
         assertEquals("se", Ex248.year1("ce"));
+        assertEquals("Se", Ex248.year1("Ce"));
         assertEquals("-se-", Ex248.year1("-ce-"));
         assertEquals(" se ", Ex248.year1(" ce "));
 
@@ -96,10 +98,11 @@ class Ex248Test {
     @Test
     void year3() {
         assertEquals("ololosh", Ex248.year3(new Ex248.State(new StringBuilder("ololoshe"), false)).sb().toString());
-        assertEquals("e",       Ex248.year3(new Ex248.State(new StringBuilder("e"), false)).sb().toString());
+        assertEquals("e", Ex248.year3(new Ex248.State(new StringBuilder("e"), false)).sb().toString());
         assertEquals("e ololo", Ex248.year3(new Ex248.State(new StringBuilder("e ololo"), false)).sb().toString());
-        assertEquals("",        Ex248.year3(new Ex248.State(new StringBuilder(""), false)).sb().toString());
-        assertEquals("e",       Ex248.year3(new Ex248.State(new StringBuilder("e "), false)).sb().toString());
+        assertEquals("", Ex248.year3(new Ex248.State(new StringBuilder(""), false)).sb().toString());
+        assertEquals("e", Ex248.year3(new Ex248.State(new StringBuilder("e "), false)).sb().toString());
+        assertEquals("th", Ex248.year3(new Ex248.State(new StringBuilder("the"), false)).sb().toString());
     }
 
     /**
@@ -109,16 +112,16 @@ class Ex248Test {
      */
     @Test
     void year4() {
-        assertEquals("",        Ex248.year4(new Ex248.State(new StringBuilder("a"), false)).sb().toString());
-        assertEquals("''",      Ex248.year4(new Ex248.State(new StringBuilder("'A'"), false)).sb().toString());
-        assertEquals("table",   Ex248.year4(new Ex248.State(new StringBuilder("a table"), false)).sb().toString());
-        assertEquals("table",   Ex248.year4(new Ex248.State(new StringBuilder("table a"), false)).sb().toString());
-        assertEquals("",        Ex248.year4(new Ex248.State(new StringBuilder("an"), false)).sb().toString());
-        assertEquals("table",   Ex248.year4(new Ex248.State(new StringBuilder("an table"), false)).sb().toString());
-        assertEquals("table",   Ex248.year4(new Ex248.State(new StringBuilder("table an"), false)).sb().toString());
-        assertEquals("",        Ex248.year4(new Ex248.State(new StringBuilder("the"), false)).sb().toString());
-        assertEquals("table",   Ex248.year4(new Ex248.State(new StringBuilder("the table"), false)).sb().toString());
-        assertEquals("table",   Ex248.year4(new Ex248.State(new StringBuilder("table the"), false)).sb().toString());
+        assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("a"), false)).sb().toString());
+        assertEquals("''", Ex248.year4(new Ex248.State(new StringBuilder("'A'"), false)).sb().toString());
+        assertEquals("table", Ex248.year4(new Ex248.State(new StringBuilder("a table"), false)).sb().toString());
+        assertEquals("table", Ex248.year4(new Ex248.State(new StringBuilder("table a"), false)).sb().toString());
+        assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("an"), false)).sb().toString());
+        assertEquals("table", Ex248.year4(new Ex248.State(new StringBuilder("an table"), false)).sb().toString());
+        assertEquals("table", Ex248.year4(new Ex248.State(new StringBuilder("table an"), false)).sb().toString());
+        assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("th"), false)).sb().toString());
+        assertEquals("table", Ex248.year4(new Ex248.State(new StringBuilder("th table"), false)).sb().toString());
+        assertEquals("table", Ex248.year4(new Ex248.State(new StringBuilder("table th"), false)).sb().toString());
     }
 
     @Test
