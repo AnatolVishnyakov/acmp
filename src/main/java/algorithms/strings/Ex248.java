@@ -1,7 +1,7 @@
 package algorithms.strings;
 
-import java.io.*;
-import java.util.*;
+import java.io.PrintWriter;
+import java.util.Scanner;
 
 public class Ex248 {
     record State(StringBuilder sb, Boolean changed) {
@@ -166,6 +166,26 @@ public class Ex248 {
         int lastIndex = sb.length() - 1;
         if (lastIndex > 0 && sb.charAt(lastIndex) == ' ') {
             sb.deleteCharAt(lastIndex);
+        }
+        if (!sb.isEmpty()) {
+            if (sb.charAt(0) == ' ') {
+                sb.deleteCharAt(0);
+            }
+        }
+
+        for (int i = 0; i < sb.length(); i++) {
+            if (i + 1 < sb.length()) {
+                if (sb.charAt(i) == ' ' && sb.charAt(i) == sb.charAt(i + 1)) {
+                    sb.deleteCharAt(i);
+                    i--;
+                }
+            }
+        }
+
+        if (sb.length() - 1 > 0) {
+            if (sb.charAt(sb.length() - 1) == ' ') {
+                sb.deleteCharAt(sb.length() - 1);
+            }
         }
         return sb.toString();
     }

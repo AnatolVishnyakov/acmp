@@ -122,6 +122,10 @@ class Ex248Test {
         assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("th"), false)).sb().toString());
         assertEquals("table", Ex248.year4(new Ex248.State(new StringBuilder("th table"), false)).sb().toString());
         assertEquals("table", Ex248.year4(new Ex248.State(new StringBuilder("table th"), false)).sb().toString());
+        assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("th th th"), false)).sb().toString());
+        assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("a a a"), false)).sb().toString());
+        assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("an an an"), false)).sb().toString());
+        assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("   "), false)).sb().toString());
     }
 
     @Test
@@ -144,5 +148,15 @@ class Ex248Test {
         assertEquals("!e!e!", Ex248.all("!e!e!"));
         assertEquals(".e.e.", Ex248.all(".e.e."));
         assertEquals(",e,e,", Ex248.all(",e,e,"));
+
+        assertEquals("", Ex248.all("the the the"));
+        assertEquals("", Ex248.all("a a a"));
+        assertEquals("", Ex248.all("an an an"));
+
+        assertEquals("", Ex248.all("   "));
+        assertEquals("' '", Ex248.all("'   '"));
+        assertEquals("' '", Ex248.all("'  '"));
+
+        assertEquals("ololoshka", Ex248.all(" ololoshka "));
     }
 }
