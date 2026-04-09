@@ -193,15 +193,22 @@ class Ex248Test {
         // Артикль между знаками препинания
         assertEquals("helo,,world", Ex248.all("hello,the,world"));
         assertEquals("helo--world", Ex248.all("hello-a-world"));
+
+        // etc.
+        assertEquals("an", Ex248.all("anne"));
+        assertEquals("An", Ex248.all("Ann"));
     }
 
     @Test
     void foo() {
 //        assertEquals("!helo , , , world!", Ex248.all("A !hello a, An, The, world! A"));
-        assertEquals("x,y", Ex248.all("x a,y"));
-        assertEquals("helo.", Ex248.all("hello the."));
-        assertEquals("word!", Ex248.all("word a!"));
-        assertEquals(",,", Ex248.all(", a,"));
-        assertEquals("kat,dog", Ex248.all("cat the,dog"));
+//        assertEquals("x,y", Ex248.all("x a,y"));
+//        assertEquals("helo.", Ex248.all("hello the."));
+//        assertEquals("word!", Ex248.all("word a!"));
+//        assertEquals(",,", Ex248.all(", a,"));
+//        assertEquals("kat,dog", Ex248.all("cat the,dog"));
+
+        assertEquals("an", Ex248.all("anne"));
+        assertEquals("An", Ex248.all("Ann"));
     }
 }

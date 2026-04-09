@@ -66,7 +66,8 @@ public class Ex248 {
             if (sb.toString().equalsIgnoreCase("a")) {
                 return new State(sb, sb.length() != s.length());
             }
-            return year2(sb.toString());
+            var res = year2(sb.toString());
+            return new State(res.sb, true);
         }
         return new State(sb, sb.length() != s.length());
     }
@@ -80,6 +81,7 @@ public class Ex248 {
     static State year3(State in) {
         var words = in.sb.toString().split(" ");
         StringBuilder sb = new StringBuilder();
+        var changed = in.changed;
         for (int i = 0; i < words.length; i++) {
             var word = words[i];
             if (word.length() > 1) {
@@ -88,6 +90,7 @@ public class Ex248 {
                         sb.append(' ');
                     }
                     sb.append(word, 0, word.length() - 1);
+                    changed = true;
                     continue;
                 }
             }
@@ -96,7 +99,7 @@ public class Ex248 {
             }
             sb.append(word);
         }
-        return new State(sb, in.changed);
+        return new State(sb, changed);
     }
 
     static State year4(State in) {
@@ -105,8 +108,8 @@ public class Ex248 {
         for (int i = 0; i < words.length; i++) {
             var word = words[i].replace("'", "");
             if ((word.equalsIgnoreCase("a") && !in.changed) ||
-                word.equalsIgnoreCase("an") ||
-                word.equalsIgnoreCase("th")
+                (word.equalsIgnoreCase("an") && !in.changed) ||
+                (word.equalsIgnoreCase("th") && !in.changed)
             ) {
                 sb.append(words[i].replace(word, ""));
                 continue;
@@ -163,6 +166,9 @@ public class Ex248 {
                         if (sb.length() - 1 > 0 && sb.charAt(sb.length() - 1) == ' ') {
                             sb.deleteCharAt(sb.length() - 1);
                         }
+//                        if (sb.charAt(0) == ' ') {
+//                            sb.deleteCharAt(0);
+//                        }
                     }
                     i += word.length() - 1;
             }
