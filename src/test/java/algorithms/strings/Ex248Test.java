@@ -158,5 +158,40 @@ class Ex248Test {
         assertEquals("' '", Ex248.all("'  '"));
 
         assertEquals("ololoshka", Ex248.all(" ololoshka "));
+
+        // Артикль в начале строки — после удаления пробел оказывается в начале
+        assertEquals("kat", Ex248.all("a cat"));
+        assertEquals("kat", Ex248.all("an cat"));
+        assertEquals("kat", Ex248.all("the cat"));
+
+        // Артикль в конце строки — после удаления пробел оказывается в конце
+        assertEquals("kat", Ex248.all("cat a"));
+        assertEquals("kat", Ex248.all("cat an"));
+        assertEquals("kat", Ex248.all("cat the"));
+
+        // Артикль в середине — после удаления образуется двойной пробел
+        assertEquals("kat dog", Ex248.all("cat the dog"));
+        assertEquals("kat dog", Ex248.all("cat a dog"));
+        assertEquals("kat dog", Ex248.all("cat an dog"));
+
+        // Несколько артиклей подряд (разделённые знаками препинания)
+        assertEquals(",", Ex248.all("a,the"));
+        assertEquals("-", Ex248.all("the-a"));
+        assertEquals(".", Ex248.all("an.the"));
+        assertEquals("!!", Ex248.all("!the!"));
+
+        // Артикли со знаками препинания — знак препинания как разделитель слов
+        assertEquals(",kat", Ex248.all("the,cat"));
+        assertEquals("kat,", Ex248.all("cat,a"));
+        assertEquals(",kat,", Ex248.all("a,cat,the"));
+
+        // Все слова — артикли (результат пустой)
+        assertEquals("", Ex248.all("a"));
+        assertEquals("", Ex248.all("a the an"));
+        assertEquals(",,", Ex248.all("a,the,an"));
+
+        // Артикль между знаками препинания
+        assertEquals("helo,,world", Ex248.all("hello,the,world"));
+        assertEquals("helo--world", Ex248.all("hello-a-world"));
     }
 }
