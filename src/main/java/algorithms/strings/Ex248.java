@@ -4,7 +4,7 @@ import java.io.PrintWriter;
 import java.util.Scanner;
 
 public class Ex248 {
-    record State(StringBuilder sb, Boolean changed) {
+    record State(StringBuilder sb, Boolean changed, Boolean removedE) {
     }
 
     static String year1(String s) {
@@ -64,12 +64,12 @@ public class Ex248 {
         }
         if (replaced) {
             if (sb.toString().equalsIgnoreCase("a")) {
-                return new State(sb, sb.length() != s.length());
+                return new State(sb, sb.length() != s.length(), false);
             }
             var res = year2(sb.toString());
-            return new State(res.sb, true);
+            return new State(res.sb, true, false);
         }
-        return new State(sb, sb.length() != s.length());
+        return new State(sb, sb.length() != s.length(), false);
     }
 
     private static boolean isDuplicate(String s, int curr, int next) {
@@ -81,7 +81,7 @@ public class Ex248 {
     static State year3(State in) {
         var words = in.sb.toString().split(" ");
         StringBuilder sb = new StringBuilder();
-        var changed = in.changed;
+        var removedE = false;
         for (int i = 0; i < words.length; i++) {
             var word = words[i];
             if (word.length() > 1) {
@@ -90,7 +90,7 @@ public class Ex248 {
                         sb.append(' ');
                     }
                     sb.append(word, 0, word.length() - 1);
-                    changed = true;
+                    removedE = true;
                     continue;
                 }
             }
@@ -99,7 +99,7 @@ public class Ex248 {
             }
             sb.append(word);
         }
-        return new State(sb, changed);
+        return new State(sb, in.changed, removedE);
     }
 
     static State year4(State in) {
@@ -109,7 +109,7 @@ public class Ex248 {
             var word = words[i].replace("'", "");
             if ((word.equalsIgnoreCase("a") && !in.changed) ||
                 (word.equalsIgnoreCase("an") && !in.changed) ||
-                (word.equalsIgnoreCase("th") && in.changed)
+                (word.equalsIgnoreCase("th") && in.removedE)
             ) {
                 sb.append(words[i].replace(word, ""));
                 continue;
@@ -119,7 +119,7 @@ public class Ex248 {
             }
             sb.append(word);
         }
-        return new State(sb, in.changed);
+        return new State(sb, in.changed, in.removedE);
     }
 
     static String all(String s) {

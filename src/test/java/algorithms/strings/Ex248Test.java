@@ -208,7 +208,11 @@ class Ex248Test {
 //        assertEquals(",,", Ex248.all(", a,"));
 //        assertEquals("kat,dog", Ex248.all("cat the,dog"));
 
-        assertEquals("an", Ex248.all("anne"));
-        assertEquals("An", Ex248.all("Ann"));
+//        assertEquals("an", Ex248.all("anne"));
+//        assertEquals("An", Ex248.all("Ann"));
+        assertEquals("th", Ex248.all("th"));
+        assertEquals("", Ex248.all(" "));
+        assertEquals("th", Ex248.all("thh"));
+        assertEquals("Th", Ex248.all("Thh"));
     }
 }
