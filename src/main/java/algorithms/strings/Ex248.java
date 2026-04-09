@@ -159,6 +159,10 @@ public class Ex248 {
                     ).sb.toString();
                     if (!res.isBlank()) {
                         sb.append(res);
+                    } else {
+                        if (sb.length() - 1 > 0 && sb.charAt(sb.length() - 1) == ' ') {
+                            sb.deleteCharAt(sb.length() - 1);
+                        }
                     }
                     i += word.length() - 1;
             }
@@ -196,7 +200,7 @@ public class Ex248 {
 
         String input = in.nextLine();
         if (input.length() <= 200) {
-            out.println(all(input));
+            out.print(all(input));
         }
 
         out.flush();
