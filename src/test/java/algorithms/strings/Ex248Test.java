@@ -119,10 +119,10 @@ class Ex248Test {
         assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("an"), false)).sb().toString());
         assertEquals("table", Ex248.year4(new Ex248.State(new StringBuilder("an table"), false)).sb().toString());
         assertEquals("table", Ex248.year4(new Ex248.State(new StringBuilder("table an"), false)).sb().toString());
-        assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("th"), false)).sb().toString());
-        assertEquals("table", Ex248.year4(new Ex248.State(new StringBuilder("th table"), false)).sb().toString());
-        assertEquals("table", Ex248.year4(new Ex248.State(new StringBuilder("table th"), false)).sb().toString());
-        assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("th th th"), false)).sb().toString());
+        assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("th"), true)).sb().toString());
+        assertEquals("table", Ex248.year4(new Ex248.State(new StringBuilder("th table"), true)).sb().toString());
+        assertEquals("table", Ex248.year4(new Ex248.State(new StringBuilder("table th"), true)).sb().toString());
+        assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("th th th"), true)).sb().toString());
         assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("a a a"), false)).sb().toString());
         assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("an an an"), false)).sb().toString());
         assertEquals("", Ex248.year4(new Ex248.State(new StringBuilder("   "), false)).sb().toString());

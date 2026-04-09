@@ -109,7 +109,7 @@ public class Ex248 {
             var word = words[i].replace("'", "");
             if ((word.equalsIgnoreCase("a") && !in.changed) ||
                 (word.equalsIgnoreCase("an") && !in.changed) ||
-                (word.equalsIgnoreCase("th") && !in.changed)
+                (word.equalsIgnoreCase("th") && in.changed)
             ) {
                 sb.append(words[i].replace(word, ""));
                 continue;
