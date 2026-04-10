@@ -61,12 +61,15 @@ public class Ex248 {
                 }
             }
         }
-        return new WordInProcess(sb, EnumSet.noneOf(WordFlag.class));
+        return new WordInProcess(sb, flags);
     }
 
     static WordInProcess year2(WordInProcess word) {
         var s = word.sb.toString();
         var flags = EnumSet.noneOf(WordFlag.class);
+        if (s.isEmpty()) {
+            return new WordInProcess(word.sb, flags);
+        }
         boolean isUpper = Character.isUpperCase(s.charAt(0));
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < s.length(); i++) {
@@ -149,6 +152,18 @@ public class Ex248 {
             }
             sb.append(word);
         }
+
+        int j = 0;
+        while (j < sb.length()) {
+            if (j + 1 >= sb.length()) {
+                break;
+            }
+            if (sb.charAt(j) == ' ' && sb.charAt(j) == sb.charAt(j + 1)) {
+                sb.deleteCharAt(j);
+                continue;
+            }
+            j++;
+        }
         return new WordInProcess(sb, in.flags);
     }
 
@@ -193,7 +208,7 @@ public class Ex248 {
                     if (!res.isBlank()) {
                         sb.append(res);
                     } else {
-                        if (sb.length() - 1 > 0 && sb.charAt(sb.length() - 1) == ' ') {
+                        if (!sb.isEmpty() && sb.charAt(sb.length() - 1) == ' ') {
                             sb.deleteCharAt(sb.length() - 1);
                         }
                     }
@@ -201,7 +216,7 @@ public class Ex248 {
             }
         }
         int lastIndex = sb.length() - 1;
-        if (lastIndex > 0 && sb.charAt(lastIndex) == ' ') {
+        if (lastIndex >= 0 && sb.charAt(lastIndex) == ' ') {
             sb.deleteCharAt(lastIndex);
         }
         if (!sb.isEmpty()) {
@@ -219,10 +234,12 @@ public class Ex248 {
             }
         }
 
-        if (sb.length() - 1 > 0) {
-            if (sb.charAt(sb.length() - 1) == ' ') {
-                sb.deleteCharAt(sb.length() - 1);
-            }
+        if (!sb.isEmpty() && sb.charAt(sb.length() - 1) == ' ') {
+            sb.deleteCharAt(sb.length() - 1);
+        }
+
+        if (sb.length() == 1 && sb.charAt(0) == ' ') {
+            return sb.deleteCharAt(0).toString();
         }
         return sb.toString();
     }

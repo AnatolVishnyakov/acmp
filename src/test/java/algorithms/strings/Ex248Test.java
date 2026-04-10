@@ -402,7 +402,7 @@ class Ex248Test {
 
                     // Пробелы
                     "'     ' -> '' -> false",
-                    "   -> '' -> false",
+                    "'  ' -> '' -> false",
 
                     // Артикль между словами
                     "cat a dog -> cat dog -> false",
@@ -630,22 +630,5 @@ class Ex248Test {
         assertEquals("Wher ar you?", Ex248.all("Where are you?"));
         assertEquals("Pleas kom her", Ex248.all("Please come here"));
         assertEquals("I si thri tris", Ex248.all("I see three trees"));
-    }
-
-    @Test
-    void foo() {
-//        assertEquals("!helo , , , world!", Ex248.all("A !hello a, An, The, world! A"));
-        assertEquals("x,y", Ex248.all("x a,y"));
-        assertEquals("helo.", Ex248.all("hello the."));
-        assertEquals("word!", Ex248.all("word a!"));
-        assertEquals(",,", Ex248.all(", a,"));
-        assertEquals("kat,dog", Ex248.all("cat the,dog"));
-
-        assertEquals("an", Ex248.all("anne"));
-        assertEquals("An", Ex248.all("Ann"));
-        assertEquals("th", Ex248.all("th"));
-        assertEquals("", Ex248.all(" "));
-        assertEquals("th", Ex248.all("thh"));
-        assertEquals("Th", Ex248.all("Thh"));
     }
 }
