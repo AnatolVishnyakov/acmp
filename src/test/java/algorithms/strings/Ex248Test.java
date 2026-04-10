@@ -692,4 +692,96 @@ class Ex248Test {
         assertEquals("K", Ex248.all("Ck the"));
         assertEquals("K", Ex248.all("the Ck"));
     }
+
+    /**
+     * Тесты на пробелы (WA 10)
+     * - пробел в начале
+     * - пробел в конце
+     * - два и более пробела в середине (после удаления артиклей)
+     */
+    @Test
+    void spacesEdgeCases() {
+        // === Пробел в начале строки (должен удаляться) ===
+        assertEquals("word", Ex248.all(" word"));
+        assertEquals("word", Ex248.all("  word"));      // два пробела
+        assertEquals("helo", Ex248.all(" hello"));
+        assertEquals("kat", Ex248.all(" cat"));
+
+        // === Пробел в конце строки (должен удаляться) ===
+        assertEquals("word", Ex248.all("word "));
+        assertEquals("word", Ex248.all("word  "));      // два пробела
+        assertEquals("helo", Ex248.all("hello "));
+        assertEquals("kat", Ex248.all("cat "));
+
+        // === Пробелы с обеих сторон ===
+        assertEquals("word", Ex248.all(" word "));
+        assertEquals("word", Ex248.all("  word  "));
+        assertEquals("helo world", Ex248.all(" hello world "));
+
+        // === Двойной пробел в середине после удаления артикля ===
+        assertEquals("x y", Ex248.all("x a y"));        // "a" удаляется, остаётся один пробел
+        assertEquals("x y", Ex248.all("x the y"));      // "the" удаляется
+        assertEquals("x y", Ex248.all("x an y"));       // "an" удаляется
+        assertEquals("x y", Ex248.all("x a a y"));      // два артикля подряд
+        assertEquals("x y", Ex248.all("x a the y"));    // два разных артикля
+        assertEquals("x y", Ex248.all("x the a an y")); // три артикля
+
+        // === Множество артиклей — все пробелы должны схлопнуться ===
+        assertEquals("first last", Ex248.all("first a a a last"));
+        assertEquals("first last", Ex248.all("first the the the last"));
+        assertEquals("first last", Ex248.all("first a the an last"));
+
+        // === Артикль в начале — пробел не должен остаться в начале ===
+        assertEquals("word", Ex248.all("a word"));
+        assertEquals("word", Ex248.all("the word"));
+        assertEquals("word", Ex248.all("an word"));
+        assertEquals("word", Ex248.all("a the word"));
+        assertEquals("word", Ex248.all("a the an word"));
+
+        // === Артикль в конце — пробел не должен остаться в конце ===
+        assertEquals("word", Ex248.all("word a"));
+        assertEquals("word", Ex248.all("word the"));
+        assertEquals("word", Ex248.all("word an"));
+        assertEquals("word", Ex248.all("word a the"));
+        assertEquals("word", Ex248.all("word a the an"));
+
+        // === Только артикли — результат пустой, без пробелов ===
+        assertEquals("", Ex248.all("a"));
+        assertEquals("", Ex248.all("the"));
+        assertEquals("", Ex248.all("an"));
+        assertEquals("", Ex248.all("a the"));
+        assertEquals("", Ex248.all("a the an"));
+        assertEquals("", Ex248.all("a a a a a"));
+        assertEquals("", Ex248.all("the the the"));
+
+        // === Только пробелы ===
+        assertEquals("", Ex248.all(" "));
+        assertEquals("", Ex248.all("  "));
+        assertEquals("", Ex248.all("   "));
+
+        // === Пробел между знаками препинания (должен сохраняться) ===
+        assertEquals(". .", Ex248.all(". ."));
+        assertEquals(", ,", Ex248.all(", ,"));
+        assertEquals("! ?", Ex248.all("! ?"));
+        assertEquals(". , !", Ex248.all(". , !"));
+
+        // === Артикль между знаком препинания и словом ===
+        assertEquals(", word", Ex248.all(", a word"));
+        assertEquals("word ,", Ex248.all("word a ,"));
+        assertEquals(", word ,", Ex248.all(", the word ,"));
+
+        // === Сложные комбинации ===
+        assertEquals("x, y", Ex248.all("x, a y"));       // запятая + пробел + артикль + пробел
+        assertEquals("x, y", Ex248.all("x a, y"));       // артикль удаляется с пробелом перед ним
+        assertEquals("x,, y", Ex248.all("x, a, y"));     // артикль между запятыми, пробел перед ним удаляется
+
+        // "x, a, y": пробел перед "a" удаляется вместе с артиклем
+        // Результат: "x," + "," + " " + "y" = "x,, y"
+        assertEquals("x,, y", Ex248.all("x, a, y"));
+
+        // === Результат — один символ ===
+        assertEquals("x", Ex248.all(" x "));
+        assertEquals("x", Ex248.all("a x a"));
+        assertEquals("x", Ex248.all("the x the"));
+    }
 }
