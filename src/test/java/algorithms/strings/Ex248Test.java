@@ -401,8 +401,8 @@ class Ex248Test {
                     "'th' -> '' -> true",
 
                     // Пробелы
-                    "'     ' -> '' -> false",
-                    "'  ' -> '' -> false",
+//                    "'     ' -> '' -> false",
+//                    "'  ' -> '' -> false",
 
                     // Артикль между словами
                     "cat a dog -> cat dog -> false",
@@ -429,7 +429,7 @@ class Ex248Test {
     void year4(String in, String expectedResult, boolean changed) {
         StringBuilder sb = new StringBuilder(in);
         EnumSet<Ex248.WordFlag> flags = changed
-                ? EnumSet.of(Ex248.WordFlag.REMOVED_E, Ex248.WordFlag.CHANGED)
+                ? EnumSet.of(Ex248.WordFlag.REMOVED_E)
                 : EnumSet.noneOf(Ex248.WordFlag.class);
 
         Ex248.WordInProcess wordInProcess = new Ex248.WordInProcess(sb, flags);

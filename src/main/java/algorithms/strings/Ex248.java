@@ -6,7 +6,6 @@ import java.util.Scanner;
 
 public class Ex248 {
     enum WordFlag {
-        CHANGED,
         REMOVED_K,
         NEED_UPPER_CASE,
         REMOVED_DUPLICATE,
@@ -14,22 +13,41 @@ public class Ex248 {
     }
 
     record WordInProcess(StringBuilder sb, EnumSet<WordFlag> flags) {
+        static WordInProcess empty() {
+            return new WordInProcess(new StringBuilder(0), EnumSet.noneOf(WordFlag.class));
+        }
+
+        WordInProcess(StringBuilder sb) {
+            this(sb, EnumSet.noneOf(WordFlag.class));
+        }
+
         public String get() {
             return sb.toString();
         }
     }
 
+    /**
+     * <b>Год 1: Замена буквы "c"</b>
+     * <ul>
+     *   <li>"ci" и "ce" → "si" и "se"</li>
+     *   <li>"ck" → опускается</li>
+     *   <li>в остальных случаях → "k"</li>
+     * </ul>
+     * Все замены производятся строго слева направо.
+     * Например: "success" → "suksess", "cck" → "kk".
+     */
     static WordInProcess year1(String s) {
+        if (s.isBlank()) {
+            return WordInProcess.empty();
+        }
         StringBuilder sb = new StringBuilder();
         var flags = EnumSet.noneOf(WordFlag.class);
-        if (s.isBlank()) {
-            return new WordInProcess(new StringBuilder(0), flags);
-        }
         boolean isUpperCaseFirstSymbol = Character.isUpperCase(s.charAt(0));
         for (int i = 0; i < s.length(); i++) {
             char curr = Character.toLowerCase(s.charAt(i));
             char next = i + 1 < s.length()
                     ? s.charAt(i + 1) : '0';
+            boolean isUpper = (i == 0 && Character.isUpperCase(s.charAt(0)));
             if (curr == 'c') {
                 switch (next) {
                     case 'i', 'e' -> {
@@ -37,9 +55,8 @@ public class Ex248 {
                         else sb.append('s');
                     }
                     case 'k' -> {
-                        flags.add(WordFlag.CHANGED);
                         flags.add(WordFlag.REMOVED_K);
-                        if (i == 0 && Character.isUpperCase(s.charAt(0))) {
+                        if (isUpper) {
                             flags.add(WordFlag.NEED_UPPER_CASE);
                         }
                     }
@@ -53,7 +70,7 @@ public class Ex248 {
                     sb.append(Character.toUpperCase(curr));
                     flags.remove(WordFlag.NEED_UPPER_CASE);
                 } else {
-                    if (i == 0 && Character.isUpperCase(s.charAt(0))) {
+                    if (isUpper) {
                         sb.append(Character.toUpperCase(curr));
                     } else {
                         sb.append(curr);
@@ -77,7 +94,6 @@ public class Ex248 {
         for (int i = 0; i < s.length(); i++) {
             if (isDuplicate(s, i, i + 1)) {
                 flags.add(WordFlag.REMOVED_DUPLICATE);
-                flags.add(WordFlag.CHANGED);
                 var c = Character.toLowerCase(s.charAt(i));
                 if (c == 'e') {
                     if (i == 0 && isUpper) sb.append('I');
@@ -122,7 +138,6 @@ public class Ex248 {
                     }
                     sb.append(word, 0, word.length() - 1);
                     in.flags.add(WordFlag.REMOVED_E);
-                    in.flags.add(WordFlag.CHANGED);
                     continue;
                 }
             }
@@ -142,8 +157,8 @@ public class Ex248 {
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < words.length; i++) {
             var word = words[i].replace("'", "");
-            if ((word.equalsIgnoreCase("a") && !in.flags.contains(WordFlag.CHANGED)) ||
-                (word.equalsIgnoreCase("an") && !in.flags.contains(WordFlag.CHANGED)) ||
+            if ((word.equalsIgnoreCase("a") && in.flags.isEmpty()) ||
+                (word.equalsIgnoreCase("an") && in.flags.isEmpty()) ||
                 (word.equalsIgnoreCase("th") && in.flags.contains(WordFlag.REMOVED_E))
             ) {
                 sb.append(words[i].replace(word, ""));
