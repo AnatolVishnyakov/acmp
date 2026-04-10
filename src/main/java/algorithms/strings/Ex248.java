@@ -65,6 +65,7 @@ public class Ex248 {
         for (int i = 0; i < s.length(); i++) {
             if (isDuplicate(s, i, i + 1)) {
                 flags.add(WordFlag.REMOVED_DUPLICATE);
+                flags.add(WordFlag.CHANGED);
                 var c = Character.toLowerCase(s.charAt(i));
                 if (c == 'e') {
                     if (i == 0 && isUpper) sb.append('I');
@@ -100,7 +101,6 @@ public class Ex248 {
     static WordInProcess year3(WordInProcess in) {
         var words = in.sb.toString().split(" ");
         StringBuilder sb = new StringBuilder();
-        var removedE = false;
         for (int i = 0; i < words.length; i++) {
             var word = words[i];
             if (word.length() > 1) {
@@ -109,7 +109,8 @@ public class Ex248 {
                         sb.append(' ');
                     }
                     sb.append(word, 0, word.length() - 1);
-                    removedE = true;
+                    in.flags.add(WordFlag.REMOVED_E);
+                    in.flags.add(WordFlag.CHANGED);
                     continue;
                 }
             }

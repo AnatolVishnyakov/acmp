@@ -148,23 +148,43 @@ class Ex248Test {
      * Удаляются артикли "a", "an" и "the", если они являются отдельными словами.
      * Например: "the table" → "tabl", "aaaaa" → "a" (остается, так как изначально не было артиклем).
      */
-//    @Test
-//    void year4() {
-//        assertEquals("", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("a"), false, false)).sb().toString());
-//        assertEquals("''", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("'A'"), false, false)).sb().toString());
-//        assertEquals("table", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("a table"), false, false)).sb().toString());
-//        assertEquals("table", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("table a"), false, false)).sb().toString());
-//        assertEquals("", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("an"), false, false)).sb().toString());
-//        assertEquals("table", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("an table"), false, false)).sb().toString());
-//        assertEquals("table", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("table an"), false, false)).sb().toString());
-//        assertEquals("", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("th"), true, true)).sb().toString());
-//        assertEquals("table", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("th table"), true, true)).sb().toString());
-//        assertEquals("table", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("table th"), true, true)).sb().toString());
-//        assertEquals("", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("th th th"), true, true)).sb().toString());
-//        assertEquals("", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("a a a"), false, false)).sb().toString());
-//        assertEquals("", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("an an an"), false, false)).sb().toString());
-//        assertEquals("", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("   "), false, false)).sb().toString());
-//    }
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "a -> '' -> false",
+                    "A -> '' -> false",
+                    "a a a -> '' -> false",
+                    "A a a -> '' -> false",
+                    "a table -> table -> false",
+                    "table a -> table -> false",
+                    "an -> '' -> false",
+                    "An -> '' -> false",
+                    "an an an -> '' -> false",
+                    "An an an -> '' -> false",
+                    "an table -> table -> false",
+                    "table an -> table -> false",
+                    "th -> '' -> true",
+                    "Th -> '' -> true",
+                    "th th th -> '' -> true",
+                    "Th th th -> '' -> true",
+                    "th table -> table -> true",
+                    "table th -> table -> true",
+                    "'     ' -> '' -> false",
+            },
+            delimiterString = "->"
+    )
+    void year4(String in, String expectedResult, boolean changed) {
+        StringBuilder sb = new StringBuilder(in);
+        EnumSet<Ex248.WordFlag> flags = changed
+                ? EnumSet.of(Ex248.WordFlag.REMOVED_E)
+                : EnumSet.noneOf(Ex248.WordFlag.class);
+
+        Ex248.WordInProcess wordInProcess = new Ex248.WordInProcess(sb, flags);
+        var actualResult = Ex248.year4(wordInProcess).get();
+
+        assertEquals(expectedResult, actualResult);
+    }
+
     @Test
     void all() {
         assertEquals("A", Ex248.all("Aaaaaa"));
