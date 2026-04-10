@@ -1,29 +1,38 @@
 package algorithms.strings;
 
 import java.io.PrintWriter;
+import java.util.EnumSet;
 import java.util.Scanner;
 
 public class Ex248 {
-    record State(StringBuilder sb, Boolean changed, Boolean removedE) {
+    enum WordFlag {
+        CHANGED,
+        REMOVED_E
     }
 
-    static String year1(String s) {
+    record WordInProcess(StringBuilder sb, EnumSet<WordFlag> flags) {
+        public String get() {
+            return sb.toString();
+        }
+    }
+
+    static WordInProcess year1(String s) {
         StringBuilder sb = new StringBuilder();
+        boolean isUpper = Character.isUpperCase(s.charAt(0));
         for (int i = 0; i < s.length(); i++) {
-            boolean isUpper = Character.isUpperCase(s.charAt(i));
             char curr = Character.toLowerCase(s.charAt(i));
             char next = i + 1 < s.length()
                     ? s.charAt(i + 1) : '0';
             if (curr == 'c') {
                 switch (next) {
                     case 'i', 'e' -> {
-                        if (isUpper) sb.append('S');
+                        if (i == 0 && isUpper) sb.append('S');
                         else sb.append('s');
                     }
                     case 'k' -> {
                     }
                     default -> {
-                        if (isUpper) sb.append('K');
+                        if (i == 0 && isUpper) sb.append('K');
                         else sb.append('k');
                     }
                 }
@@ -36,10 +45,11 @@ public class Ex248 {
                 else sb.append(curr);
             }
         }
-        return sb.toString();
+        return new WordInProcess(sb, EnumSet.noneOf(WordFlag.class));
     }
 
-    static State year2(String s) {
+    static WordInProcess year2(WordInProcess word) {
+        var s = word.sb.toString();
         StringBuilder sb = new StringBuilder();
         boolean replaced = false;
         for (int i = 0; i < s.length(); i++) {
@@ -64,12 +74,12 @@ public class Ex248 {
         }
         if (replaced) {
             if (sb.toString().equalsIgnoreCase("a")) {
-                return new State(sb, sb.length() != s.length(), false);
+                return new WordInProcess(sb, word.flags);
             }
-            var res = year2(sb.toString());
-            return new State(res.sb, true, false);
+            var res = year2(new WordInProcess(sb, word.flags));
+            return new WordInProcess(res.sb, word.flags);
         }
-        return new State(sb, sb.length() != s.length(), false);
+        return new WordInProcess(sb, word.flags);
     }
 
     private static boolean isDuplicate(String s, int curr, int next) {
@@ -78,7 +88,7 @@ public class Ex248 {
                Character.toLowerCase(s.charAt(curr)) == Character.toLowerCase(s.charAt(next));
     }
 
-    static State year3(State in) {
+    static WordInProcess year3(WordInProcess in) {
         var words = in.sb.toString().split(" ");
         StringBuilder sb = new StringBuilder();
         var removedE = false;
@@ -99,17 +109,17 @@ public class Ex248 {
             }
             sb.append(word);
         }
-        return new State(sb, in.changed, removedE);
+        return new WordInProcess(sb, in.flags);
     }
 
-    static State year4(State in) {
+    static WordInProcess year4(WordInProcess in) {
         var words = in.sb.toString().split(" ");
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < words.length; i++) {
             var word = words[i].replace("'", "");
-            if ((word.equalsIgnoreCase("a") && !in.changed) ||
-                (word.equalsIgnoreCase("an") && !in.changed) ||
-                (word.equalsIgnoreCase("th") && in.removedE)
+            if ((word.equalsIgnoreCase("a") && !in.flags.contains(WordFlag.CHANGED)) ||
+                (word.equalsIgnoreCase("an") && !in.flags.contains(WordFlag.CHANGED)) ||
+                (word.equalsIgnoreCase("th") && in.flags.contains(WordFlag.REMOVED_E))
             ) {
                 sb.append(words[i].replace(word, ""));
                 continue;
@@ -119,7 +129,7 @@ public class Ex248 {
             }
             sb.append(word);
         }
-        return new State(sb, in.changed, in.removedE);
+        return new WordInProcess(sb, in.flags);
     }
 
     static String all(String s) {
@@ -166,9 +176,6 @@ public class Ex248 {
                         if (sb.length() - 1 > 0 && sb.charAt(sb.length() - 1) == ' ') {
                             sb.deleteCharAt(sb.length() - 1);
                         }
-//                        if (sb.charAt(0) == ' ') {
-//                            sb.deleteCharAt(0);
-//                        }
                     }
                     i += word.length() - 1;
             }
