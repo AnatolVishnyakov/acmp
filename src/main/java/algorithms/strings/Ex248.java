@@ -50,7 +50,11 @@ public class Ex248 {
                     sb.append(Character.toUpperCase(curr));
                     flags.remove(WordFlag.NEED_UPPER_CASE);
                 } else {
-                    sb.append(curr);
+                    if (i == 0 && Character.isUpperCase(s.charAt(0))) {
+                        sb.append(Character.toUpperCase(curr));
+                    } else {
+                        sb.append(curr);
+                    }
                 }
             }
         }
