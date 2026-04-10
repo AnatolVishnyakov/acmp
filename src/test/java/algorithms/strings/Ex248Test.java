@@ -346,32 +346,90 @@ class Ex248Test {
     @ParameterizedTest
     @CsvSource(
             value = {
+                    // Артикль "a"
                     "a -> '' -> false",
                     "A -> '' -> false",
                     "a a a -> '' -> false",
                     "A a a -> '' -> false",
                     "a table -> table -> false",
                     "table a -> table -> false",
+
+                    // Артикль "an"
                     "an -> '' -> false",
                     "An -> '' -> false",
                     "an an an -> '' -> false",
                     "An an an -> '' -> false",
                     "an table -> table -> false",
                     "table an -> table -> false",
+
+                    // Артикль "th" (бывший "the", REMOVED_E = true)
                     "th -> '' -> true",
                     "Th -> '' -> true",
                     "th th th -> '' -> true",
                     "Th th th -> '' -> true",
                     "th table -> table -> true",
                     "table th -> table -> true",
+
+                    // "th" НЕ удаляется, если REMOVED_E = false (это не артикль)
+                    "th -> th -> false",
+                    "Th -> Th -> false",
+                    "th cat -> th cat -> false",
+
+                    // "a" и "an" НЕ удаляются, если REMOVED_E = true (были изменены)
+                    "a -> a -> true",
+                    "an -> an -> true",
+                    "a cat -> a cat -> true",
+                    "an cat -> an cat -> true",
+
+                    // Смешанные артикли (одинаковый флаг для всех слов)
+                    "a an -> '' -> false",
+                    "an a -> '' -> false",
+                    "th th -> '' -> true",
+
+                    // Слова, похожие на артикли, но не артикли
+                    "ant -> ant -> false",
+                    "ant -> ant -> true",
+                    "at -> at -> false",
+                    "than -> than -> true",
+                    "that -> that -> true",
+                    "them -> them -> true",
+
+                    // Артикли с апострофами
+                    "'a' -> '' -> false",
+                    "'A' -> '' -> false",
+                    "'an' -> '' -> false",
+                    "'th' -> '' -> true",
+
+                    // Пробелы
                     "'     ' -> '' -> false",
+                    "   -> '' -> false",
+
+                    // Артикль между словами
+                    "cat a dog -> cat dog -> false",
+                    "cat an dog -> cat dog -> false",
+                    "cat th dog -> cat dog -> true",
+
+                    // Несколько слов, только часть — артикли
+                    "a big cat -> big cat -> false",
+                    "th big cat -> big cat -> true",
+                    "big a cat -> big cat -> false",
+                    "big cat a -> big cat -> false",
+
+                    // Все слова — артикли
+                    "a a a a -> '' -> false",
+                    "an an an an -> '' -> false",
+                    "th th th th -> '' -> true",
+
+                    // Пустая строка
+                    "'' -> '' -> false",
+                    "'' -> '' -> true",
             },
             delimiterString = "->"
     )
     void year4(String in, String expectedResult, boolean changed) {
         StringBuilder sb = new StringBuilder(in);
         EnumSet<Ex248.WordFlag> flags = changed
-                ? EnumSet.of(Ex248.WordFlag.REMOVED_E)
+                ? EnumSet.of(Ex248.WordFlag.REMOVED_E, Ex248.WordFlag.CHANGED)
                 : EnumSet.noneOf(Ex248.WordFlag.class);
 
         Ex248.WordInProcess wordInProcess = new Ex248.WordInProcess(sb, flags);

@@ -130,6 +130,9 @@ public class Ex248 {
     }
 
     static WordInProcess year4(WordInProcess in) {
+        if (in.sb.toString().isBlank()) {
+            return in;
+        }
         var words = in.sb.toString().split(" ");
         StringBuilder sb = new StringBuilder();
         for (int i = 0; i < words.length; i++) {
