@@ -125,6 +125,8 @@ class Ex248Test {
                     "cici -> sisi",
                     "ckce -> kse",
                     "ceck -> sek",
+                    "' ' -> ''",
+                    "'' -> ''",
             },
             delimiterString = "->"
     )
@@ -146,14 +148,98 @@ class Ex248Test {
     @ParameterizedTest
     @CsvSource(
             value = {
+// Базовые удвоения ee и oo
                     "ee -> i",
                     "oo -> u",
+                    "Ee -> I",
+                    "Oo -> U",
+
+                    // Остальные удвоения → одна буква
+                    "aa -> a",
+                    "bb -> b",
+                    "cc -> c",
+                    "dd -> d",
+                    "ff -> f",
+                    "gg -> g",
+                    "hh -> h",
+                    "ii -> i",
+                    "ll -> l",
+                    "mm -> m",
+                    "nn -> n",
+                    "pp -> p",
+                    "rr -> r",
+                    "ss -> s",
+                    "tt -> t",
                     "uu -> u",
                     "vv -> v",
-                    "Ooo -> Uo",
+                    "zz -> z",
+
+                    // Заглавные
+                    "Aa -> A",
+                    "Bb -> B",
+                    "Ll -> L",
+                    "Ss -> S",
+
+                    // Тройные (слева направо)
+                    "ooo -> uo",
+                    "eee -> ie",
+                    "aaa -> a",
+                    "lll -> l",
+                    "sss -> s",
+
+                    // Четверные и более
                     "Aaaa -> A",
                     "Oooo -> U",
                     "Eeeee -> Ie",
+                    "oooo -> u",
+                    "eeee -> i",
+                    "aaaaa -> a",
+                    "llll -> l",
+
+                    // Цепочки из условия
+                    "oou -> u",
+                    "iee -> i",
+                    "eei -> i",
+                    "ooi -> ui",
+                    "uoo -> u",
+
+                    // Смешанные удвоения
+                    "aabb -> ab",
+                    "eeff -> if",
+                    "ooll -> ul",
+                    "llss -> ls",
+                    "sstt -> st",
+
+                    // Слова
+                    "hello -> helo",
+                    "book -> buk",
+                    "look -> luk",
+                    "feel -> fil",
+                    "good -> gud",
+                    "food -> fud",
+                    "room -> rum",
+                    "tree -> tri",
+                    "free -> fri",
+                    "green -> grin",
+                    "sleep -> slip",
+                    "keep -> kip",
+                    "need -> nid",
+                    "speed -> spid",
+                    "football -> futbal",
+                    "balloon -> balun",
+
+                    // Без удвоений (не меняется)
+                    "abc -> abc",
+                    "test -> test",
+                    "word -> word",
+                    "a -> a",
+
+                    // Несколько пар в слове
+                    "beekeeper -> bikiper",
+                    "roommate -> rumate",
+
+                    // Пустая строка
+                    "' '->' '",
             },
             delimiterString = "->"
     )

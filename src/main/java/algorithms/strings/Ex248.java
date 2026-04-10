@@ -22,6 +22,9 @@ public class Ex248 {
     static WordInProcess year1(String s) {
         StringBuilder sb = new StringBuilder();
         var flags = EnumSet.noneOf(WordFlag.class);
+        if (s.isBlank()) {
+            return new WordInProcess(new StringBuilder(0), flags);
+        }
         boolean isUpperCaseFirstSymbol = Character.isUpperCase(s.charAt(0));
         for (int i = 0; i < s.length(); i++) {
             char curr = Character.toLowerCase(s.charAt(i));
