@@ -66,7 +66,9 @@ public class Ex248 {
 
     static WordInProcess year2(WordInProcess word) {
         var s = word.sb.toString();
+        // Сохраняем флаги из year1 и добавляем свои
         var flags = EnumSet.noneOf(WordFlag.class);
+        flags.addAll(word.flags);
         if (s.isEmpty()) {
             return new WordInProcess(word.sb, flags);
         }
@@ -96,7 +98,7 @@ public class Ex248 {
             if (sb.toString().equalsIgnoreCase("a")) {
                 return new WordInProcess(sb, flags);
             }
-            var res = year2(new WordInProcess(sb, flags));
+            var res = year2(new WordInProcess(sb, EnumSet.noneOf(WordFlag.class)));
             return new WordInProcess(res.sb, flags);
         }
         return new WordInProcess(sb, flags);

@@ -773,8 +773,6 @@ class Ex248Test {
         // === Сложные комбинации ===
         assertEquals("x, y", Ex248.all("x, a y"));       // запятая + пробел + артикль + пробел
         assertEquals("x, y", Ex248.all("x a, y"));       // артикль удаляется с пробелом перед ним
-        assertEquals("x,, y", Ex248.all("x, a, y"));     // артикль между запятыми, пробел перед ним удаляется
-
         // "x, a, y": пробел перед "a" удаляется вместе с артиклем
         // Результат: "x," + "," + " " + "y" = "x,, y"
         assertEquals("x,, y", Ex248.all("x, a, y"));
@@ -783,5 +781,64 @@ class Ex248Test {
         assertEquals("x", Ex248.all(" x "));
         assertEquals("x", Ex248.all("a x a"));
         assertEquals("x", Ex248.all("the x the"));
+    }
+
+    /**
+     * Тесты из комментариев к задаче (WA 7, WA 10, WA 12)
+     */
+    @Test
+    void testsFromComments() {
+        // === WA 12: тесты с одиночной 'e' между знаками препинания ===
+        // Ответ должен быть таким же как ввод
+        assertEquals("'e'e'", Ex248.all("'e'e'"));
+        assertEquals("\"e\"e\"", Ex248.all("\"e\"e\""));
+        assertEquals("!e!e!", Ex248.all("!e!e!"));
+        assertEquals(".e.e.", Ex248.all(".e.e."));
+        assertEquals(",e,e,", Ex248.all(",e,e,"));
+
+        // === Тесты из комментариев ===
+        assertEquals("I", Ex248.all("Eee"));           // Eee -> Ie -> I
+        assertEquals("Uo", Ex248.all("Ooo"));          // Ooo -> Uo
+        assertEquals("U", Ex248.all("Oooo"));          // Oooo -> Uu -> U
+        assertEquals("Papa Keks", Ex248.all("Papa Ckeks"));  // Ck -> K
+        assertEquals("kof", Ex248.all("cofe"));        // c->k, e удаляется
+        assertEquals("i", Ex248.all("iee"));           // ee->i, ii->i
+        assertEquals("u", Ex248.all("uoo"));           // oo->u, uu->u
+
+        // === WA 10: пробелы после удаления артиклей ===
+        assertEquals("", Ex248.all("A the an"));       // пустая строка, НЕ пробел!
+        assertEquals("", Ex248.all("a"));
+        assertEquals("", Ex248.all("the"));
+        assertEquals("", Ex248.all("an"));
+
+        // === Дополнительные тесты из комментариев ===
+        assertEquals("i", Ex248.all("ieee"));          // ieee -> ii -> i
+        assertEquals("uo", Ex248.all("uooo"));         // uooo -> uuo -> uo
+        assertEquals("a", Ex248.all("aaaa"));          // aaaa -> aa -> a
+        assertEquals("A", Ex248.all("Aaaa"));          // Aaaa -> Aa -> A
+        assertEquals("A", Ex248.all("Aaaaaa"));        // много a
+
+        // === Проверка что 'c' заменяется правильно ===
+        assertEquals("sukses", Ex248.all("success"));  // success -> suksess -> sukses
+        assertEquals("aksept", Ex248.all("accept"));
+        assertEquals("sokser", Ex248.all("soccer"));
+        assertEquals("okur", Ex248.all("occur"));
+
+        // === Артикли не удаляются если слово изменилось ===
+        assertEquals("a", Ex248.all("aa"));            // aa -> a, но CHANGED, не удаляется
+        assertEquals("an", Ex248.all("ann"));          // ann -> an, но CHANGED
+        assertEquals("th", Ex248.all("thh"));          // thh -> th, но CHANGED (не REMOVED_E)
+        assertEquals("an", Ex248.all("anne"));         // anne -> ane -> an, CHANGED
+        assertEquals("An", Ex248.all("Ann"));          // Ann -> An, CHANGED
+
+        // === Проверка заглавных букв с Ck ===
+        assertEquals("K", Ex248.all("Ck"));
+        assertEquals("K", Ex248.all("Cck"));
+        assertEquals("K", Ex248.all("Ckck"));          // Ck->K, ck->k -> Kk -> K (Kk дубликаты)
+
+        // === Граничные случаи ===
+        assertEquals("", Ex248.all(""));               // пустая строка
+        assertEquals("", Ex248.all(" "));              // один пробел
+        assertEquals("", Ex248.all("  "));             // два пробела
     }
 }
