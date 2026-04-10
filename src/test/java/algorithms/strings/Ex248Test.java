@@ -261,12 +261,70 @@ class Ex248Test {
     @ParameterizedTest
     @CsvSource(
             value = {
+                    // Базовые случаи — удаление e в конце
                     "ololoshe -> ololosh",
+                    "the -> th",
+                    "table -> tabl",
+                    "name -> nam",
+                    "home -> hom",
+                    "time -> tim",
+                    "made -> mad",
+                    "take -> tak",
+                    "come -> com",
+                    "give -> giv",
+                    "live -> liv",
+
+                    // Заглавные в начале
+                    "The -> Th",
+                    "Table -> Tabl",
+                    "Name -> Nam",
+                    "Home -> Hom",
+
+                    // e — единственная буква (НЕ удаляется)
                     "e -> e",
+                    "E -> E",
+
+                    // Не заканчивается на e (не меняется)
+                    "cat -> cat",
+                    "dog -> dog",
+                    "th -> th",
+                    "an -> an",
+                    "word -> word",
+                    "test -> test",
+
+                    // Несколько слов
                     "e ololo -> e ololo",
+                    "the cat -> th cat",
+                    "table name -> tabl nam",
+                    "give me -> giv m",
+                    "home alone -> hom alon",
+                    "e e e -> e e e",
+                    "the the the -> th th th",
+
+                    // Короткие слова с e
+                    "me -> m",
+                    "we -> w",
+                    "he -> h",
+                    "be -> b",
+                    "re -> r",
+                    "Me -> M",
+                    "We -> W",
+
+                    // Пустая строка и пробелы
                     "''->''",
                     "e  -> e",
-                    "the -> th"
+                    "'  ' -> ''",
+
+                    // Слова без букв (только e в конце после преобразований)
+                    "ee -> e",
+
+                    // Двойное e в конце (но это уже после year2, так что маловероятно)
+                    "ilee -> ile",
+
+                    // Смешанные случаи
+                    "a e i -> a e i",
+                    "the a an -> th a an",
+                    "cake pie -> cak pi",
             },
             delimiterString = "->"
     )
