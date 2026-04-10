@@ -631,4 +631,65 @@ class Ex248Test {
         assertEquals("Pleas kom her", Ex248.all("Please come here"));
         assertEquals("I si thri tris", Ex248.all("I see three trees"));
     }
+
+    /**
+     * Тесты для исправленных багов
+     */
+    @Test
+    void bugfixes() {
+        // === Баг 1: year2 падал на пустой строке ===
+        // year1("") возвращает пустой StringBuilder, year2 должен обработать это
+        assertEquals("", Ex248.all(""));
+        assertEquals("", Ex248.year1("").get());
+
+        // === Баг 2: year1 терял флаги (возвращал пустой EnumSet) ===
+        // Флаг REMOVED_K должен передаваться, чтобы "Ck" -> "K" (заглавная сохранялась)
+        assertEquals("K", Ex248.all("Ck"));
+        assertEquals("K", Ex248.all("Cck"));
+        assertEquals("K", Ex248.year1("Ck").get());
+
+        // === Баг 3: пробел в конце не удалялся если sb.length() == 1 ===
+        // Артикль в конце после слова из одной буквы
+        assertEquals("x", Ex248.all("x a"));
+        assertEquals("x", Ex248.all("x the"));
+        assertEquals("x", Ex248.all("x an"));
+
+        // === Баг 4: пробел в начале не удалялся в некоторых случаях ===
+        assertEquals("x", Ex248.all(" x"));
+        assertEquals("x", Ex248.all("  x"));  // два пробела (хотя по условию невозможно)
+        assertEquals("x", Ex248.all("x "));
+        assertEquals("x", Ex248.all("x  "));
+
+        // === Один пробел ===
+        assertEquals("", Ex248.all(" "));
+
+        // === Артикль — единственное слово, пробелы вокруг ===
+        assertEquals("", Ex248.all(" a "));
+        assertEquals("", Ex248.all(" the "));
+        assertEquals("", Ex248.all(" an "));
+
+        // === Строка из одного символа (не артикль) ===
+        assertEquals("x", Ex248.all("x"));
+        assertEquals("X", Ex248.all("X"));
+        assertEquals("e", Ex248.all("e"));
+        assertEquals("E", Ex248.all("E"));
+
+        // === Пустая строка через year2 напрямую ===
+        var emptyWord = new Ex248.WordInProcess(
+                new StringBuilder(""),
+                EnumSet.noneOf(Ex248.WordFlag.class)
+        );
+        assertEquals("", Ex248.year2(emptyWord).get());
+
+        // === Флаги корректно передаются через все годы ===
+        // "Ckck" -> year1 -> "Kk" (c опускается перед k, заглавная сохраняется)
+        assertEquals("k", Ex248.all("ckck"));
+        assertEquals("K", Ex248.all("Ckck"));
+
+        // === Комбинация: слово из ck + артикль ===
+        assertEquals("k", Ex248.all("ck a"));
+        assertEquals("k", Ex248.all("a ck"));
+        assertEquals("K", Ex248.all("Ck the"));
+        assertEquals("K", Ex248.all("the Ck"));
+    }
 }
