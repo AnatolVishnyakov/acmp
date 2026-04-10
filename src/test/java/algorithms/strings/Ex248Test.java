@@ -507,6 +507,129 @@ class Ex248Test {
         // etc.
         assertEquals("an", Ex248.all("anne"));
         assertEquals("An", Ex248.all("Ann"));
+
+        // === Комплексные преобразования через все 4 года ===
+
+        // Слова, которые НЕ должны удаляться как артикли
+        assertEquals("an", Ex248.all("anne"));        // ann→an (changed), не артикль
+        assertEquals("An", Ex248.all("Ann"));         // Ann→An (changed), не артикль
+        assertEquals("th", Ex248.all("thh"));         // thh→th (changed в year2), не артикль
+        assertEquals("Th", Ex248.all("Thh"));         // Thh→Th (changed в year2), не артикль
+        assertEquals("a", Ex248.all("aa"));           // aa→a (changed), не артикль
+        assertEquals("A", Ex248.all("Aa"));           // Aa→A (changed), не артикль
+        assertEquals("a", Ex248.all("aaa"));          // aaa→a (changed), не артикль
+        assertEquals("A", Ex248.all("Aaaa"));         // Aaaa→A (changed), не артикль
+
+        // Слова, похожие на артикли после преобразований
+        assertEquals("ant", Ex248.all("ant"));        // не меняется
+        assertEquals("than", Ex248.all("thane"));     // thane→than (e удалена, но "than" ≠ "th")
+        assertEquals("them", Ex248.all("theme"));     // theme→them
+        assertEquals("then", Ex248.all("thenne"));    // thenne→then (nn→n, e удалена)
+
+        // === Year1: замена c ===
+        assertEquals("kat", Ex248.all("cat"));
+        assertEquals("Kat", Ex248.all("Cat"));
+        assertEquals("kak", Ex248.all("cake"));      // cake→kake→kak (e удалена)
+        assertEquals("kak", Ex248.all("cake"));       // Исправление: cake→kake→kak
+        assertEquals("ras", Ex248.all("race"));       // race→rase→ras
+        assertEquals("peas", Ex248.all("peace"));     // peace→pease→peas
+        assertEquals("peas", Ex248.all("peace"));
+        assertEquals("sirkl", Ex248.all("circle"));   // circle→sirkle→sirkl
+        assertEquals("aksept", Ex248.all("accept"));  // accept→aksept
+        assertEquals("sokser", Ex248.all("soccer"));  // soccer→sokser (cc→ks)
+        assertEquals("klok", Ex248.all("clock"));     // clock→klok (c→k, ck→k)
+
+        // === Year2: удвоения ===
+        assertEquals("helo", Ex248.all("hello"));     // ll→l
+        assertEquals("buk", Ex248.all("book"));       // oo→u
+        assertEquals("luk", Ex248.all("look"));       // oo→u
+        assertEquals("fil", Ex248.all("feel"));       // ee→i, l
+        assertEquals("gud", Ex248.all("good"));       // oo→u
+        assertEquals("grin", Ex248.all("green"));     // ee→i, n
+        assertEquals("slip", Ex248.all("sleep"));     // ee→i, p
+        assertEquals("nid", Ex248.all("need"));       // ee→i
+        assertEquals("spid", Ex248.all("speed"));     // ee→i
+        assertEquals("tri", Ex248.all("tree"));       // ee→i, e удалена
+        assertEquals("fri", Ex248.all("free"));       // ee→i, e удалена
+
+        // === Сложные предложения ===
+        assertEquals("Helo world", Ex248.all("Hello world"));
+        assertEquals("gud morning", Ex248.all("good morning"));
+        assertEquals("si you sun", Ex248.all("see you soon")); // see→si, oo→u
+        assertEquals("I fil gud", Ex248.all("I feel good"));
+        assertEquals("kip kalm", Ex248.all("keep calm"));     // ee→i, p
+
+        // === Артикли в сложных позициях ===
+        assertEquals("big kat", Ex248.all("a big cat"));
+        assertEquals("big kat", Ex248.all("the big cat"));
+        assertEquals("I hav kat", Ex248.all("I have a cat")); // have→hav
+        assertEquals("( kat)", Ex248.all("(the cat)"));
+        assertEquals("\" kat\"", Ex248.all("\"a cat\""));
+        assertEquals("kat!", Ex248.all("the cat!"));
+        assertEquals("kat?", Ex248.all("a cat?"));
+        assertEquals("kat;", Ex248.all("an cat;"));
+
+        // === Множественные артикли ===
+        assertEquals("", Ex248.all("the"));
+        assertEquals("", Ex248.all("The"));
+        assertEquals("", Ex248.all("a"));
+        assertEquals("", Ex248.all("A"));
+        assertEquals("", Ex248.all("an"));
+        assertEquals("", Ex248.all("An"));
+        assertEquals("", Ex248.all("a an the"));
+        assertEquals("", Ex248.all("The A An"));
+
+        // === Знаки препинания ===
+        assertEquals("helo, world", Ex248.all("hello, world"));
+        assertEquals("helo; world", Ex248.all("hello; world"));
+        assertEquals("helo: world", Ex248.all("hello: world"));
+        assertEquals("(helo)", Ex248.all("(hello)"));
+        assertEquals("\"helo\"", Ex248.all("\"hello\""));
+        assertEquals("helo-world", Ex248.all("hello-world"));
+        assertEquals("it's", Ex248.all("it's"));
+        assertEquals("don't", Ex248.all("don't"));  // d, o, n, ', t
+        assertEquals("I'm", Ex248.all("I'm"));
+
+        // === Пробелы в начале/конце удаляются ===
+        assertEquals("helo", Ex248.all(" hello"));
+        assertEquals("helo", Ex248.all("hello "));
+        assertEquals("helo", Ex248.all(" hello "));
+        assertEquals("helo world", Ex248.all(" hello world "));
+
+        // === Артикли со знаками препинания (без пробелов) ===
+        assertEquals(",", Ex248.all(",the"));
+        assertEquals(",", Ex248.all("the,"));
+        assertEquals(",", Ex248.all(",a"));
+        assertEquals(",", Ex248.all("a,"));
+        assertEquals(",,", Ex248.all(",the,"));
+        assertEquals("kat,,dog", Ex248.all("cat,the,dog"));
+        assertEquals("kat--dog", Ex248.all("cat-a-dog"));
+        assertEquals("kat..dog", Ex248.all("cat.an.dog"));
+
+        // === Граничные случаи ===
+        assertEquals("", Ex248.all(""));
+        assertEquals(".", Ex248.all("."));
+        assertEquals(",", Ex248.all(","));
+        assertEquals("!", Ex248.all("!"));
+        assertEquals("?", Ex248.all("?"));
+        assertEquals("...", Ex248.all("..."));
+        assertEquals("x", Ex248.all("x"));
+        assertEquals("X", Ex248.all("X"));
+
+        // === Пробелы между знаками препинания ===
+        assertEquals(". .", Ex248.all(". ."));
+        assertEquals(", ,", Ex248.all(", ,"));
+        assertEquals("! ?", Ex248.all("! ?"));
+
+        // === Апострофы ===
+        assertEquals("'helo'", Ex248.all("'hello'"));
+        assertEquals("''", Ex248.all("'a'"));          // 'a' — артикль удаляется
+        assertEquals("''", Ex248.all("'the'"));       // 'the' — артикль удаляется
+
+        // === Смешанные сложные случаи ===
+        assertEquals("Wher ar you?", Ex248.all("Where are you?"));
+        assertEquals("Pleas kom her", Ex248.all("Please come here"));
+        assertEquals("I si thri tris", Ex248.all("I see three trees"));
     }
 
     @Test
