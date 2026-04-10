@@ -121,15 +121,27 @@ class Ex248Test {
      * Буква "e" опускается в конце слова, если она не единственная буква в слове.
      *
      */
-//    @Test
-//    void year3() {
-//        assertEquals("ololosh", Ex248.year3(new Ex248.WordInProcess(new StringBuilder("ololoshe"), false, false)).sb().toString());
-//        assertEquals("e", Ex248.year3(new Ex248.WordInProcess(new StringBuilder("e"), false, false)).sb().toString());
-//        assertEquals("e ololo", Ex248.year3(new Ex248.WordInProcess(new StringBuilder("e ololo"), false, false)).sb().toString());
-//        assertEquals("", Ex248.year3(new Ex248.WordInProcess(new StringBuilder(""), false, false)).sb().toString());
-//        assertEquals("e", Ex248.year3(new Ex248.WordInProcess(new StringBuilder("e "), false, false)).sb().toString());
-//        assertEquals("th", Ex248.year3(new Ex248.WordInProcess(new StringBuilder("the"), false, false)).sb().toString());
-//    }
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "ololoshe -> ololosh",
+                    "e -> e",
+                    "e ololo -> e ololo",
+                    "''->''",
+                    "e  -> e",
+                    "the -> th"
+            },
+            delimiterString = "->"
+    )
+    void year3(String in, String expectedResult) {
+        StringBuilder sb = new StringBuilder(in);
+        EnumSet<Ex248.WordFlag> flags = EnumSet.noneOf(Ex248.WordFlag.class);
+
+        Ex248.WordInProcess wordInProcess = new Ex248.WordInProcess(sb, flags);
+        var actualResult = Ex248.year3(wordInProcess).get();
+
+        assertEquals(expectedResult, actualResult);
+    }
 
     /**
      * <b>Год 4: Удаление артиклей</b><br>
