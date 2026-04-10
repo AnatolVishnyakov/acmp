@@ -49,33 +49,37 @@ class Ex248Test {
      * Все замены производятся строго слева направо.
      * Например: "success" → "suksess", "cck" → "kk".
      */
-    @Test
-    void year1() {
-        assertEquals("si", Ex248.year1("ci").get());
-        assertEquals("Si", Ex248.year1("Ci").get());
-        assertEquals("-si-", Ex248.year1("-ci-").get());
-        assertEquals(" si ", Ex248.year1(" ci ").get());
-
-        assertEquals("se", Ex248.year1("ce").get());
-        assertEquals("Se", Ex248.year1("Ce").get());
-        assertEquals("-se-", Ex248.year1("-ce-").get());
-        assertEquals(" se ", Ex248.year1(" ce ").get());
-
-        assertEquals("k", Ex248.year1("ck").get());
-        assertEquals("K", Ex248.year1("Ck").get());
-        assertEquals(" k ", Ex248.year1(" ck ").get());
-
-        assertEquals("k", Ex248.year1("c").get());
-        assertEquals("K", Ex248.year1("C").get());
-        assertEquals(" k ", Ex248.year1(" c ").get());
-        assertEquals("kk", Ex248.year1("cck").get());
-        assertEquals("suksess", Ex248.year1("success").get());
-        assertEquals("kksi", Ex248.year1("ccci").get());
-        assertEquals("Kksi", Ex248.year1("Ccci").get());
-        assertEquals("kkse", Ex248.year1("ccce").get());
-        assertEquals("Kkse", Ex248.year1("Ccce").get());
-        assertEquals("kkkkkk", Ex248.year1("cccccc").get());
-        assertEquals("Kkkkkk", Ex248.year1("Cccccc").get());
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "ci -> si",
+                    "Ci -> Si",
+                    "-ci- -> -si-",
+                    " ci  ->  si ",
+                    "ce -> se",
+                    "Ce -> Se",
+                    "-ce- -> -se-",
+                    " ce  ->  se ",
+                    "ck -> k",
+                    "Ck -> K",
+                    " ck  ->  k ",
+                    "c -> k",
+                    "C -> K",
+                    " c  ->  k ",
+                    "cck -> kk",
+                    "success -> suksess",
+                    "ccci -> kksi",
+                    "Ccci -> Kksi",
+                    "ccce -> kkse",
+                    "Ccce -> Kkse",
+                    "cccccc -> kkkkkk",
+                    "Cccccc -> Kkkkkk",
+            },
+            delimiterString = "->"
+    )
+    void year1(String in, String expectedResult) {
+        String actualResult = Ex248.year1(in).get();
+        assertEquals(expectedResult, actualResult);
     }
 
     /**
