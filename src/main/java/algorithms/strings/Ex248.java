@@ -7,7 +7,10 @@ import java.util.Scanner;
 public class Ex248 {
     enum WordFlag {
         CHANGED,
-        REMOVED_E
+        REMOVED_K,
+        NEED_UPPER_CASE,
+        REMOVED_DUPLICATE,
+        REMOVED_E,
     }
 
     record WordInProcess(StringBuilder sb, EnumSet<WordFlag> flags) {
@@ -18,7 +21,8 @@ public class Ex248 {
 
     static WordInProcess year1(String s) {
         StringBuilder sb = new StringBuilder();
-        boolean isUpper = Character.isUpperCase(s.charAt(0));
+        var flags = EnumSet.noneOf(WordFlag.class);
+        boolean isUpperCaseFirstSymbol = Character.isUpperCase(s.charAt(0));
         for (int i = 0; i < s.length(); i++) {
             char curr = Character.toLowerCase(s.charAt(i));
             char next = i + 1 < s.length()
@@ -26,23 +30,28 @@ public class Ex248 {
             if (curr == 'c') {
                 switch (next) {
                     case 'i', 'e' -> {
-                        if (i == 0 && isUpper) sb.append('S');
+                        if (i == 0 && isUpperCaseFirstSymbol) sb.append('S');
                         else sb.append('s');
                     }
                     case 'k' -> {
+                        flags.add(WordFlag.CHANGED);
+                        flags.add(WordFlag.REMOVED_K);
+                        if (i == 0 && Character.isUpperCase(s.charAt(0))) {
+                            flags.add(WordFlag.NEED_UPPER_CASE);
+                        }
                     }
                     default -> {
-                        if (i == 0 && isUpper) sb.append('K');
+                        if (i == 0 && isUpperCaseFirstSymbol) sb.append('K');
                         else sb.append('k');
                     }
                 }
             } else {
-                int prev = i - 1;
-                if (prev >= 0 && Character.isUpperCase(s.charAt(prev)) && Character.toLowerCase(s.charAt(prev)) == 'c' && Character.toLowerCase(curr) == 'k') {
-                    isUpper = true;
+                if (flags.contains(WordFlag.NEED_UPPER_CASE)) {
+                    sb.append(Character.toUpperCase(curr));
+                    flags.remove(WordFlag.NEED_UPPER_CASE);
+                } else {
+                    sb.append(curr);
                 }
-                if (isUpper) sb.append(Character.toUpperCase(curr));
-                else sb.append(curr);
             }
         }
         return new WordInProcess(sb, EnumSet.noneOf(WordFlag.class));
@@ -50,21 +59,21 @@ public class Ex248 {
 
     static WordInProcess year2(WordInProcess word) {
         var s = word.sb.toString();
+        var flags = EnumSet.noneOf(WordFlag.class);
+        boolean isUpper = Character.isUpperCase(s.charAt(0));
         StringBuilder sb = new StringBuilder();
-        boolean replaced = false;
         for (int i = 0; i < s.length(); i++) {
             if (isDuplicate(s, i, i + 1)) {
-                replaced = true;
-                boolean isUpper = Character.isUpperCase(s.charAt(i));
+                flags.add(WordFlag.REMOVED_DUPLICATE);
                 var c = Character.toLowerCase(s.charAt(i));
                 if (c == 'e') {
-                    if (isUpper) sb.append('I');
+                    if (i == 0 && isUpper) sb.append('I');
                     else sb.append('i');
                 } else if (c == 'o') {
-                    if (isUpper) sb.append('U');
+                    if (i == 0 && isUpper) sb.append('U');
                     else sb.append('u');
                 } else {
-                    if (isUpper) sb.append(Character.toUpperCase(c));
+                    if (i == 0 && isUpper) sb.append(Character.toUpperCase(c));
                     else sb.append(c);
                 }
                 i++;
@@ -72,14 +81,14 @@ public class Ex248 {
                 sb.append(s.charAt(i));
             }
         }
-        if (replaced) {
+        if (flags.contains(WordFlag.REMOVED_DUPLICATE)) {
             if (sb.toString().equalsIgnoreCase("a")) {
-                return new WordInProcess(sb, word.flags);
+                return new WordInProcess(sb, flags);
             }
-            var res = year2(new WordInProcess(sb, word.flags));
-            return new WordInProcess(res.sb, word.flags);
+            var res = year2(new WordInProcess(sb, flags));
+            return new WordInProcess(res.sb, flags);
         }
-        return new WordInProcess(sb, word.flags);
+        return new WordInProcess(sb, flags);
     }
 
     private static boolean isDuplicate(String s, int curr, int next) {

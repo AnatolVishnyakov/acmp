@@ -1,6 +1,10 @@
 package algorithms.strings;
 
 import org.junit.jupiter.api.Test;
+import org.junit.jupiter.params.ParameterizedTest;
+import org.junit.jupiter.params.provider.CsvSource;
+
+import java.util.EnumSet;
 
 import static org.junit.jupiter.api.Assertions.assertEquals;
 
@@ -84,17 +88,29 @@ class Ex248Test {
      * Замены выполняются строго слева направо.
      * Например: "ooo" → "uo", "oou" → "u", "iee" → "i".
      */
-//    @Test
-//    void year2() {
-//        assertEquals("i", Ex248.year2("ee").sb().toString());
-//        assertEquals("u", Ex248.year2("oo").sb().toString());
-//        assertEquals("u", Ex248.year2("uu").sb().toString());
-//        assertEquals("v", Ex248.year2("vv").sb().toString());
-//        assertEquals("Uo", Ex248.year2("Ooo").sb().toString());
-//        assertEquals("A", Ex248.year2("Aaaa").sb().toString());
-//        assertEquals("U", Ex248.year2("Oooo").sb().toString());
-//        assertEquals("Ie", Ex248.year2("Eeeee").sb().toString());
-//    }
+    @ParameterizedTest
+    @CsvSource(
+            value = {
+                    "ee -> i",
+                    "oo -> u",
+                    "uu -> u",
+                    "vv -> v",
+                    "Ooo -> Uo",
+                    "Aaaa -> A",
+                    "Oooo -> U",
+                    "Eeeee -> Ie",
+            },
+            delimiterString = "->"
+    )
+    void year2(String in, String expectedResult) {
+        StringBuilder sb = new StringBuilder(in);
+        EnumSet<Ex248.WordFlag> flags = EnumSet.noneOf(Ex248.WordFlag.class);
+
+        Ex248.WordInProcess wordInProcess = new Ex248.WordInProcess(sb, flags);
+        var actualResult = Ex248.year2(wordInProcess).get();
+
+        assertEquals(expectedResult, actualResult);
+    }
 
     /**
      * <b>Год 3: Удаление "e" в конце слова</b><br>
@@ -133,7 +149,6 @@ class Ex248Test {
 //        assertEquals("", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("an an an"), false, false)).sb().toString());
 //        assertEquals("", Ex248.year4(new Ex248.WordInProcess(new StringBuilder("   "), false, false)).sb().toString());
 //    }
-
     @Test
     void all() {
         assertEquals("A", Ex248.all("Aaaaaa"));
